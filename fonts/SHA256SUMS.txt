@@ -1,0 +1,6 @@
+564ce565c371c5e5bbf286006565a7c9aa55a9f56e7ca58d56e05d649dd61a72 *space-grotesk/OFL.txt
+8e085aa438094f11487a836652edd5c054fa6a96f63fc7c282105ee3a4b08c07 *space-grotesk/SpaceGrotesk[wght].woff2
+5660f8a658f8bb50dbc005232f885eadffd2bc1c235c4f6fbb63469d1f9cde6d *ibm-plex-sans/IBMPlexSans-Medium.woff2
+ba711a3085ff9f27440b6b9c4550cfc47c97bf36591d5da958b975bb3add8c1a *ibm-plex-sans/IBMPlexSans-Regular.woff2
+f78048030eab62e860efa39a0df79e2e5581bf122eb95b9bc42c0b8a4988d205 *ibm-plex-sans/IBMPlexSans-SemiBold.woff2
+7e6b2818edbd8f6a01ae80641cc8f16a51080d08fb4e532be3a0b6f74adb07da *ibm-plex-sans/LICENSE.txt

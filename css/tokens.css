@@ -1,0 +1,87 @@
+/* (c) 2026 Andrius Bubliauskas. All rights reserved.
+   Design tokens for orion-81.io 3.0.0 (DESIGN.md section 1). Components use these names, never raw values.
+   Dark is the default; the light theme is chosen only by the visitor (the switch in the top bar). */
+:root {
+  color-scheme: dark;
+
+  /* colour roles, dark */
+  --bg: #0a0d13;
+  --surface: #11161f;
+  --raised: #171e2a;
+  --line: #243044;
+  --control-line: #627189;
+  --text: #e8ecf2;
+  --muted: #9ba5b5;
+  --primary: #6cc3ff;
+  --done: #5fd38d;
+  --now: #ffc65c;
+  --next: #9aa8ff;
+  --on-primary: var(--bg);
+  --bar-bg: rgba(10, 13, 19, 0.94);
+  --plate: #05070b;
+
+  /* type */
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --mono: ui-monospace, "Cascadia Mono", Consolas, "Liberation Mono", monospace;
+  --fs-display: clamp(2.25rem, 5vw, 3.5rem);
+  --fs-h2: clamp(1.5rem, 3vw, 2rem);
+  --fs-h3: 1.25rem;
+  --fs-body: 1.0625rem;
+  --fs-small: 0.875rem;
+  --fs-eyebrow: 0.75rem;
+  --measure: 68ch;
+
+  /* spacing, 4-based */
+  --s1: 4px;
+  --s2: 8px;
+  --s3: 12px;
+  --s4: 16px;
+  --s5: 24px;
+  --s6: 32px;
+  --s7: 48px;
+  --s8: 64px;
+  --s9: 96px;
+  --section-gap: clamp(var(--s7), 8vw, var(--s9));
+  --gutter: clamp(16px, 4vw, 32px);
+  --content: min(72rem, 100% - 2 * var(--gutter));
+
+  /* shape */
+  --radius: 14px;
+  --radius-s: 8px;
+  --radius-pill: 999px;
+  --glow-c: color-mix(in srgb, var(--primary) 18%, transparent);
+  --glow: 0 0 24px 2px var(--glow-c);
+  --hit: 44px;
+
+  /* motion */
+  --dur-fast: 150ms;
+  --dur: 250ms;
+  --dur-slow: 400ms;
+  --dur-gauge: 700ms;
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+  --bg: #f6f8fb;
+  --surface: #ffffff;
+  --raised: #eef2f7;
+  --line: #d9e0ea;
+  --control-line: #738094;
+  --text: #0f1621;
+  --muted: #4f5b6d;
+  --primary: #0b6fb8;
+  --done: #187a43;
+  --now: #9a6100;
+  --next: #4a55c7;
+  --bar-bg: rgba(246, 248, 251, 0.94);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-fast: 0.01ms;
+    --dur: 0.01ms;
+    --dur-slow: 0.01ms;
+    --dur-gauge: 0.01ms;
+  }
+}

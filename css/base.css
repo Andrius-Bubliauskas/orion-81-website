@@ -1,0 +1,197 @@
+/* (c) 2026 Andrius Bubliauskas. All rights reserved.
+   Base layer for orion-81.io 3.0.0: reset, type, page frame, top bar, skip link, footer (DESIGN.md sections 1, 2, 3.1, 3.14). */
+*, *::before, *::after { box-sizing: border-box; }
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  --bar-h: 45px;
+  --toc-h: 0px;
+  scroll-padding-top: calc(var(--bar-h) + var(--toc-h) + var(--s4));
+}
+@media (max-width: 559px) {
+  html { --bar-h: 89px; }
+}
+@media (min-width: 900px) {
+  html.has-toc { --toc-h: 45px; }
+}
+body {
+  margin: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: auto auto 1fr auto;
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+  font: 400 var(--fs-body) / 1.6 var(--sans);
+  font-variant-numeric: normal;
+  overflow-wrap: break-word;
+}
+h1, h2, h3, h4, p, dl, dd, dt, ol, ul, figure, blockquote { margin: 0; padding: 0; }
+ol, ul { list-style: none; }
+img, svg { max-width: 100%; }
+img { height: auto; }
+button, input, select { font: inherit; color: inherit; }
+button { cursor: pointer; }
+
+h1 { font-size: var(--fs-display); font-weight: 300; line-height: 1.1; letter-spacing: -0.02em; }
+h2 { font-size: var(--fs-h2); font-weight: 400; line-height: 1.2; letter-spacing: -0.005em; }
+h3 { font-size: var(--fs-h3); font-weight: 500; line-height: 1.3; }
+p, li, dd { max-width: var(--measure); }
+small, .small { font-size: var(--fs-small); line-height: 1.5; }
+
+a { color: var(--primary); text-decoration: underline; text-underline-offset: 0.18em; text-decoration-thickness: 1px; }
+a:hover { text-decoration-thickness: 2px; }
+
+:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+:focus:not(:focus-visible) { outline: none; }
+
+main { grid-row: 3; min-width: 0; }
+main > * { width: var(--content); margin-inline: auto; }
+main > section { padding-block: 0 var(--section-gap); }
+main > section:first-child { padding-top: clamp(var(--s5), 5vw, var(--s8)); }
+
+/* skip link: sits above the window until it is focused */
+.skip {
+  position: absolute;
+  top: 0;
+  left: var(--s4);
+  z-index: 100;
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--hit);
+  padding: 0 var(--s4);
+  background: var(--primary);
+  color: var(--on-primary);
+  border-radius: 0 0 var(--radius-s) var(--radius-s);
+  font-weight: 500;
+  text-decoration: none;
+  transform: translateY(-110%);
+  transition: transform var(--dur-fast) var(--ease);
+}
+.skip:focus { transform: none; outline: 2px solid var(--text); outline-offset: -4px; }
+
+/* top bar: five tabs, a 44 px theme button, sticky and translucent */
+.site-bar {
+  grid-row: 1;
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background: var(--bar-bg);
+  border-bottom: 1px solid var(--line);
+}
+@supports (backdrop-filter: blur(8px)) {
+  .site-bar { backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+}
+.bar-in {
+  width: var(--content);
+  margin-inline: auto;
+  display: flex;
+  align-items: center;
+  gap: var(--s2);
+  min-height: var(--hit);
+}
+/* all five tabs are always visible: below about 560 px the strip wraps onto a second row (never a sideways scroll) */
+.o81-tabs {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  position: relative;
+}
+.o81-tab {
+  position: relative;
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  min-width: var(--hit);
+  min-height: var(--hit);
+  padding: 0 var(--s3);
+  color: var(--muted);
+  font-size: 0.9375rem;
+  white-space: nowrap;
+  text-decoration: none;
+  transition: color var(--dur-fast) var(--ease);
+}
+.o81-tab:hover { color: var(--text); }
+.o81-tab[aria-current="page"] { color: var(--primary); }
+.o81-tab[aria-current="page"]::after {
+  content: "";
+  position: absolute;
+  left: var(--s3);
+  right: var(--s3);
+  bottom: 0;
+  height: 2px;
+  background: var(--primary);
+  border-radius: 2px;
+}
+.o81-tab:focus-visible { outline-offset: -4px; }
+/* narrow screens: the tabs flow in rows (never a sideways scroll). The first row leaves room for the theme button at the top right; the second row
+   uses the whole width, so all five tabs fit in two rows at 320 px. */
+@media (max-width: 559px) {
+  .bar-in { display: block; position: relative; }
+  .o81-tabs { display: block; font-size: 0; line-height: 0; }
+  .o81-tabs::before { content: ""; float: right; width: calc(var(--hit) + var(--s2)); height: var(--hit); }
+  .o81-tab { vertical-align: top; font-size: 0.9375rem; line-height: 1.2; }
+  .theme-btn { position: absolute; top: 0; right: 0; }
+}
+@media (max-width: 400px) {
+  .o81-tab { padding: 0 10px; }
+  .o81-tab[aria-current="page"]::after { left: 10px; right: 10px; }
+}
+@media (min-width: 700px) {
+  .o81-tab { padding: 0 var(--s4); }
+  .o81-tab[aria-current="page"]::after { left: var(--s4); right: var(--s4); }
+}
+
+.theme-btn {
+  flex: 0 0 auto;
+  align-self: flex-start;
+  width: var(--hit);
+  height: var(--hit);
+  display: grid;
+  place-items: center;
+  padding: 0;
+  background: transparent;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-pill);
+  color: var(--text);
+  transition: background var(--dur) var(--ease), border-color var(--dur) var(--ease);
+}
+.theme-btn:hover { background: var(--raised); border-color: var(--primary); }
+.theme-btn .i-sun { display: none; }
+[data-theme="light"] .theme-btn .i-sun { display: block; }
+[data-theme="light"] .theme-btn .i-moon { display: none; }
+html:not(.js) .theme-btn { display: none; }
+
+/* footer */
+.pg-footer {
+  grid-row: 4;
+  width: var(--content);
+  margin-inline: auto;
+  padding-block: var(--s6) var(--s7);
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: var(--fs-small);
+  line-height: 1.5;
+}
+.pg-footer p + p { margin-top: var(--s2); }
+
+/* three-star marker: three dots on a diagonal, drawn for the project */
+.stars { display: inline-flex; gap: 4px; align-items: center; vertical-align: middle; margin-right: var(--s3); }
+.stars i { display: block; width: 5px; height: 5px; border-radius: 50%; background: var(--primary); }
+.stars i:nth-child(1) { transform: translate(-4px, 4px); }
+.stars i:nth-child(2) { opacity: 0.7; }
+.stars i:nth-child(3) { opacity: 0.45; transform: translate(4px, -4px); }
+h2 .stars { margin-right: var(--s3); }
+
+.eyebrow, .fp-eyebrow {
+  font: 500 var(--fs-eyebrow) / 1.4 var(--mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}

@@ -1,0 +1,21 @@
+/* (c) 2026 Andrius Bubliauskas. All rights reserved.
+   The Gallery address page (gallery/index.html), 3.0.0. The Gallery itself lives in the Orion POC tab, which is frozen; this page only passes
+   visitors on to it, so it is one calm card in the site's frame. It sits beside tokens.css, base.css and components.css and uses their tokens. */
+
+.gv-main { display: grid; align-content: start; padding-block: clamp(var(--s6), 8vw, var(--s9)); }
+.gv-card {
+  width: min(40rem, var(--content));
+  margin-inline: auto;
+  padding: var(--s6);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+.gv-card h1 { margin: 0 0 var(--s4); font-size: var(--fs-h2); font-weight: 300; line-height: 1.15; letter-spacing: -0.01em; }
+.gv-card p { max-width: none; font-size: 1.1875rem; line-height: 1.5; }
+/* the one link of the page: set in the sentence, underlined and heavier (an inline link in a sentence follows WCAG 2.5.8) */
+.gv-card a { font-weight: 500; }
+@media (max-width: 479px) {
+  .gv-card { padding: var(--s5); }
+  .gv-card p { font-size: 1.0625rem; }
+}

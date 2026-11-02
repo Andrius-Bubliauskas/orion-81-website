@@ -1,6 +1,6 @@
 # orion-81.io
 
-This folder is the whole orion-81.io website, version 2.8.3. A bar at the top of every page links its five parts.
+This folder is the whole orion-81.io website, version 3.0.0. A bar at the top of every page links its five parts.
 
 ## What it holds
 
@@ -37,6 +37,14 @@ The home page links to one page on anthropic.com as further reading; the link lo
 
 Anthropic, Claude and Claude Code are trademarks of Anthropic, PBC. Orion-81 is independent and is not affiliated with,
 sponsored, endorsed or funded by Anthropic.
+
+## Discord
+
+The home page links to the Orion-81 Discord server (https://discord.gg/CjzXsa8nw) with Discord's official Symbol, self-hosted and unaltered in `assets/img/discord/`. The link loads nothing from Discord until it is followed. Discord and the Discord logo are trademarks of Discord Inc.; used under Discord's brand guidelines. Orion-81 is not affiliated with or endorsed by Discord.
+
+## Fonts
+
+The Orchestration page shows the slides of the presentation "Two orchestrators, one game" in its own two typefaces, Space Grotesk and IBM Plex Sans, self-hosted in `fonts/` and used on that page only (`css/orchestration-slides.css`). Both are licensed under the SIL Open Font License, Version 1.1; the licence texts are beside the files (`fonts/space-grotesk/OFL.txt`, `fonts/ibm-plex-sans/LICENSE.txt`), and `fonts/SHA256SUMS.txt` lists the files, which are the projects' official WOFF2 releases, unmodified (no subsetting or renaming, so the Reserved Font Name "Plex" is not triggered). This is the owner's written exception, scoped to the Orchestration slides. Nothing is loaded from other sites.
 
 ## Rights
 

@@ -1,6 +1,12 @@
 /* (c) 2026 Andrius Bubliauskas. All rights reserved.
    The searchable table of every automated test (classic script, no storage, no network requests).
-   Reads window.ORION81_TESTS (assets/data/test-index.js), renders into #o81-tests and fills every data-o81-bind element. */
+   Reads window.ORION81_TESTS (assets/data/test-index.js), renders into #o81-tests and fills every data-o81-bind element.
+   3.0.0: rows are drawn in pages of 100 with a "Show 100 more" button (data-o81-more). Search and the area menu always run over
+   all rows of the model (window.O81_TABLE.rows); a row is hidden by the filter (tr.hidden) or held back by the pager (class
+   o81-paged). The count line still reads "N of T shown" with N the number of matching rows.
+   Fix round: a change made by the reader (search, the area menu, "Show 100 more") is a same-document View Transition cross-fade where the page
+   offers one (window.o81Transition, js/site.js), skipped under reduced motion. Below 600 px each row is a card: every cell carries its column
+   header's own words (data-label) and the table keeps its semantics through explicit roles while the display is not a table. */
 (function () {
   'use strict';
 
@@ -46,6 +52,7 @@
   var labels = {};
   data.areas.forEach(function (a) { labels[a.key] = a.label; });
 
+  var PAGE = 100;
   var frag = document.createDocumentFragment();
 
   frag.appendChild(el('p', 'o81-tests-source',
@@ -91,6 +98,7 @@
   table.setAttribute('aria-label', 'Every automated test of the game\'s rules');
   var thead = el('thead');
   var hr = el('tr');
+  var HEADS = ['#', 'Area', 'Spec reference', 'What it checks', 'Where'];
   [['#', 'o81-tests-num'], ['Area', ''], ['Spec reference', ''], ['What it checks', ''], ['Where', '']].forEach(function (h) {
     var th = el('th', h[1], h[0]);
     th.scope = 'col';
@@ -116,6 +124,7 @@
       wcell.appendChild(document.createTextNode(part));
     });
     tr.appendChild(wcell);
+    for (var c = 0; c < tr.cells.length; c++) tr.cells[c].setAttribute('data-label', HEADS[c]);
     tbody.appendChild(tr);
     rows.push({ tr: tr, area: key, index: idx, text: [idx, label, ref, check, where].join(' ').toLowerCase() });
   });
@@ -128,6 +137,15 @@
   table.appendChild(tbody);
   wrap.appendChild(table);
   frag.appendChild(wrap);
+
+  /* The pager: a button that draws the next page of the rows that match. */
+  var pager = el('div', 'o81-tests-pager');
+  var moreBtn = el('button', 'btn btn-secondary o81-tests-more', 'Show 100 more');
+  moreBtn.type = 'button';
+  moreBtn.setAttribute('data-o81-more', '');
+  pager.appendChild(moreBtn);
+  pager.hidden = true;
+  frag.appendChild(pager);
 
   /* On-demand probes. */
   var probes = el('div', 'o81-tests-probes');
@@ -147,31 +165,48 @@
   mount.textContent = '';
   mount.appendChild(frag);
 
-  var lastQuery = null, lastArea = null, shown = total;
+  var lastQuery = null, lastArea = null, shown = total, limit = PAGE, words = [], curArea = '';
+
+  /* Paint the model: filter over all rows, then hold back the matches beyond the pages drawn so far. */
+  function paint() {
+    var n = 0;
+    for (var i = 0; i < rows.length; i++) {
+      var r = rows[i];
+      var ok = !curArea || r.area === curArea;
+      for (var w = 0; ok && w < words.length; w++) {
+        if (r.text.indexOf(words[w]) === -1) ok = false;
+      }
+      if (r.tr.hidden === ok) r.tr.hidden = !ok;
+      var held = ok && n >= limit;
+      if (r.tr.classList.contains('o81-paged') !== held) r.tr.classList.toggle('o81-paged', held);
+      if (ok) n++;
+    }
+    empty.hidden = n > 0;
+    count.textContent = n + ' of ' + total + ' shown';
+    pager.hidden = n <= limit;
+    shown = n;
+    return n;
+  }
 
   function apply(query, area) {
     query = query == null ? '' : String(query);
     area = area == null ? '' : String(area);
     if (search.value !== query) search.value = query;
     if (menu.value !== area) menu.value = area;
-    var words = query.toLowerCase().split(/\s+/).filter(Boolean);
     if (query === lastQuery && area === lastArea) return shown;
-    var n = 0;
-    for (var i = 0; i < rows.length; i++) {
-      var r = rows[i];
-      var ok = !area || r.area === area;
-      for (var w = 0; ok && w < words.length; w++) {
-        if (r.text.indexOf(words[w]) === -1) ok = false;
-      }
-      if (r.tr.hidden === ok) r.tr.hidden = !ok;
-      if (ok) n++;
-    }
-    empty.hidden = n > 0;
-    count.textContent = n + ' of ' + total + ' shown';
+    words = query.toLowerCase().split(/\s+/).filter(Boolean);
+    curArea = area;
+    limit = PAGE;
     lastQuery = query;
     lastArea = area;
-    shown = n;
-    return n;
+    return paint();
+  }
+
+  function more() {
+    limit += PAGE;
+    paint();
+    if (pager.hidden) { count.setAttribute('tabindex', '-1'); count.focus({ preventScroll: true }); }
+    return shown;
   }
 
   var timer = 0;
@@ -179,19 +214,50 @@
     clearTimeout(timer);
     apply(search.value, menu.value);
   }
+  /* what the reader changes goes through a View Transition cross-fade where the page offers one */
+  function viaTransition(fn) {
+    if (window.o81Transition) window.o81Transition(fn); else fn();
+  }
   search.addEventListener('input', function () {
     clearTimeout(timer);
-    timer = setTimeout(fromControls, 100);
+    timer = setTimeout(function () { viaTransition(fromControls); }, 100);
   });
-  search.addEventListener('search', fromControls);
-  menu.addEventListener('change', fromControls);
+  search.addEventListener('search', function () { viaTransition(fromControls); });
+  menu.addEventListener('change', function () { viaTransition(fromControls); });
+  moreBtn.addEventListener('click', function () { viaTransition(more); });
 
-  count.textContent = total + ' of ' + total + ' shown';
+  /* Below 600 px the rows are cards (display: block): give the table its roles explicitly so a screen reader still reads a table */
+  var cards = window.matchMedia ? window.matchMedia('(max-width: 599px)') : null;
+  function roles() {
+    var on = !!(cards && cards.matches);
+    function set(e, role) { if (on) e.setAttribute('role', role); else e.removeAttribute('role'); }
+    set(table, 'table');
+    set(thead, 'rowgroup');
+    set(tbody, 'rowgroup');
+    set(hr, 'row');
+    Array.prototype.forEach.call(hr.cells, function (c) { set(c, 'columnheader'); });
+    rows.forEach(function (r) {
+      set(r.tr, 'row');
+      Array.prototype.forEach.call(r.tr.cells, function (c) { set(c, 'cell'); });
+    });
+    set(empty, 'row');
+    set(emptyCell, 'cell');
+  }
+  if (cards) {
+    if (cards.addEventListener) cards.addEventListener('change', roles); else if (cards.addListener) cards.addListener(roles);
+    roles();
+  }
+
   lastQuery = '';
   lastArea = '';
+  paint();
 
   window.O81_TABLE = {
     apply: apply,
+    more: more,
+    pager: pager,
+    moreButton: moreBtn,
+    pageSize: PAGE,
     rows: rows,
     empty: empty,
     count: count,

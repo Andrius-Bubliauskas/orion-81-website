@@ -1,7 +1,8 @@
 <!doctype html>
-<html lang="en-GB">
+<html lang="en-GB" data-theme="dark" class="has-toc">
 <head>
 <meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Orion-81 devlog</title>
 <meta name="description" content="The Orion-81 devlog: a dated log of the work so far, the milestone road with today's status, how the game is made, an interactive progress chart and every automated test of its rules.">
@@ -10,11 +11,14 @@
 <link rel="icon" type="image/png" sizes="180x180" href="../assets/img/logo/favicon-180.png">
 <link rel="apple-touch-icon" href="../assets/img/logo/favicon-180.png">
 <!-- (c) 2026 Andrius Bubliauskas. All rights reserved. -->
-<link rel="stylesheet" href="../css/tabbar.css">
-<link rel="stylesheet" href="../css/o81.css">
-<link rel="stylesheet" href="../css/test-table.css">
+<link rel="stylesheet" href="../css/tokens.css">
+<link rel="stylesheet" href="../css/base.css">
+<link rel="stylesheet" href="../css/components.css">
+<script src="../js/site.js"></script>
 </head>
 <body data-o81-page="devlog">
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-bar"><div class="bar-in">
 <nav class="o81-tabs" aria-label="Site">
   <a class="o81-tab" data-tab="home" data-clean="../" href="../index.html">Home</a>
   <a class="o81-tab" data-tab="devlog" data-clean="./" href="index.html" aria-current="page">Orion-81 devlog</a>
@@ -22,7 +26,20 @@
   <a class="o81-tab" data-tab="orchestration" data-clean="../orchestration/" href="../orchestration/index.html">Orchestration</a>
   <a class="o81-tab" data-tab="poc" data-clean="../poc/" href="../poc/index.html">Orion POC</a>
 </nav>
-<main class="pg-main">
+<button type="button" class="theme-btn" id="o81-theme" aria-pressed="false" aria-label="Light theme"><svg class="i-moon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4 8 8 0 1 0 20 14.5z"/></svg><svg class="i-sun" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button>
+</div></header>
+<nav class="toc" aria-label="Jump to"><div class="toc-in"><details class="toc-menu"><summary>Jump to</summary><ul>
+<li><a href="#glance">At a glance</a></li>
+<li><a href="#devlog">Devlog</a></li>
+<li><a href="#what">What the game will be</a></li>
+<li><a href="#road">The road</a></li>
+<li><a href="#ahead">Road ahead and the AI effort to get there</a></li>
+<li><a href="#built">What exists today</a></li>
+<li><a href="#how">How it is made</a></li>
+<li><a href="#tests">Every test</a></li>
+<li><a href="#poc-note">The earlier proof of concept</a></li>
+</ul></details></div></nav>
+<main id="main" class="pg-main">
 
 <section id="top" class="pg-hero" aria-labelledby="top-h">
   <picture>
@@ -30,14 +47,15 @@
     <img class="pg-logo" src="../assets/img/logo/logo-512.png" srcset="../assets/img/logo/logo-128.png 128w, ../assets/img/logo/logo-512.png 512w" sizes="(max-width: 600px) 112px, 144px" width="512" height="367" alt="Orion-81 logo">
   </picture>
   <h1 id="top-h" class="pg-wordmark">Orion-81</h1>
+  <p class="pg-summary-page">The page opens with the project at a glance and then the devlog, newest first. After it come what the game will be, the milestone road, the road ahead and the AI effort to get there, what exists today, how it is made, every test and the earlier proof of concept.</p>
   <p class="pg-lead">Orion-81 is a space combat game with six degrees of freedom: you move and turn freely along every axis. You pilot a single heavy ship and point its nose with the mouse. The pace is unhurried, yet the controls answer at once: every input takes effect from the next 8 millisecond step, and a big ship simply takes longer to come round.</p>
   <p>It has a purpose beyond play. Its revenue is meant to help support software engineers and graphic designers whose work has been affected by artificial intelligence.</p>
   <p class="pg-status-line"><strong>In development.</strong> Built so far: the rules core (M2), the demo's rules (M2.1), ships as machines (M2.2, done on 26 October 2026) the engine-neutral first-flight layer (M3a, done on 28 October 2026) and game modes, balance and sub-system combat (M2.3, done on 31 October 2026). Air, orbit and descent (M2.4) is being built, and work has started on M4a, the engine-neutral half of M4; nothing of it is merged yet.</p>
 </section>
 
 <section id="glance" aria-labelledby="glance-h">
-  <h2 id="glance-h">At a glance</h2>
-  <a class="pg-feature" href="progress.html">
+  <h2 id="glance-h"><span class="stars" aria-hidden="true"><i></i><i></i><i></i></span>At a glance</h2>
+  <a class="pg-feature rv" href="progress.html">
     <span class="pg-feature-kicker">Interactive progress chart</span>
     <span class="pg-feature-h">Every branch, wave and work item since 14 October</span>
     <span class="pg-feature-p">Zoom, filter and search the whole build. The road ahead is drawn as dashed estimates.</span>
@@ -45,59 +63,71 @@
   </a>
   <h3 class="pg-sub">The AI effort to get there: estimate of <span data-o81-stat="est_date">31 October 2026</span></h3>
   <ul class="pg-stats">
-    <li class="pg-stat"><span class="pg-stat-num">about <span data-o81-stat="tokens_bn">67</span> billion</span><span class="pg-stat-cap">tokens of AI work to go on the whole remaining road, within a range of <span data-o81-stat="tokens_low_bn">36</span> to <span data-o81-stat="tokens_high_bn">139</span> billion</span></li>
-    <li class="pg-stat"><span class="pg-stat-num">about <span data-o81-stat="weeks">11</span> weeks</span><span class="pg-stat-cap">of AI work at the current pace, within a range of <span data-o81-stat="weeks_low">6</span> to <span data-o81-stat="weeks_high">23</span> weeks</span></li>
-    <li class="pg-stat"><span class="pg-stat-num">about <span data-o81-stat="weeks_free">0.4</span> weeks</span><span class="pg-stat-cap">of that is engine-free work: the rest of air, orbit and descent, and of M4a, the engine-neutral half of M4</span></li>
-    <li class="pg-stat"><span class="pg-stat-num">about <span data-o81-stat="weeks_engine">9.8</span> weeks</span><span class="pg-stat-cap">of that is engine work, with a wider range because none of it has been measured yet</span></li>
-    <li class="pg-stat"><span class="pg-stat-num"><span data-o81-stat="finish">around 29 January 2027</span></span><span class="pg-stat-cap">for the last planned milestone, between <span data-o81-stat="finish_low">late December 2026</span> and <span data-o81-stat="finish_high">mid April 2027</span></span></li>
-    <li class="pg-stat"><span class="pg-stat-num"><span data-o81-stat="used_bn">17.7</span> billion</span><span class="pg-stat-cap">tokens used, from <span data-o81-stat="used_from">14 October 2026</span> to <span data-o81-stat="used_to">31 October 2026</span></span></li>
+    <li class="pg-stat rv"><span class="pg-stat-num">about <span data-o81-stat="tokens_bn">67</span> billion</span><span class="pg-stat-cap">tokens of AI work to go on the whole remaining road, within a range of <span data-o81-stat="tokens_low_bn">36</span> to <span data-o81-stat="tokens_high_bn">139</span> billion</span></li>
+    <li class="pg-stat rv"><span class="pg-stat-num">about <span data-o81-stat="weeks">11</span> weeks</span><span class="pg-stat-cap">of AI work at the current pace, within a range of <span data-o81-stat="weeks_low">6</span> to <span data-o81-stat="weeks_high">23</span> weeks</span></li>
+    <li class="pg-stat rv"><span class="pg-stat-num">about <span data-o81-stat="weeks_free">0.4</span> weeks</span><span class="pg-stat-cap">of that is engine-free work: the rest of air, orbit and descent, and of M4a, the engine-neutral half of M4</span></li>
+    <li class="pg-stat rv"><span class="pg-stat-num">about <span data-o81-stat="weeks_engine">9.8</span> weeks</span><span class="pg-stat-cap">of that is engine work, with a wider range because none of it has been measured yet</span></li>
+    <li class="pg-stat rv"><span class="pg-stat-num"><span data-o81-stat="finish">around 29 January 2027</span></span><span class="pg-stat-cap">for the last planned milestone, between <span data-o81-stat="finish_low">late December 2026</span> and <span data-o81-stat="finish_high">mid April 2027</span></span></li>
+    <li class="pg-stat rv"><span class="pg-stat-num"><span data-o81-stat="used_bn">17.7</span> billion</span><span class="pg-stat-cap">tokens used, from <span data-o81-stat="used_from">14 October 2026</span> to <span data-o81-stat="used_to">31 October 2026</span></span></li>
   </ul>
   <p class="pg-quiet">Effort is counted in tokens, the small pieces of text the AI reads and writes. These are totals only.</p>
   <p class="pg-quiet">How it is worked out: the tokens each finished milestone used are counted from the work records, and each remaining milestone is sized against a finished one of known cost. The engine work has not been measured yet, so its range is wider.</p>
 </section>
 
+<div class="streak" aria-hidden="true"></div>
+
 <section id="devlog" aria-labelledby="devlog-h">
-  <h2 id="devlog-h">Devlog</h2>
+  <h2 id="devlog-h"><span class="stars" aria-hidden="true"><i></i><i></i><i></i></span>Devlog</h2>
   <p>What happened, newest first. All dates are in October 2026. The <a href="progress.html">interactive progress chart</a> shows the same work on a time line, with the road ahead as dashed estimates.</p>
-  <ol class="pg-log">
-    <li class="pg-entry">
+  <div class="pg-tools" hidden>
+    <button type="button" class="btn btn-secondary" id="o81-show-all" data-o81-expand aria-expanded="false" aria-controls="o81-log">Show all</button>
+    <button type="button" class="btn btn-quiet" id="o81-collapse-all" aria-controls="o81-log">Collapse all</button>
+  </div>
+  <ol class="pg-log" id="o81-log">
+    <li class="pg-entry rv">
       <span class="pg-date">27 to 29 October</span>
       <h3 class="pg-entry-h">M3a done; M2.3's code complete; M2.4 planned</h3>
+      <p class="pg-summary">M3a was merged on 28 October, M2.3's code is complete, and M2.4 is planned.</p>
       <p>M3a was closed after Andrius's review and merged into the main line on 28 October as version 0.3.0-m3a. Its follow-up fixes were merged the same morning. M3a is the engine-neutral presentation layer: cameras, the lens, input, the session, the host and a replay tool. The main line now holds 1,396 automated tests of the rules and 239 of the presentation layer. Both test programs give identical results from two different compilers, and each runs in under one second.</p>
-      <p>Five of the 19 milestones are done: M0, M2, M2.1, M2.2 and M3a (the road counts M3a and M3b as two).</p>
-      <p>Every wave of M2.3 (modes, balance and sub-system combat) was built and merged into the milestone's own branch. Its code was complete on 28 October, within the test-time limit Andrius set, which he raised three times as the work went on. Still to do are its spec text, the milestone's close and its merge into the main line.</p>
-      <p>The first balance report ran 1,190 simulated matches in five scenarios, with stand-in ships, so its results are only a guide. Two results stand out. In all 60 runs against a capital ship whose guns were firing, a swarm of small ships never destroyed it and never damaged any of its parts. In 22 of 40 capture-the-flag matches, nobody captured a flag. Andrius chooses the fixes.</p>
-      <p>M2.4, air, orbit and descent, has a plan, written and checked on 28 October, and its specs for the air, kinds of airframe and linked zones are written and installed, awaiting Andrius's final approval. Andrius moved the invasion rules, the orbital station and its defence grid, and the computer pilots' invasion goals to M10.1, invasion and defence, which keeps M2.4 within its test-time budget. M2.4 is built after M2.3 joins the main line.</p>
+      <details class="pg-more"><summary>Read the whole entry</summary>
+        <p>Five of the 19 milestones are done: M0, M2, M2.1, M2.2 and M3a (the road counts M3a and M3b as two).</p>
+        <p>Every wave of M2.3 (modes, balance and sub-system combat) was built and merged into the milestone's own branch. Its code was complete on 28 October, within the test-time limit Andrius set, which he raised three times as the work went on. Still to do are its spec text, the milestone's close and its merge into the main line.</p>
+        <p>The first balance report ran 1,190 simulated matches in five scenarios, with stand-in ships, so its results are only a guide. Two results stand out. In all 60 runs against a capital ship whose guns were firing, a swarm of small ships never destroyed it and never damaged any of its parts. In 22 of 40 capture-the-flag matches, nobody captured a flag. Andrius chooses the fixes.</p>
+        <p>M2.4, air, orbit and descent, has a plan, written and checked on 28 October, and its specs for the air, kinds of airframe and linked zones are written and installed, awaiting Andrius's final approval. Andrius moved the invasion rules, the orbital station and its defence grid, and the computer pilots' invasion goals to M10.1, invasion and defence, which keeps M2.4 within its test-time budget. M2.4 is built after M2.3 joins the main line.</p>
+      </details>
     </li>
-    <li class="pg-entry">
+    <li class="pg-entry rv">
       <span class="pg-date">26 October</span>
       <h3 class="pg-entry-h">M2.2 done; M3a and M2.3 under way</h3>
+      <p class="pg-summary">M2.2 was closed and merged on 26 October, and M3a and M2.3 started side by side.</p>
       <p>M2.2, ships as machines, was closed and accepted on 26 October and merged into the main line as version 0.2.2. It adds damage that spreads from part to part and the damage control to stop it, aiming at a ship's subsystems, ships breaking apart into tumbling debris, salvage, and power modules (engines, shields and weapon mounts), with commands to pick a ship's sub-targets. The suite now holds 1,396 automated tests. Two different compilers give identical results, all four build setups build cleanly, and the whole suite still runs in under a second. The copy scans are clean.</p>
-      <p>Four of the 19 milestones are done: M0, M2, M2.1 and M2.2 (the road counts M3a and M3b as two).</p>
-      <p>Two milestones are now under way side by side. M3a is the engine-neutral presentation layer: cameras, the lens, input, the session, the host and a replay tool. M2.3 is modes, balance and sub-system combat: play styles, team objectives, capture the flag, assigned ships, mount dispersion, shield bubbles, swarm tactics and a balance harness. Each starts by checking its plan against the finished M2.2 code.</p>
-      <p>A new page shows how the work was organised: <a href="agent-provenance.html">how the Claude agents built it</a>, the Agent Provenance Graph, under the Progress tab.</p>
+      <details class="pg-more"><summary>Read the whole entry</summary>
+        <p>Four of the 19 milestones are done: M0, M2, M2.1 and M2.2 (the road counts M3a and M3b as two).</p>
+        <p>Two milestones are now under way side by side. M3a is the engine-neutral presentation layer: cameras, the lens, input, the session, the host and a replay tool. M2.3 is modes, balance and sub-system combat: play styles, team objectives, capture the flag, assigned ships, mount dispersion, shield bubbles, swarm tactics and a balance harness. Each starts by checking its plan against the finished M2.2 code.</p>
+        <p>A new page shows how the work was organised: <a href="agent-provenance.html">how the Claude agents built it</a>, the Agent Provenance Graph, under the Progress tab.</p>
+      </details>
     </li>
-    <li class="pg-entry">
+    <li class="pg-entry rv">
       <span class="pg-date">18 to 20 October</span>
       <h3 class="pg-entry-h">M2.2, ships as machines: four waves done, paused at a checkpoint</h3>
       <p>Work on ships as machines began on 18 October. Its first four waves are done, and the power modules (engines, shields and weapon mounts) are under way. On 20 October the work was paused at a checkpoint. On 18 October the rules were also checked to give identical results when built with two different compilers.</p>
     </li>
-    <li class="pg-entry">
+    <li class="pg-entry rv">
       <span class="pg-date">18 October</span>
       <h3 class="pg-entry-h">The road widens: new game modes and balance work</h3>
       <p>New ideas for game modes and for balancing the game were planned into the road as five new milestones: M2.3 (modes, balance and sub-system combat), M2.4 (air, orbit and descent), M6.1 (capture the flag), M8.1 (assigned-ship co-op and a pilot record) and M10.1 (invasion and defence). Nothing was built for them yet. Each is checked against the work before it when its turn comes.</p>
     </li>
-    <li class="pg-entry">
+    <li class="pg-entry rv">
       <span class="pg-date">17 to 18 October</span>
       <h3 class="pg-entry-h">M2.1, the demo's rules: built and merged</h3>
       <p>The rules every mode shares, single-player waves and drones, and computer pilots for fighters and mid-size ships were built wave by wave and checked, and the milestone was merged into the main line on 18 October. The game now has four difficulty levels, held as data. The suite grew to more than a thousand automated tests, still running in under a second.</p>
     </li>
-    <li class="pg-entry">
+    <li class="pg-entry rv">
       <span class="pg-date">15 to 16 October</span>
       <h3 class="pg-entry-h">M2, the rules core: built and merged</h3>
       <p>Flight, the five weapon families and damage were planned on 15 October and built in six waves, each tested against the numbers in the specs, with an independent review. The rules core was merged into the main line on 16 October, and the copy scans found nothing from outside.</p>
     </li>
-    <li class="pg-entry">
+    <li class="pg-entry rv">
       <span class="pg-date">14 October</span>
       <h3 class="pg-entry-h">The start, and M0: the walking skeleton</h3>
       <p>Orion-81 restarted from a clean slate. The founding specs were signed off, the code base, its build and its first tests were put in place, and the first milestone, M0, was reached the same day. Work sessions have been recorded on video ever since.</p>
@@ -106,7 +136,7 @@
 </section>
 
 <section id="what" aria-labelledby="what-h">
-  <h2 id="what-h">What the game will be</h2>
+  <h2 id="what-h"><span class="stars" aria-hidden="true"><i></i><i></i><i></i></span>What the game will be</h2>
   <p>The first goal is the clean v0 demo: a small but complete slice of the game. It is planned to hold:</p>
   <ul class="pg-list">
     <li>eight original ship hulls, each designed for Orion-81;</li>
@@ -119,61 +149,27 @@
   <p>In Orion-81 a ship is a machine made of parts, not a bar of health. Damage to its edges knocks out engines, turrets and sensors one by one; only a hit to the core destroys it. Each weapon has its own job, and a pilot who manoeuvres well beats the automatic mounts.</p>
 </section>
 
+<div class="streak" aria-hidden="true"></div>
+
 <section id="road" aria-labelledby="road-h">
-  <h2 id="road-h">The road</h2>
+  <h2 id="road-h"><span class="stars" aria-hidden="true"><i></i><i></i><i></i></span>The road</h2>
   <p>Orion-81 is built in milestones. Each one is planned, checked against the work before it, built and reviewed. The <a href="progress.html">interactive progress chart</a> draws the road with estimated dates.</p>
   <ol class="pg-road">
-    <li class="pg-step is-done">
-      <span class="pg-status">Done, 14 October 2026</span>
-      <h3 class="pg-step-h">M0: walking skeleton</h3>
-      <p>The game's code base, its build and its first tests, all in place.</p>
-    </li>
-    <li class="pg-step is-done">
-      <span class="pg-status">Done, 16 October 2026, in the main line</span>
-      <h3 class="pg-step-h">M2: the rules core</h3>
-      <p>Flight, weapons and damage, each tested against the numbers in the specs.</p>
-    </li>
-    <li class="pg-step is-done">
-      <span class="pg-status">Done, 18 October 2026, in the main line</span>
-      <h3 class="pg-step-h">M2.1: the demo's rules</h3>
-      <p>The rules every mode shares, single-player waves and drones, and computer pilots for fighters and mid-size ships.</p>
-    </li>
-    <li class="pg-step is-done">
-      <span class="pg-status">Done, 26 October 2026, in the main line</span>
-      <h3 class="pg-step-h">M2.2: ships as machines</h3>
-      <p>Damage that spreads from part to part and damage control to stop it, aiming at a ship's subsystems, ships breaking apart into tumbling debris, and salvage. The power modules (engines, shields and weapon mounts) are added to it.</p>
-    </li>
-    <li class="pg-step is-done">
-      <span class="pg-status">Done, 28 October 2026, in the main line</span>
-      <h3 class="pg-step-h">M3a: first flight, the part that needs no engine</h3>
-      <p>Cameras, controls kept as data, pause, menus and settings, and a tool that plays back a recorded match.</p>
-    </li>
-    <li class="pg-step is-done">
-      <span class="pg-status">Done, 31 October 2026, in the main line</span>
-      <h3 class="pg-step-h">M2.3: modes, balance and sub-system combat</h3>
-      <p>Play styles and rules for each class of ship in each mode, team objectives, capture the flag rules, how an assigned ship is drawn, shield bubbles, swarm tactics and a tool that plays many matches to check the balance.</p>
-    </li>
-    <li class="pg-step is-now">
-      <span class="pg-status">Under way: being built, not yet merged</span>
-      <h3 class="pg-step-h">M2.4: air, orbit and descent</h3>
-      <p>Flight in an atmosphere, linked zones with a flown descent and re-entry heating.</p>
-    </li>
-    <li class="pg-step is-later">
-      <span class="pg-status">After the engine question is settled</span>
-      <h3 class="pg-step-h">M3b: first flight in a game engine</h3>
-      <p>The rules core joined to a game engine through a thin layer, so a ship can be flown on screen for the first time.</p>
-    </li>
-    <li class="pg-step is-later">
-      <span class="pg-status">Later, in this order</span>
-      <h3 class="pg-step-h">M4 to M11</h3>
-      <p>M4 the clean v0 demo, the first playable build; M5 multiplayer on a local network; M6 the look, and M6.1 capture the flag on a city slice; M7 the full fleet; M8 loadout and hangar, and M8.1 assigned-ship co-op with a pilot record; M9 team battle; M10 more worlds, and M10.1 invasion and defence, with the orbital station; M11 economy and unlocks.</p>
-    </li>
+    <li class="pg-step is-done"><div class="pg-node"><span class="pg-status">Done, 14 October 2026</span><h3 class="pg-step-h">M0: walking skeleton</h3><p id="o81-road-0">The game's code base, its build and its first tests, all in place.</p></div></li>
+    <li class="pg-step is-done"><div class="pg-node"><span class="pg-status">Done, 16 October 2026, in the main line</span><h3 class="pg-step-h">M2: the rules core</h3><p id="o81-road-1">Flight, weapons and damage, each tested against the numbers in the specs.</p></div></li>
+    <li class="pg-step is-done"><div class="pg-node"><span class="pg-status">Done, 18 October 2026, in the main line</span><h3 class="pg-step-h">M2.1: the demo's rules</h3><p id="o81-road-2">The rules every mode shares, single-player waves and drones, and computer pilots for fighters and mid-size ships.</p></div></li>
+    <li class="pg-step is-done"><div class="pg-node"><span class="pg-status">Done, 26 October 2026, in the main line</span><h3 class="pg-step-h">M2.2: ships as machines</h3><p id="o81-road-3">Damage that spreads from part to part and damage control to stop it, aiming at a ship's subsystems, ships breaking apart into tumbling debris, and salvage. The power modules (engines, shields and weapon mounts) are added to it.</p></div></li>
+    <li class="pg-step is-done"><div class="pg-node"><span class="pg-status">Done, 28 October 2026, in the main line</span><h3 class="pg-step-h">M3a: first flight, the part that needs no engine</h3><p id="o81-road-4">Cameras, controls kept as data, pause, menus and settings, and a tool that plays back a recorded match.</p></div></li>
+    <li class="pg-step is-done"><div class="pg-node"><span class="pg-status">Done, 31 October 2026, in the main line</span><h3 class="pg-step-h">M2.3: modes, balance and sub-system combat</h3><p id="o81-road-5">Play styles and rules for each class of ship in each mode, team objectives, capture the flag rules, how an assigned ship is drawn, shield bubbles, swarm tactics and a tool that plays many matches to check the balance.</p></div></li>
+    <li class="pg-step is-now"><div class="pg-node"><span class="pg-status">Under way: being built, not yet merged</span><h3 class="pg-step-h">M2.4: air, orbit and descent</h3><p id="o81-road-6">Flight in an atmosphere, linked zones with a flown descent and re-entry heating.</p></div></li>
+    <li class="pg-step is-later"><div class="pg-node"><span class="pg-status">After the engine question is settled</span><h3 class="pg-step-h">M3b: first flight in a game engine</h3><p id="o81-road-7">The rules core joined to a game engine through a thin layer, so a ship can be flown on screen for the first time.</p></div></li>
+    <li class="pg-step is-later"><div class="pg-node"><span class="pg-status">Later, in this order</span><h3 class="pg-step-h">M4 to M11</h3><p id="o81-road-8">M4 the clean v0 demo, the first playable build; M5 multiplayer on a local network; M6 the look, and M6.1 capture the flag on a city slice; M7 the full fleet; M8 loadout and hangar, and M8.1 assigned-ship co-op with a pilot record; M9 team battle; M10 more worlds, and M10.1 invasion and defence, with the orbital station; M11 economy and unlocks.</p></div></li>
   </ol>
   <p class="pg-quiet">There is no M1.</p>
 </section>
 
 <section id="ahead" aria-labelledby="ahead-h">
-  <h2 id="ahead-h">Road ahead and the AI effort to get there</h2>
+  <h2 id="ahead-h"><span class="stars" aria-hidden="true"><i></i><i></i><i></i></span>Road ahead and the AI effort to get there</h2>
   <p>The rest of the road, in order. The first step needs no game engine, and work on M4a, the engine-neutral half of M4, has started beside it. Engine work starts once the engine question is settled.</p>
   <ol class="pg-list pg-ahead">
     <li><strong>M2.4.</strong> Air, orbit and descent. Being built. No engine needed.</li>
@@ -186,14 +182,16 @@
 </section>
 
 <section id="built" aria-labelledby="built-h">
-  <h2 id="built-h">What exists today</h2>
-  <p>The rules core, written in C++. It covers flight; the five weapon families (lasers, rotary cannons, rockets, railguns and point defence); turrets and automatic mounts; damage that travels through each ship's graph of modules; and the world step, which can record a replay and take a fingerprint of the game state, so the same inputs always give the same result. On top of it sit the demo's rules: the sides, respawns, pickups and score, single-player waves, drones and computer pilots, and four difficulty levels. Ships are machines now: damage spreads from part to part, damage control can stop it, a pilot can aim at a ship's subsystems, wrecks break into tumbling debris that can be salvaged, and engines, shields and weapon mounts are power modules. Without any game engine, the presentation layer (M3a) adds cameras, the lens, input, the session, the host and a replay tool. Since 31 October the main line also holds M2.3: game modes, balance and sub-system combat.</p>
-  <p>The rules give identical results when built with two different compilers. They are checked by <span data-o81-bind="count">1396</span> automated tests, and a further 239 test the presentation layer. Each of the two test programs runs in under one second.</p>
-  <p>There is nothing to play or watch yet. The first playable build is M4.</p>
+  <h2 id="built-h"><span class="stars" aria-hidden="true"><i></i><i></i><i></i></span>What exists today</h2>
+  <div class="pg-cards">
+    <div class="pg-card rv"><p>The rules core, written in C++. It covers flight; the five weapon families (lasers, rotary cannons, rockets, railguns and point defence); turrets and automatic mounts; damage that travels through each ship's graph of modules; and the world step, which can record a replay and take a fingerprint of the game state, so the same inputs always give the same result. On top of it sit the demo's rules: the sides, respawns, pickups and score, single-player waves, drones and computer pilots, and four difficulty levels. Ships are machines now: damage spreads from part to part, damage control can stop it, a pilot can aim at a ship's subsystems, wrecks break into tumbling debris that can be salvaged, and engines, shields and weapon mounts are power modules. Without any game engine, the presentation layer (M3a) adds cameras, the lens, input, the session, the host and a replay tool. Since 31 October the main line also holds M2.3: game modes, balance and sub-system combat.</p></div>
+    <div class="pg-card rv"><p>The rules give identical results when built with two different compilers. They are checked by <span data-o81-bind="count">1396</span> automated tests, and a further 239 test the presentation layer. Each of the two test programs runs in under one second.</p></div>
+    <div class="pg-card pg-card-quote rv"><p>There is nothing to play or watch yet. The first playable build is M4.</p></div>
+  </div>
 </section>
 
 <section id="how" aria-labelledby="how-h">
-  <h2 id="how-h">How it is made</h2>
+  <h2 id="how-h"><span class="stars" aria-hidden="true"><i></i><i></i><i></i></span>How it is made</h2>
   <ul class="pg-list">
     <li>Orion-81 is directed by Andrius Bubliauskas with AI. Claude Code by Anthropic writes the code, plans the work and reviews it; Andrius makes the decisions.</li>
     <li>Five written specs are the source of truth: flight, the fleet, weapons, game modes and the places. They hold the behaviour, the numbers and the acceptance tests.</li>
@@ -204,14 +202,16 @@
   </ul>
 </section>
 
+<div class="streak" aria-hidden="true"></div>
+
 <section id="tests" aria-labelledby="tests-h">
-  <h2 id="tests-h">Every test</h2>
+  <h2 id="tests-h"><span class="stars" aria-hidden="true"><i></i><i></i><i></i></span>Every test</h2>
   <p>Each automated test checks one rule of the specs against its numbers. A test's name reads "spec reference: what it checks", so a test marked weapons 8.5 checks section 8.5 of the weapons spec. Search for any word, or choose one of the <span data-o81-bind="areas">27</span> areas.</p>
   <div id="o81-tests" class="o81-tests"><noscript><p>The searchable table needs JavaScript. It lists every automated test of the game's rules.</p></noscript></div>
 </section>
 
 <section id="poc-note" aria-labelledby="poc-note-h">
-  <h2 id="poc-note-h">The earlier proof of concept</h2>
+  <h2 id="poc-note-h"><span class="stars" aria-hidden="true"><i></i><i></i><i></i></span>The earlier proof of concept</h2>
   <p>The earlier proof of concept is kept, unchanged, in the Orion POC tab, as it was published on 13 October 2026. It shares no code with Orion-81, and what it says was true as of that date.</p>
 </section>
 
@@ -220,13 +220,13 @@
   <p>&copy; 2026 Andrius Bubliauskas. All rights reserved.</p>
   <p>Anthropic, Claude and Claude Code are trademarks of Anthropic, PBC. Orion-81 is not affiliated with, sponsored or endorsed by Anthropic.</p>
   <p>No trackers, no cookies, nothing loaded from other sites.</p>
-  <p>Site version 2.8.3, updated 31 October 2026.</p>
+  <p>Site version 3.0.0, updated 2 November 2026.</p>
 </footer>
 <script src="../assets/data/test-index.js"></script>
 <script src="../assets/data/progress-stats.js"></script>
 <script src="../js/tabbar.js"></script>
 <script src="../js/test-table.js"></script>
 <script src="../js/stats.js"></script>
-<script src="../js/o81-selftest.js"></script>
+<script src="../js/o81-selftest-v3.js"></script>
 </body>
 </html>

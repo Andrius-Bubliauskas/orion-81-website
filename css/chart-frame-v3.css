@@ -1,0 +1,122 @@
+/* (c) 2026 Andrius Bubliauskas. All rights reserved.
+   The frame of the two generated pages, devlog/progress.html (the progress chart) and devlog/agent-provenance.html (the agent graph), 3.0.0.
+   It sits beside tokens.css, base.css and components.css and styles only the frame: the top bar with the five tabs and the theme button, the subtab bar
+   (Progress chart, Agent Provenance Graph), the skip link and the footer. The page's own look (its chart, graph, toolbar and panels) is its own inline
+   style and stays as published in 2.8.3.
+   The pages are full-height apps (their body is a column that does not scroll), so every rule here beats the page's own selectors by specificity
+   (the page style comes after this file) and keeps the frame a fixed height. */
+
+/* the bar is a column item that never shrinks; the page's `.o81-tabs { flex: none }` would stop the tab strip from growing */
+.site-bar { flex: none; }
+.site-bar .bar-in .o81-tabs { flex: 1 1 auto; min-width: 0; }
+.site-bar .o81-tab { margin: 0; }
+
+/* the subtab bar (Progress chart | Agent Provenance Graph): a second, quieter row inside the sticky bar, the same underline as the tabs */
+.site-bar .o81-subtabs {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  width: var(--content);
+  min-height: var(--hit);
+  margin-inline: auto;
+  padding: 0;
+  gap: 0;
+  background: var(--surface);
+  border: 0;
+  border-top: 1px solid var(--line);
+  font: 400 0.875rem / 1.2 var(--sans);
+}
+.site-bar .o81-subtab {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--hit);
+  min-width: var(--hit);
+  padding: 0 var(--s3);
+  border: 0;
+  color: var(--muted);
+  font-weight: 400;
+  text-decoration: none;
+  transition: color var(--dur-fast) var(--ease);
+}
+.site-bar .o81-subtab:hover { color: var(--text); }
+.site-bar .o81-subtab[aria-current="page"] { color: var(--primary); border: 0; }
+.site-bar .o81-subtab[aria-current="page"]::after {
+  content: "";
+  position: absolute;
+  left: var(--s3);
+  right: var(--s3);
+  bottom: 0;
+  height: 2px;
+  background: var(--primary);
+  border-radius: 2px;
+}
+.site-bar .o81-subtab:focus-visible { outline: 2px solid var(--primary); outline-offset: -4px; border-radius: 4px; }
+@media (min-width: 700px) {
+  .site-bar .o81-subtab { padding: 0 var(--s4); }
+  .site-bar .o81-subtab[aria-current="page"]::after { left: var(--s4); right: var(--s4); }
+}
+
+/* on the narrowest phones the two subtabs stay on one row (a second row would take chart room) */
+@media (max-width: 400px) {
+  .site-bar .o81-subtab { padding: 0 10px; font-size: 0.8125rem; }
+  .site-bar .o81-subtab[aria-current="page"]::after { left: 10px; right: 10px; }
+}
+
+/* the theme button keeps its size; the page's own `button` rule must not shrink or restyle it */
+.site-bar .theme-btn { width: var(--hit); height: var(--hit); min-height: var(--hit); padding: 0; background: transparent; border: 1px solid var(--line); border-radius: var(--radius-pill); color: var(--text); }
+.site-bar .theme-btn:hover { background: var(--raised); border-color: var(--primary); }
+
+/* the skip link is fixed above the window (the page's body does not scroll, so a link moved up inside it would count as clipped) */
+body[data-o81-page] .skip { position: fixed; }
+
+/* the graph page follows the system ("Theme: auto"): its <html> has no data-theme, so under a light system setting the frame takes the light colours too.
+   They are set on the frame's own elements only, so the graph's own colour names (--bg, --line, --muted and the rest) are never redefined. */
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme]) .site-bar,
+  :root:not([data-theme]) .skip,
+  :root:not([data-theme]) .pg-footer.cf-foot {
+    color-scheme: light;
+    --bg: #f6f8fb;
+    --surface: #ffffff;
+    --raised: #eef2f7;
+    --line: #d9e0ea;
+    --text: #0f1621;
+    --muted: #4f5b6d;
+    --primary: #0b6fb8;
+    --bar-bg: rgba(246, 248, 251, 0.94);
+    --on-primary: #f6f8fb;
+  }
+}
+
+/* the page's title uses the display weight of the site; its own size stays */
+body[data-o81-page] h1 { letter-spacing: normal; }
+
+/* the chart's side panel is a heading with a badge: the site's `main h2` flex layout must not apply to it */
+main #panel h2 { display: block; margin: 0 0 6px; }
+
+/* the footer: the site's footer text word for word, set small so a full-height page keeps room for the chart or graph */
+.pg-footer.cf-foot {
+  flex: none;
+  width: 100%;
+  margin: 0;
+  padding: var(--s2) var(--gutter);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 var(--s4);
+  border-top: 1px solid var(--line);
+  background: var(--bg);
+  color: var(--muted);
+  font: 400 0.75rem / 1.45 var(--sans);
+}
+.pg-footer.cf-foot p { max-width: none; margin: 0; }
+.pg-footer.cf-foot p + p { margin-top: 0; }
+
+/* the graph page: its content sits in a <main> (the landmark and the skip link's target) that keeps the page's own column of intro, header and graph */
+main.cf-main { display: flex; flex-direction: column; flex: 1 1 auto; min-height: 0; min-width: 0; }
+main.cf-main > * { width: auto; margin-inline: 0; }
+
+/* the chart's legend, opened on a phone, would take most of the window in a page that does not scroll (the frame's bars take their share): it scrolls inside itself instead, so the chart keeps room */
+@media (max-width: 760px) {
+  body[data-o81-page] details.legend[open] { max-height: 28vh; overflow: auto; }
+}
