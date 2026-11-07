@@ -1,6 +1,6 @@
 # orion-81.io
 
-This folder is the whole orion-81.io website, version 3.0.0. A bar at the top of every page links its five parts.
+This folder is the whole orion-81.io website, version 3.0.1. A bar at the top of every page links its five parts.
 
 ## What it holds
 
@@ -8,8 +8,8 @@ This folder is the whole orion-81.io website, version 3.0.0. A bar at the top of
   software engineers and graphic designers whose work has been affected by AI), how that sits with the idea of sharing what AI gives with the
   people it affects, and it has two doors: the Orion-81 devlog and the archived Orion POC.
 * **Orion-81 devlog** (`devlog/index.html`): the state of Orion-81, the game being made now. It holds a dated devlog, what the game
-  will be, the milestone road with today's status, how it is made, and a searchable table of every automated test of the game's
-  rules. `devlog/progress.html` is the interactive progress chart, a public copy of the project tracker's time line.
+  will be, the milestone road with today's status, how it is made, and a searchable table of the automated tests of the game's
+  rules as of 29 October 2026. `devlog/progress.html` is the interactive progress chart, a public copy of the project tracker's time line.
 * **Progress** (`devlog/progress.html`): the progress chart, with a second bar for its agent-provenance view.
 * **Orchestration** (`orchestration/index.html`): how several developers, each directing their own AI agents, can work towards one
   goal through one shared record. It defines the word, shows how Orion-81 is run today by one developer and one orchestrator, and
