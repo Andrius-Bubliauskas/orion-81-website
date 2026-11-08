@@ -50,7 +50,7 @@
   <p class="pg-summary-page">The page opens with the project at a glance and then the devlog, newest first. After it come what the game will be, the milestone road, the road ahead and the AI effort to get there, what exists today, how it is made, every test and the earlier proof of concept.</p>
   <p class="pg-lead">Orion-81 is a space combat game with six degrees of freedom: you move and turn freely along every axis. You pilot a single heavy ship and point its nose with the mouse. The pace is unhurried, yet the controls answer at once: every input takes effect from the next 8 millisecond step, and a big ship simply takes longer to come round.</p>
   <p>It has a purpose beyond play. Its revenue is meant to help support software engineers and graphic designers whose work has been affected by artificial intelligence.</p>
-  <p class="pg-status-line"><strong>In development.</strong> Built so far: the rules core (M2), the demo's rules (M2.1), ships as machines (M2.2, done on 26 October 2026), the engine-neutral first-flight layer (M3a, done on 28 October 2026), game modes, balance and sub-system combat (M2.3, done on 31 October 2026) and air, orbit and descent (M2.4, done on 1 November 2026). Work has started on M4a, the engine-neutral half of M4; nothing of it is merged yet.</p>
+  <p class="pg-status-line"><strong>In development.</strong> Built so far: the rules core (M2), the demo's rules (M2.1), ships as machines (M2.2, done on 26 October 2026), the engine-neutral first-flight layer (M3a, done on 28 October 2026), game modes, balance and sub-system combat (M2.3, done on 31 October 2026) and air, orbit and descent (M2.4, done on 1 November 2026). The game engine is Unreal Engine 5.8.4, chosen on 7 November 2026, and engine work starts once it is installed. Work has started on M4a, the engine-neutral half of M4; nothing of it is merged yet.</p>
 </section>
 
 <section id="glance" aria-labelledby="glance-h">
@@ -84,6 +84,14 @@
     <button type="button" class="btn btn-quiet" id="o81-collapse-all" aria-controls="o81-log">Collapse all</button>
   </div>
   <ol class="pg-log" id="o81-log">
+    <li class="pg-entry rv">
+      <span class="pg-date">30 October and 7 November</span>
+      <h3 class="pg-entry-h">The engine question settled: Unreal Engine 5.8.4</h3>
+      <p>The engine question is closed. Epic Games updated the licence of Unreal Engine on 30 October 2026, and on 7 November Andrius decided that work in Unreal Engine 5 can go ahead.</p>
+      <p>He chose Unreal Engine 5.8.4 the same day, with one planned move to Unreal Engine 5.9 later, between milestones. The first versions aim at the highest quality possible; the plan is to lower the minimum PC the game needs later, as the project gains traction.</p>
+      <p>The road to the first playable version is set. M3b, the first flight in the engine, gives the first build that can be flown. M4, the clean v0 demo, is the first playable version: a packaged build in Unreal Engine 5, done when its checks pass and Andrius has played it and accepted it. M4a, the engine-neutral half of M4, runs beside M3b. Engine work starts once the engine is installed; until then, work goes on in the parts that need no engine.</p>
+      <p>Nothing has been merged into the main line since 1 November, so seven of the 19 milestones are still done. For M4a, the HUD model and view are accepted on one branch and a seeded rock field on another, and two other parts are still to come.</p>
+    </li>
     <li class="pg-entry rv">
       <span class="pg-date">31 October to 2 November</span>
       <h3 class="pg-entry-h">M2.3 and M2.4 done; M4a started</h3>
@@ -169,18 +177,18 @@
     <li class="pg-step is-done"><div class="pg-node"><span class="pg-status">Done, 28 October 2026, in the main line</span><h3 class="pg-step-h">M3a: first flight, the part that needs no engine</h3><p id="o81-road-4">Cameras, controls kept as data, pause, menus and settings, and a tool that plays back a recorded match.</p></div></li>
     <li class="pg-step is-done"><div class="pg-node"><span class="pg-status">Done, 31 October 2026, in the main line</span><h3 class="pg-step-h">M2.3: modes, balance and sub-system combat</h3><p id="o81-road-5">Play styles and rules for each class of ship in each mode, team objectives, capture the flag rules, how an assigned ship is drawn, shield bubbles, swarm tactics and a tool that plays many matches to check the balance.</p></div></li>
     <li class="pg-step is-done"><div class="pg-node"><span class="pg-status">Done, 1 November 2026, in the main line</span><h3 class="pg-step-h">M2.4: air, orbit and descent</h3><p id="o81-road-6">Flight in an atmosphere, linked zones with a flown descent and re-entry heating.</p></div></li>
-    <li class="pg-step is-later"><div class="pg-node"><span class="pg-status">After the engine question is settled</span><h3 class="pg-step-h">M3b: first flight in a game engine</h3><p id="o81-road-7">The rules core joined to a game engine through a thin layer, so a ship can be flown on screen for the first time.</p></div></li>
-    <li class="pg-step is-now"><div class="pg-node"><span class="pg-status">Under way, paused for now: M4a only, nothing merged yet</span><h3 class="pg-step-h">M4 to M11</h3><p id="o81-road-8">M4 the clean v0 demo, the first playable build; M5 multiplayer on a local network; M6 the look, and M6.1 capture the flag on a city slice; M7 the full fleet; M8 loadout and hangar, and M8.1 assigned-ship co-op with a pilot record; M9 team battle; M10 more worlds, and M10.1 invasion and defence, with the orbital station; M11 economy and unlocks.</p></div></li>
+    <li class="pg-step is-later"><div class="pg-node"><span class="pg-status">Next: once Unreal Engine 5.8.4 is installed</span><h3 class="pg-step-h">M3b: first flight in a game engine</h3><p id="o81-road-7">The rules core joined to a game engine through a thin layer, so a ship can be flown on screen for the first time.</p></div></li>
+    <li class="pg-step is-now"><div class="pg-node"><span class="pg-status">Under way: M4a only, nothing merged yet</span><h3 class="pg-step-h">M4 to M11</h3><p id="o81-road-8">M4 the clean v0 demo, the first playable build; M5 multiplayer on a local network; M6 the look, and M6.1 capture the flag on a city slice; M7 the full fleet; M8 loadout and hangar, and M8.1 assigned-ship co-op with a pilot record; M9 team battle; M10 more worlds, and M10.1 invasion and defence, with the orbital station; M11 economy and unlocks.</p></div></li>
   </ol>
   <p class="pg-quiet">There is no M1.</p>
 </section>
 
 <section id="ahead" aria-labelledby="ahead-h">
   <h2 id="ahead-h"><span class="stars" aria-hidden="true"><i></i><i></i><i></i></span>Road ahead and the AI effort to get there</h2>
-  <p>The rest of the road, in order. Work has started on M4a, the engine-neutral half of M4, which needs no game engine. Engine work starts once the engine question is settled.</p>
+  <p>The rest of the road, in order. The game engine is Unreal Engine 5.8.4, and engine work starts once it is installed. Work has started on M4a, the engine-neutral half of M4, which needs no game engine and runs beside M3b.</p>
   <ol class="pg-list pg-ahead">
     <li><strong>M4a.</strong> The engine-neutral half of M4. Started, with nothing merged yet. No engine needed.</li>
-    <li><strong>M3b.</strong> First flight in a game engine. Needs the engine.</li>
+    <li><strong>M3b.</strong> First flight in the game engine, Unreal Engine 5.8.4: the first build that can be flown. Needs the engine.</li>
     <li><strong>M4 to M11.</strong> The clean v0 demo (M4); multiplayer on a local network (M5); the look (M6) and capture the flag (M6.1); the full fleet (M7); loadout and hangar (M8) and assigned-ship co-op (M8.1); team battle (M9); more worlds (M10) and invasion and defence, with the orbital station (M10.1); economy and unlocks (M11). All need the engine, apart from M4a.</li>
   </ol>
 
@@ -205,7 +213,7 @@
     <li>It is a clean restart. The proof of concept began on an open-source base released under the GPL, and a licence review of that prototype found code in it derived from the base. To start again with no licensing issues, development restarted from a clean slate on 14 October 2026, with new specifications written from the game's design and new code throughout. Orion-81 shares no code with the proof of concept.</li>
     <li>Work sessions were recorded on video as a devlog, with gaps, from 14 October to 1 November 2026.</li>
     <li>Before a milestone starts, its plan is checked against the work before it. When it closes, independent reviews and copy scans look for outside code; the milestone closes so far found none.</li>
-    <li>Third-party code in the game uses permissive licences only, apart from the game engine and the Windows C++ runtime.</li>
+    <li>Third-party code in the game uses permissive licences only, apart from the game engine, Unreal Engine 5, and the Windows C++ runtime.</li>
   </ul>
 </section>
 
@@ -227,7 +235,7 @@
   <p>&copy; 2026 Andrius Bubliauskas. All rights reserved.</p>
   <p>Anthropic, Claude and Claude Code are trademarks of Anthropic, PBC. Orion-81 is not affiliated with, sponsored or endorsed by Anthropic.</p>
   <p>No trackers, no cookies, nothing loaded from other sites.</p>
-  <p>Site version 3.0.1, updated 3 November 2026.</p>
+  <p>Site version 3.0.2, updated 7 November 2026.</p>
 </footer>
 <script src="../assets/data/test-index.js"></script>
 <script src="../assets/data/progress-stats.js"></script>
