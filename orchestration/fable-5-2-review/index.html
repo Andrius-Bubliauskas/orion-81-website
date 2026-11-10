@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="en-GB" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'none'; form-action 'none'">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Orion-81 Fable 5.2 conduct-of-work review</title>
+<meta name="description" content="Fable 5.2 conduct-of-work review: four weeks of AI-run development, measured, and the change of roles applied on 10 November 2026.">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<link rel="icon" type="image/png" sizes="32x32" href="../../assets/img/logo/favicon-32.png">
+<link rel="icon" type="image/png" sizes="180x180" href="../../assets/img/logo/favicon-180.png">
+<link rel="apple-touch-icon" href="../../assets/img/logo/favicon-180.png">
+<!-- (c) 2026 Andrius Bubliauskas. All rights reserved. -->
+<link rel="stylesheet" href="../../css/tokens.css">
+<link rel="stylesheet" href="../../css/base.css">
+<link rel="stylesheet" href="../../css/components.css">
+<link rel="stylesheet" href="../../css/review-slides.css">
+<script src="../../js/site.js"></script>
+</head>
+<body data-o81-page="orchestration-review">
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-bar"><div class="bar-in">
+<nav class="o81-tabs" aria-label="Site">
+  <a class="o81-tab" data-tab="home" data-clean="../../" href="../../index.html">Home</a>
+  <a class="o81-tab" data-tab="devlog" data-clean="../../devlog/" href="../../devlog/index.html">Orion-81 devlog</a>
+  <a class="o81-tab" data-tab="progress" data-clean="../../devlog/progress.html" href="../../devlog/progress.html">Progress</a>
+  <a class="o81-tab" data-tab="orchestration" data-clean="../" href="../index.html" aria-current="page">Orchestration</a>
+  <a class="o81-tab" data-tab="poc" data-clean="../../poc/" href="../../poc/index.html">Orion POC</a>
+</nav>
+<button type="button" class="theme-btn" id="o81-theme" aria-pressed="false" aria-label="Light theme"><svg class="i-moon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4 8 8 0 1 0 20 14.5z"/></svg><svg class="i-sun" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button>
+</div>
+<nav class="o81-subtabs" aria-label="Orchestration views">
+  <a class="o81-subtab" data-subtab="orchestration" data-clean="../" href="../index.html">Orchestration</a>
+  <a class="o81-subtab" data-subtab="fable-5-2-review" data-clean="./" href="index.html" aria-current="page">Fable 5.2 conduct-of-work review</a>
+</nav>
+</header>
+<main id="main" class="rs-main">
+<div class="rs-stage" data-o81-slides tabindex="0" role="region" aria-label="Slides">
+  <div class="og-bar rs-bar">
+    <button type="button" class="rs-btn" data-o81-prev aria-label="Previous slide"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+    <p class="rs-count" data-o81-slide-count>Slide 1 of 16</p>
+    <button type="button" class="rs-btn" data-o81-next aria-label="Next slide"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+    <button type="button" class="rs-btn rs-btn-fs" data-o81-fullscreen aria-pressed="false" aria-label="Full screen"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button>
+  </div>
+
+<div class="og-frame rs-frame"><section id="s1" class="rs-slide rs-dark rs-cover" data-o81-slide="s1" aria-roledescription="slide" aria-labelledby="s1-h" aria-current="true">
+<p class="rs-kick">Orion-81 · how the work is run</p>
+<h1 class="rs-title-xl" id="s1-h">Fable 5.2 conduct-of-work review</h1>
+<p class="rs-lede">Four weeks of AI-run development, measured: what worked, where the effort went, and the change of roles applied on 10 November 2026.</p>
+<p class="rs-byline">By Claude Fable 5.2, lead planner, at the owner’s request · 10 November 2026</p>
+</section></div>
+
+<div class="og-frame rs-frame"><section id="s2" class="rs-slide" data-o81-slide="s2" aria-roledescription="slide" aria-labelledby="s2-h">
+<p class="rs-kick">The question</p>
+<h2 class="rs-h2" id="s2-h">What Andrius asked</h2>
+<blockquote class="rs-quote"><p>“Review how we were working so far, see if there would be a more optimal way to work and apply that way of organising Planner, Reviewer and Coder roles.”</p></blockquote>
+<h3 class="rs-h3">What was measured</h3>
+<ul class="rs-tiles">
+<li class="rs-tile"><p class="rs-tile-n">331</p><p class="rs-tile-c">work items in the tracker</p></li>
+<li class="rs-tile"><p class="rs-tile-n">2 088</p><p class="rs-tile-c">agent runs in 17 sessions</p></li>
+<li class="rs-tile"><p class="rs-tile-n">83 245</p><p class="rs-tile-c">replies from the AI models</p></li>
+<li class="rs-tile"><p class="rs-tile-n">580</p><p class="rs-tile-c">commits in 26 days</p></li>
+<li class="rs-tile"><p class="rs-tile-n">2 541</p><p class="rs-tile-c">test cases</p></li>
+<li class="rs-tile"><p class="rs-tile-n">210 469</p><p class="rs-tile-c">lines of our own source</p></li>
+</ul>
+<p class="rs-small">Measured from the tracker, the game repository and the sessions’ own records (totals only), and read in depth by an independent analyst on a sample of 18 items.</p>
+</section></div>
+
+<div class="og-frame rs-frame"><section id="s3" class="rs-slide" data-o81-slide="s3" aria-roledescription="slide" aria-labelledby="s3-h">
+<p class="rs-kick">What works</p>
+<h2 class="rs-h2" id="s3-h">What works, and stays</h2>
+<ol class="rs-points">
+<li><p class="rs-pt">Four builds, identical output.</p><p>Every merge is built four ways, and the tests’ printed output must be the same in all four. It stopped the one compiler-specific defect at the merge.</p></li>
+<li><p class="rs-pt">The clean room.</p><p>Spec writers never see outside code, checkers and implementers stay apart, and a scan for banned words runs on specs, code and records.</p></li>
+<li><p class="rs-pt">Independent checks of plans.</p><p>One stopped a clean-up that would have deleted evidence.</p></li>
+<li><p class="rs-pt">Tests that are themselves tested.</p><p>Lines of code are removed on purpose to see whether a test notices: 26 of 26 caught on one item.</p></li>
+<li><p class="rs-pt">Lessons become rules at once.</p><p>The next agent already works by them.</p></li>
+<li><p class="rs-pt">The coders.</p><p>Unblocked, they are fast, and in the sample they were right first time on behaviour.</p></li>
+</ol>
+</section></div>
+
+<div class="og-frame rs-frame"><section id="s4" class="rs-slide" data-o81-slide="s4" aria-roledescription="slide" aria-labelledby="s4-h">
+<p class="rs-kick">Finding 1</p>
+<h2 class="rs-h2" id="s4-h">Most of the AI effort went to planning and checking, not to coding</h2>
+<div class="rs-chart">
+<h3 class="rs-h3">Share of AI effort by model, in the latest full batch, 7 and 8 November</h3>
+<ul class="rs-bars">
+<li class="rs-row"><span class="rs-lab">The coding model</span><svg class="rs-svg" viewBox="0 0 100 10" preserveAspectRatio="none" aria-hidden="true" focusable="false"><rect class="rs-track" width="100" height="10"/><rect class="rs-fill" width="16" height="10"/></svg><b class="rs-val">16 %</b></li>
+<li class="rs-row"><span class="rs-lab">The planning and review model, as agents</span><svg class="rs-svg" viewBox="0 0 100 10" preserveAspectRatio="none" aria-hidden="true" focusable="false"><rect class="rs-track" width="100" height="10"/><rect class="rs-fill" width="66" height="10"/></svg><b class="rs-val">66 %</b></li>
+<li class="rs-row"><span class="rs-lab">The planning and review model, as orchestrator</span><svg class="rs-svg" viewBox="0 0 100 10" preserveAspectRatio="none" aria-hidden="true" focusable="false"><rect class="rs-track" width="100" height="10"/><rect class="rs-fill" width="18" height="10"/></svg><b class="rs-val">18 %</b></li>
+</ul>
+</div>
+<ul class="rs-facts">
+<li>Over the whole four weeks the coding model’s share was <b>23 %</b>; counted in plain tokens, without price weights, the two days split about 80 % to 20 %.</li>
+<li>The written record is <b>more than twice</b> the size of the source code (by bytes).</li>
+<li>A typical work item’s record is <b>13.8 KB</b>, the largest <b>226 KB</b>; one change of <b>21 lines</b> of code carries a record of <b>17.7 KB</b>.</li>
+</ul>
+<p class="rs-small">The coding model writes and runs code, merges and keeps records; the planning and review model plans, reviews, checks and accepts. The split is by model, because a split by task, worked out from the agents’ briefs, proved too rough to use. Effort is counted in tokens (the units of text a model reads and writes), weighted by list price so that models of different cost can be added up. It is not money spent.</p>
+</section></div>
+
+<div class="og-frame rs-frame"><section id="s5" class="rs-slide" data-o81-slide="s5" aria-roledescription="slide" aria-labelledby="s5-h">
+<p class="rs-kick">Finding 2</p>
+<h2 class="rs-h2" id="s5-h">In four sampled code reviews: weak tests, not wrong behaviour</h2>
+<div class="rs-chart">
+<h3 class="rs-h3">Findings counted in the code reviews of four sampled items</h3>
+<ul class="rs-bars">
+<li class="rs-row"><span class="rs-lab">Wrong behaviour</span><svg class="rs-svg" viewBox="0 0 28 10" preserveAspectRatio="none" aria-hidden="true" focusable="false"><rect class="rs-track" width="28" height="10"/><rect class="rs-fill" width="0" height="10"/></svg><b class="rs-val">0</b></li>
+<li class="rs-row"><span class="rs-lab">Weak or missing tests</span><svg class="rs-svg" viewBox="0 0 28 10" preserveAspectRatio="none" aria-hidden="true" focusable="false"><rect class="rs-track" width="28" height="10"/><rect class="rs-fill" width="28" height="10"/></svg><b class="rs-val">about 28</b></li>
+<li class="rs-row"><span class="rs-lab">Documents that disagree</span><svg class="rs-svg" viewBox="0 0 28 10" preserveAspectRatio="none" aria-hidden="true" focusable="false"><rect class="rs-track" width="28" height="10"/><rect class="rs-fill" width="12" height="10"/></svg><b class="rs-val">about 12</b></li>
+<li class="rs-row"><span class="rs-lab">Test-time cost</span><svg class="rs-svg" viewBox="0 0 28 10" preserveAspectRatio="none" aria-hidden="true" focusable="false"><rect class="rs-track" width="28" height="10"/><rect class="rs-fill" width="9" height="10"/></svg><b class="rs-val">about 9</b></li>
+<li class="rs-row"><span class="rs-lab">Record slips</span><svg class="rs-svg" viewBox="0 0 28 10" preserveAspectRatio="none" aria-hidden="true" focusable="false"><rect class="rs-track" width="28" height="10"/><rect class="rs-fill" width="6" height="10"/></svg><b class="rs-val">about 6</b></li>
+<li class="rs-row"><span class="rs-lab">Wording</span><svg class="rs-svg" viewBox="0 0 28 10" preserveAspectRatio="none" aria-hidden="true" focusable="false"><rect class="rs-track" width="28" height="10"/><rect class="rs-fill" width="4" height="10"/></svg><b class="rs-val">about 4</b></li>
+</ul>
+</div>
+<p class="rs-text">Two slips that got past people were caught by machines: a build with a second compiler and the scan for banned words. So the machine checks belong in front of the reviewers, and the reviewers belong where tests are thin and where parts meet.</p>
+</section></div>
+
+<div class="og-frame rs-frame"><section id="s6" class="rs-slide" data-o81-slide="s6" aria-roledescription="slide" aria-labelledby="s6-h">
+<p class="rs-kick">Finding 3</p>
+<h2 class="rs-h2" id="s6-h">One mind in three roles</h2>
+<p class="rs-text">Planning, reviewing and accepting ran on the same model, sometimes the same agent. The same planning role checked a part’s entry, ruled its own target “passed”, accepted the work and then passed three gates on it.</p>
+<ul class="rs-facts">
+<li>Around each coding pass, in four sampled items: <b>2 to 4</b> planning or review passes. On one item: <b>13</b> for 3.</li>
+<li>One plan prescribed the code exactly, “token for token”, leaving the coder to type.</li>
+</ul>
+<p class="rs-close">A reviewer of the same kind tends to share the blind spots of what it reviews.</p>
+</section></div>
+
+<div class="og-frame rs-frame"><section id="s7" class="rs-slide rs-dark" data-o81-slide="s7" aria-roledescription="slide" aria-labelledby="s7-h">
+<p class="rs-kick">Finding 4</p>
+<h2 class="rs-h2" id="s7-h">The work waits far longer than it runs</h2>
+<p class="rs-contrast"><span>Built in <b>11 minutes</b>.</span> <span>Then waited <b>7 days</b> for a ruling.</span></p>
+<p class="rs-text">The ruling, about milliseconds of test time, was held back to be asked with a later figure; for part of that week no work ran at all. A planner could have ruled the same day. Across all finished items the median time from first to last record is <b>24 hours</b>, and one in ten took <b>11 days or more</b>; the coding inside them took minutes to a few hours.</p>
+<p class="rs-small">Times come from the dates in the records; many are whole days.</p>
+<p class="rs-close">An earlier speed-up review named waiting as the main cost. It was right about the waits; its changes added structure but did not remove them.</p>
+</section></div>
+
+<div class="og-frame rs-frame"><section id="s8" class="rs-slide" data-o81-slide="s8" aria-roledescription="slide" aria-labelledby="s8-h">
+<p class="rs-kick">Finding 5</p>
+<h2 class="rs-h2" id="s8-h">Technical decisions travelled too far up</h2>
+<p class="rs-text">One two-day batch produced <b>11</b> calls taken on the owner’s behalf and <b>7</b> more rulings sent up for confirmation. About <b>5</b> of the 11 were technical and reversible, such as when to plan, the order of work and a merge of tools. Earlier, one test-time limit was raised <b>three times</b>, each time by asking him.</p>
+<p class="rs-close">When he answers, he takes the advice in bulk on technical points and departs from it on scope and cost: those questions are his.</p>
+</section></div>
+
+<div class="og-frame rs-frame"><section id="s9" class="rs-slide" data-o81-slide="s9" aria-roledescription="slide" aria-labelledby="s9-h">
+<p class="rs-kick">Findings 6 and 7</p>
+<h2 class="rs-h2" id="s9-h">Written many times, measured too finely</h2>
+<div class="rs-cols">
+<div class="rs-col">
+<h3 class="rs-h3">The same fact, again</h3>
+<ul class="rs-facts">
+<li>One pair of figures appears in <b>10 files</b>, 25 times on one page.</li>
+<li>The word for a file’s check-sum appears <b>1 683 times</b> in 235 items.</li>
+<li>There was no shared command for records; agents wrote their own scripts.</li>
+</ul>
+</div>
+<div class="rs-col">
+<h3 class="rs-h3">Finer than the ruler</h3>
+<ul class="rs-facts">
+<li>A rule that halts work when a figure passes its limit fired at <b>40.97 ms</b> against a limit of 40 ms.</li>
+<li>The same measurement’s own repeats ran from <b>37.8 to 43.8 ms</b>.</li>
+<li>The exact measurement needs the whole machine quiet, so it stops every other build while it runs.</li>
+</ul>
+</div>
+</div>
+</section></div>
+
+<div class="og-frame rs-frame"><section id="s10" class="rs-slide" data-o81-slide="s10" aria-roledescription="slide" aria-labelledby="s10-h">
+<p class="rs-kick">The new way</p>
+<h2 class="rs-h2" id="s10-h">Three roles, three models, three separate minds</h2>
+<table class="rs-table rs-roles">
+<thead><tr><th scope="col">Role</th><th scope="col">Model</th><th scope="col">Does</th><th scope="col">Never does</th></tr></thead>
+<tbody>
+<tr><th scope="row"><b>Lead planner</b> (one)</th><td data-label="Model">Claude Fable 5.2</td><td data-label="Does">owns the plan, the contracts between parts, the technical rulings, and acceptance on evidence</td><td data-label="Never does">never builds, never reviews its own plan alone</td></tr>
+<tr><th scope="row"><b>Coder</b> (many, in parallel)</th><td data-label="Model">Claude Sonnet 5.5</td><td data-label="Does">builds one package in its own copy of the code, tests first, and brings it through the gate</td><td data-label="Never does">never re-plans, merges or judges its own work</td></tr>
+<tr><th scope="row"><b>Reviewer</b> (fresh for each package)</th><td data-label="Model">Claude Opus 5.5</td><td data-label="Does">reads the change against the spec and tries to break it; also gathers facts for the planner’s rulings</td><td data-label="Never does">never reviews what it planned or built</td></tr>
+</tbody>
+</table>
+<p class="rs-close">The reviewer runs on a different model from both others, on purpose.</p>
+</section></div>
+
+<div class="og-frame rs-frame"><section id="s11" class="rs-slide" data-o81-slide="s11" aria-roledescription="slide" aria-labelledby="s11-h">
+<p class="rs-kick">One package</p>
+<h2 class="rs-h2" id="s11-h">The path of one work package</h2>
+<ol class="rs-steps">
+<li><p class="rs-pt">Brief.</p><p>One page from the lead planner.</p></li>
+<li><p class="rs-pt">Build.</p><p>A coder, tests first.</p></li>
+<li><p class="rs-pt">Gate.</p><p>Four builds, every test, identical test output, the scan for banned words. A machine decides; a failure goes back to step 2.</p></li>
+<li><p class="rs-pt">Review.</p><p>A fresh reviewer tries to break it.</p></li>
+<li><p class="rs-pt">Fix rounds.</p><p>At most two; the reviewer checks the fixes only.</p></li>
+<li><p class="rs-pt">Accept.</p><p>The lead planner, on the gate’s output and the verdict.</p></li>
+<li><p class="rs-pt">Integrate.</p><p>Merged in the planned order, gated again from clean.</p></li>
+</ol>
+<p class="rs-small">A foundation part freezes the shared interfaces first, so the parts after it can be built at the same time on separate files.</p>
+</section></div>
+
+<div class="og-frame rs-frame"><section id="s12" class="rs-slide" data-o81-slide="s12" aria-roledescription="slide" aria-labelledby="s12-h">
+<p class="rs-kick">How much review, and who decides</p>
+<h2 class="rs-h2" id="s12-h">Review by risk, decisions at the right level</h2>
+<div class="rs-cols">
+<div class="rs-col">
+<h3 class="rs-h3">How much review</h3>
+<table class="rs-table rs-pairs">
+<tbody>
+<tr><th scope="row">Records and tools</th><td>the gate, and the planner’s read</td></tr>
+<tr><th scope="row">Code inside one area</th><td>one reviewer</td></tr>
+<tr><th scope="row">Code that other parts build on</th><td>two reviewers with different lenses, at the same time</td></tr>
+<tr><th scope="row">Spec text, licences, anything public</th><td>the clean-room pipeline and the owner’s signature, as before</td></tr>
+</tbody>
+</table>
+</div>
+<div class="rs-col">
+<h3 class="rs-h3">Who decides</h3>
+<table class="rs-table rs-pairs">
+<tbody>
+<tr><th scope="row">The planner</th><td>technical, reversible, inside the owner’s limits. Logged, not sent up.</td></tr>
+<tr><th scope="row">The owner</th><td>money, licences, the scope and feel of the game, anything public or final, and anything he has reserved. Asked once a day.</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+</section></div>
+
+<div class="og-frame rs-frame"><section id="s13" class="rs-slide rs-dense" data-o81-slide="s13" aria-roledescription="slide" aria-labelledby="s13-h">
+<p class="rs-kick">Proof from one day</p>
+<h2 class="rs-h2" id="s13-h">10 November under the new rules</h2>
+<p class="rs-sub">Twelve work packages, from the coder’s start to acceptance. Two more were still in work when this was written.</p>
+<table class="rs-table rs-proof">
+<thead><tr><th scope="col">Package</th><th scope="col">Minutes from start to accepted</th><th scope="col">Reviewers</th><th scope="col">What the review found</th></tr></thead>
+<tbody>
+<tr><td data-label="Package">A shared command for the project’s records</td><td data-label="Minutes from start to accepted">25</td><td data-label="Reviewers">1</td><td data-label="What the review found">6 fixes, then 1 more</td></tr>
+<tr><td data-label="Package">Radar range fix</td><td data-label="Minutes from start to accepted">27</td><td data-label="Reviewers">1</td><td data-label="What the review found">nothing to fix</td></tr>
+<tr><td data-label="Package">A capital ship’s hull data</td><td data-label="Minutes from start to accepted">53</td><td data-label="Reviewers">2</td><td data-label="What the review found">nothing to fix; every number compared with the spec by script</td></tr>
+<tr><td data-label="Package">The world’s foundation, with the shared interfaces frozen</td><td data-label="Minutes from start to accepted">84</td><td data-label="Reviewers">2</td><td data-label="What the review found">2 fixes, both on the frozen interfaces</td></tr>
+<tr><td data-label="Package">Four winged hulls’ data</td><td data-label="Minutes from start to accepted">91</td><td data-label="Reviewers">1</td><td data-label="What the review found">1 fix</td></tr>
+<tr><td data-label="Package">The gate script</td><td data-label="Minutes from start to accepted">65</td><td data-label="Reviewers">1</td><td data-label="What the review found">2 blockers (two ways to a wrong pass), 4 fixes, then 1 more</td></tr>
+<tr><td data-label="Package">Rocks as moving objects</td><td data-label="Minutes from start to accepted">122</td><td data-label="Reviewers">2</td><td data-label="What the review found">2 blockers, 5 fixes, then 1 more</td></tr>
+<tr><td data-label="Package">Target panel and in-air read-outs</td><td data-label="Minutes from start to accepted">98</td><td data-label="Reviewers">2</td><td data-label="What the review found">2 fixes</td></tr>
+<tr><td data-label="Package">Hulls wired into the world</td><td data-label="Minutes from start to accepted">103</td><td data-label="Reviewers">2</td><td data-label="What the review found">3 fixes</td></tr>
+<tr><td data-label="Package">The demo scene and its long play-through</td><td data-label="Minutes from start to accepted">131</td><td data-label="Reviewers">2</td><td data-label="What the review found">4 fixes, each needing a planner’s ruling, then 1 more</td></tr>
+<tr><td data-label="Package">One test moved out of the timed run</td><td data-label="Minutes from start to accepted">29</td><td data-label="Reviewers">1</td><td data-label="What the review found">nothing to fix</td></tr>
+<tr><td data-label="Package">The version line</td><td data-label="Minutes from start to accepted">30</td><td data-label="Reviewers">the planner’s read</td><td data-label="What the review found">nothing to fix</td></tr>
+</tbody>
+</table>
+<ul class="rs-facts">
+<li>Half the packages were accepted within <b>75 minutes</b> of their start; the longest took <b>131</b>.</li>
+<li>The reviews found <b>4 blockers</b> and <b>31 fixes</b>; four packages had nothing to fix.</li>
+<li>The owner was asked <b>no question</b> during the day.</li>
+</ul>
+<p class="rs-close">By mid-afternoon the ten packages of game code were merged, built four ways from clean (two compilers, each in a debug and a release build) and pushed; the close’s own checks then found more to do, still in hand when this was written. The rules were not followed without exception: the day’s log lists more than a dozen slips, among them a planner’s brief that left out two tests, a planner’s message that started two duplicate reviewers, and first drafts of these slides that claimed more than the evidence held.</p>
+</section></div>
+
+<div class="og-frame rs-frame"><section id="s14" class="rs-slide" data-o81-slide="s14" aria-roledescription="slide" aria-labelledby="s14-h">
+<p class="rs-kick">Before and after</p>
+<h2 class="rs-h2" id="s14-h">The same measures, on a later day</h2>
+<table class="rs-table rs-compare">
+<thead><tr><td></td><th scope="col">The batch of 7 and 8 November</th><th scope="col">10 November</th></tr></thead>
+<tbody>
+<tr><th scope="row">Share of AI effort used by the coding model</th><td data-label="The batch of 7 and 8 November"><b>16 %</b></td><td data-label="10 November"><span class="rs-arrow" aria-hidden="true">→</span> <b>35 %</b></td></tr>
+<tr><th scope="row">Share used by the planning and review model’s agents (on 10 November reviewers and scouts only)</th><td data-label="The batch of 7 and 8 November"><b>66 %</b></td><td data-label="10 November"><span class="rs-arrow" aria-hidden="true">→</span> <b>42 %</b></td></tr>
+<tr><th scope="row">Share used by the orchestrator</th><td data-label="The batch of 7 and 8 November"><b>18 %</b></td><td data-label="10 November"><span class="rs-arrow" aria-hidden="true">→</span> <b>23 %</b>, now as lead planner on a third model</td></tr>
+<tr><th scope="row">Calls taken on the owner’s behalf</th><td data-label="The batch of 7 and 8 November"><b>11</b></td><td data-label="10 November"><span class="rs-arrow" aria-hidden="true">→</span> <b>5</b>; a further <b>27</b> technical decisions were taken and logged by the planner without waiting for ratification, and two of them were later put to the owner to review</td></tr>
+<tr><th scope="row">Dated entries in the project’s records</th><td data-label="The batch of 7 and 8 November">written by one-off scripts</td><td data-label="10 November"><span class="rs-arrow" aria-hidden="true">→</span> <b>110 entries in 15 work items</b>; from the first hour on, one shared command was the set way to write them</td></tr>
+</tbody>
+</table>
+<p class="rs-small">One day is a first proof, not a trend. The day’s figures are a snapshot taken at 14:23 UTC, part of one day against two full days, and the work differed: the earlier batch planned and wrote specifications, this day built. Shares are by model, weighted by list price as on the earlier slide; counted in plain tokens the day’s three shares were about 47 %, 35 % and 18 %.</p>
+</section></div>
+
+<div class="og-frame rs-frame"><section id="s15" class="rs-slide" data-o81-slide="s15" aria-roledescription="slide" aria-labelledby="s15-h">
+<p class="rs-kick">What is proposed</p>
+<h2 class="rs-h2" id="s15-h">Five proposals</h2>
+<p class="rs-sub">The owner decides on each.</p>
+<ol class="rs-points rs-five">
+<li><p class="rs-pt">Make the three roles lasting.</p><p>Add a reviewer on its own model to the project’s policy, with Fable 5.2 as lead planner.</p></li>
+<li><p class="rs-pt">Let the planner own technical decisions,</p><p>with a log the owner can read and overturn.</p></li>
+<li><p class="rs-pt">Keep his limits, drop the fine policing.</p><p>Targets are recorded; the exact measurement runs once per batch of work; a stop needs a margin at least as wide as the ruler’s own spread.</p></li>
+<li><p class="rs-pt">One short list of questions a day,</p><p>answered in bulk.</p></li>
+<li><p class="rs-pt">Write each fact once.</p></li>
+</ol>
+</section></div>
+
+<div class="og-frame rs-frame"><section id="s16" class="rs-slide rs-dark rs-end" data-o81-slide="s16" aria-roledescription="slide" aria-labelledby="s16-h">
+<p class="rs-kick">The one-line version</p>
+<h2 class="rs-title-xl" id="s16-h">Plan once. Let a machine run the gate. Review where parts meet. Decide at the right level. Write it once.</h2>
+<p class="rs-byline">Everything measured here comes from the project’s own tracker, repository and session records.</p>
+</section></div>
+</div>
+</main>
+<div class="rs-foot">
+<footer class="pg-footer">
+  <p>&copy; 2026 Andrius Bubliauskas. All rights reserved.</p>
+  <p>Anthropic, Claude and Claude Code are trademarks of Anthropic, PBC. Orion-81 is not affiliated with, sponsored or endorsed by Anthropic.</p>
+  <p>No trackers, no cookies, nothing loaded from other sites.</p>
+  <p>Site version 3.1.0, updated 10 November 2026.</p>
+</footer>
+</div>
+<script src="../../js/tabbar.js"></script>
+<script src="../../js/slides.js"></script>
+</body>
+</html>

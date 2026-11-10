@@ -1,6 +1,6 @@
 # orion-81.io
 
-This folder is the whole orion-81.io website, version 3.0.2. A bar at the top of every page links its five parts.
+This folder is the whole orion-81.io website, version 3.1.0. A bar at the top of every page links its five parts.
 
 ## What it holds
 
@@ -15,6 +15,8 @@ This folder is the whole orion-81.io website, version 3.0.2. A bar at the top of
   goal through one shared record. It defines the word, shows how Orion-81 is run today by one developer and one orchestrator, and
   sets out a proposal, for discussion, for two developers sharing the project. It is adapted from a presentation made with Claude
   for Andrius on 29 October 2026.
+* **Fable 5.2 conduct-of-work review** (`orchestration/fable-5-2-review/index.html`): the second view under the Orchestration tab, reached by a
+  row of two sub-tabs. A 16-slide presentation of the conduct-of-work review made on 10 November 2026.
 * **Orion POC** (`poc/index.html`): the earlier proof-of-concept site, kept byte for byte as it was published on 13 October 2026
   and not edited. The page shows it in a frame under the tab bar and a subtab bar. Its statements are those of that date. The second
   subtab, **Gallery** (`poc/gallery/index.html`), holds the pictures and clips of that proof of concept.
