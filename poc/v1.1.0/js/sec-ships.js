@@ -222,6 +222,7 @@
 		function markSelected() {
 			var vis = visibleCards(), rove = cards[S.sel] && !cards[S.sel].li.hidden ? cards[S.sel] : vis[0];
 			fleet.forEach(function (s) { var c = cards[s.id]; c.b.setAttribute('aria-pressed', s.id === S.sel ? 'true' : 'false'); c.b.tabIndex = c === rove ? 0 : -1; });
+			[].forEach.call(E.host.parentNode.querySelectorAll('.hero__ship'), function (b) { var on = b.dataset.ship === S.sel; b.setAttribute('aria-pressed', on ? 'true' : 'false'); b.tabIndex = on ? 0 : -1; });
 		}
 		function revealCard(id) {
 			var c = cards[id]; if (!c || c.li.hidden) return; var sc = E.scroll;
@@ -481,7 +482,7 @@
 				clearScene();
 				var A = c.A = entry(mA, ida), B = c.B = mB ? entry(mB, idb) : null;
 				if (!B) {
-					A.k.group.position.set(0, 0, 0); A.world.copy(A.centre); frame(A.r * ((view.size.w / Math.max(1, view.size.h)) < 1.3 ? 1.05 : 0.8), A.centre); /* squarer frames (phones) need the whole hull in view */
+					A.k.group.position.set(0, 0, 0); A.world.copy(A.centre); frame(A.r * ((view.size.w / Math.max(1, view.size.h)) < 1.3 ? 1.2 : 0.8) / Math.min(1, view.size.w / Math.max(1, view.size.h)), A.centre); /* squarer frames (phones) need the whole hull in view */
 					if (S.hsFor !== ida) { S.hsFor = ida; S.hsOn = ((byId[ida].hardpoints || []).length <= 20); } /* big hulls start with hotspots off: 36 markers hide the ship */
 					buildHotspots(A);
 				} else {
@@ -629,6 +630,22 @@
 			controls: { autoRotate: true, position: [0.62, 0.38, 0.78], target: [0, 0, 0] }, modelId: function () { return S.sel; }, setup: setup
 		});
 		E.cap.textContent = posterCaption();
+		/* the whole ship list as a row of buttons under the viewer (same look as the top viewer's row), and a finger turns the model at once on a touch screen */
+		var strip = h('div', { class: 'hero__ships pill-group', role: 'group', 'aria-label': O.t('ships.viewerGroup', 'Ship viewer') });
+		fleet.forEach(function (s) {
+			var b = h('button', { type: 'button', class: 'pill hero__ship', 'data-ship': s.id, 'aria-pressed': s.id === S.sel ? 'true' : 'false', tabindex: s.id === S.sel ? '0' : '-1', text: s.name });
+			b.addEventListener('click', function () { selectShip(s.id); });
+			strip.append(b);
+		});
+		strip.addEventListener('keydown', function (e) {
+			var b = e.target.closest && e.target.closest('.hero__ship'); if (!b) return;
+			var list = [].slice.call(strip.querySelectorAll('.hero__ship')), i = list.indexOf(b), n = -1;
+			if (e.key === 'ArrowRight' || e.key === 'ArrowDown') n = (i + 1) % list.length; else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') n = (i - 1 + list.length) % list.length;
+			else if (e.key === 'Home') n = 0; else if (e.key === 'End') n = list.length - 1; else return;
+			e.preventDefault(); list.forEach(function (x) { x.tabIndex = -1; }); list[n].tabIndex = 0; list[n].focus();
+		});
+		E.host.insertAdjacentElement('afterend', strip);
+		if (viewer.tapEl) { viewer.tapEl.remove(); viewer.tapEl = null; } viewer.coarse = false; E.host.classList.remove('viewer--coarse');
 				O.__debug.ships = { state: S, ctl: function () { return ctl; }, viewer: viewer, select: selectShip, compare: setCompare, openHP: openHP, closeHP: closeHP, specRows: specRows, hsMs: function () { var a = ctl ? ctl.hsMs : []; if (!a.length) return null; var s = a.slice().sort(function (x, y) { return x - y; }); return { frames: a.length, avgMs: a.reduce(function (x, y) { return x + y; }, 0) / a.length, p50Ms: s[s.length >> 1], maxMs: s[s.length - 1] }; } };
 
 		/* ---------- language switch (I18N.md 3.8): re-render every piece of text this section drew, keeping all state ---------- */
@@ -637,7 +654,7 @@
 			fillCmp(); layoutLadder();
 			fleet.forEach(function (s) { var c = cards[s.id]; c.b.querySelector('.ships-card__role').textContent = O.i18n.d(s.role); c.b.querySelector('.ships-card__len').textContent = lenTxt(s.lengthM); });
 			ui.keepFocus(E.legend, function () { renderTools(); }); updateViewerMeta();
-			viewer.setTexts({ label: selLabel(), groupLabel: O.t('ships.viewerGroup', 'Ship viewer'), title: byId[S.sel].name });
+			viewer.setTexts({ label: selLabel(), groupLabel: O.t('ships.viewerGroup', 'Ship viewer'), title: byId[S.sel].name }); strip.setAttribute('aria-label', O.t('ships.viewerGroup', 'Ship viewer'));
 			if (ctl) {
 				E.cap.textContent = S.busy ? O.t('ships.loadingModel', 'Loading the 3D model...') : modelCap();
 				ctl.hsl.setAttribute('aria-label', O.t('ships.hsLabel', 'Hardpoint hotspots. Arrow keys move between them, Enter opens details, Escape closes.'));

@@ -48,6 +48,11 @@
 /* ---------- viewer column ---------- */
 .ships-stage { min-width: 0; }
 .ships-viewer .viewer__poster { object-fit: cover; }
+.ships-stage .ships-viewer { height: clamp(180px, 62svh, 720px); max-height: none; min-height: 0; }
+.ships-viewer .viewer__canvas { touch-action: none !important; } /* a finger on the model turns it at once; the viewer never fills the frame's height, so the page still scrolls from outside it */
+@media (min-width: 600px) and (max-width: 899.98px) and (min-height: 600px) { .ships-stage .ships-viewer { height: clamp(180px, 74svh, 720px); } }
+@media (max-width: 599.98px) { .ships-stage .hero__ships { flex-wrap: wrap; overflow-x: visible; padding-bottom: 0; } .ships-stage .hero__ship { flex: 0 1 auto; } } /* under 600 px the row wraps: all sixteen ships visible at once */
+@media (min-width: 900px) { .ships-main { grid-template-columns: minmax(0, 9fr) minmax(0, 5fr); } .ships-main > * { grid-column: auto; } }
 .ships-ratio { margin: var(--s-2) 0 0; padding: .5rem .8rem; border: 1px solid var(--line-strong); border-left: 3px solid var(--glow); border-radius: 8px; background: var(--space-1); font-size: .9375rem; max-width: none; }
 .ships-tools { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-2) var(--s-3); margin-top: var(--s-4); }
 .ships-legend { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-2); margin-top: var(--s-4); }
