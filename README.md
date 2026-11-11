@@ -1,6 +1,6 @@
 # orion-81.io
 
-This folder is the whole orion-81.io website, version 3.1.0. A bar at the top of every page links its five parts.
+This folder is the whole orion-81.io website, version 3.1.1. A bar at the top of every page links its five parts.
 
 ## What it holds
 
@@ -17,8 +17,8 @@ This folder is the whole orion-81.io website, version 3.1.0. A bar at the top of
   for Andrius on 29 October 2026.
 * **Fable 5.2 conduct-of-work review** (`orchestration/fable-5-2-review/index.html`): the second view under the Orchestration tab, reached by a
   row of two sub-tabs. A 16-slide presentation of the conduct-of-work review made on 10 November 2026.
-* **Orion POC** (`poc/index.html`): the earlier proof-of-concept site, kept byte for byte as it was published on 13 October 2026
-  and not edited. The page shows it in a frame under the tab bar and a subtab bar. Its statements are those of that date. The second
+* **Orion POC** (`poc/index.html`): the earlier proof-of-concept site, kept as it was published on 13 October 2026; its ship viewer and the note in its tab bar were changed on 11 November 2026,
+  and everything else is byte for byte as published. The page shows it in a frame under the tab bar and a subtab bar. Its statements are those of that date. The second
   subtab, **Gallery** (`poc/gallery/index.html`), holds the pictures and clips of that proof of concept.
 
 Old links to the proof-of-concept site (for example a link to one of its sections, or one that chooses a language) are passed on

@@ -64,7 +64,7 @@
 			logo.addEventListener('error', function () { logo.hidden = true; });
 		}
 		var host = $('#top-viewer'); if (!host) return;
-		var ship = (DATA.fleet || []).filter(function (s) { return s.id === 'orion1'; })[0];
+		var fleet = DATA.fleet || [], ship = fleet.filter(function (s) { return s.id === 'orion1'; })[0], want = 'orion1', ctl = null;
 		function heroTexts() {
 			var role = ORION.i18n.d(String((ship && ship.role) || ''));
 			var lbl = ship ? ORION.t('hero.viewerLabel', '3D model of the {name} {role}, {length}, slowly rotating', { name: ship.name, role: ORION.i18n.lang === 'en' ? role.toLowerCase() : role, length: ORION.ui.fmt.len(ship.lengthM) }) : ORION.t('hero.viewerLabelFallback', '3D model of the ORION-1 fighter, slowly rotating');
@@ -77,21 +77,69 @@
 			posterKey: 'hero.poster', title: tx.title,
 			controls: { autoRotate: true },
 			setup: async function (ctx) {
-				var T = ctx.THREE, k = ctx.kit;
-				var model = await ctx.loadModel('orion1');
+				var T = ctx.THREE, k = ctx.kit, grp = null, stars = null, cur = null, tok = 0, off = false, busy = el('div', { class: 'ships-busy', hidden: '', 'aria-hidden': 'true' });
+				function drop(o) { o.traverse(function (n) { if (n.geometry) n.geometry.dispose(); [].concat(n.material || []).forEach(function (m) { for (var p in m) { var t = m[p]; if (t && t.isTexture && !(t.userData && t.userData.keep)) t.dispose(); } m.dispose(); }); }); }
+				function put(model, id) {
+					if (grp) { ctx.scene.remove(grp, stars); drop(grp); drop(stars); }
+					var s = k.ship(model, { parts: false }); grp = s.group; cur = id;
+					ctx.scene.add(grp);
+					var R = s.radius || 8;
+					stars = k.starfield({ count: 1100, radius: R * 60 }); ctx.scene.add(stars);
+					ctx.camera.position.set(0.95, 0.38, 1.15);
+					k.fit(ctx.camera, ctx.controls, R * 1.2 / Math.min(1.14, ctx.viewer.size.w / Math.max(1, ctx.viewer.size.h)));
+					ctx.setHome(); ctx.requestRender();
+				}
+				var id0 = want, model = await ctx.loadModel(id0);
 				if (ctx.signal && ctx.signal.aborted) return null;
-				var s = k.ship(model, { parts: false });
-				ctx.scene.add(s.group);
+				put(model, id0);
 				k.lightRig(ctx.scene, { intensity: 1.1 });
-				var R = s.radius || 8;
-				ctx.scene.add(k.starfield({ count: 1100, radius: R * 60 }));
-				ctx.camera.position.set(0.95, 0.38, 1.15);
-				k.fit(ctx.camera, ctx.controls, R * 1.05);
-				ctx.setHome();
-				return { update: function () { return false; }, dispose: function () { /* scene disposal is done by core */ void T; } };
+				ctx.viewer.layer().append(busy);
+				ctl = {
+					go: async function (id) {
+						var mine = ++tok, m = null, s = find(id);
+						busy.textContent = ORION.t('ships.loadingName', 'Loading {name}...', { name: s ? s.name : id }); busy.hidden = false;
+						try { m = await ctx.loadModel(id); } catch (e) { m = null; }
+						if (off || mine !== tok) return;
+						busy.hidden = true;
+						if (m) put(m, id);
+						else { ORION.ui.announce(ORION.t('ships.modelFailedLabel', '3D model for {names} could not load', { names: s ? s.name : id })); if (want === id) pick(cur); }
+					}
+				};
+				if (want !== cur) ctl.go(want);
+				return { update: function () { return false; }, dispose: function () { /* scene disposal is done by core */ void T; off = true; ctl = null; busy.remove(); } };
 			}
 		});
-		ORION.bus.on('lang', function () { hv.setTexts(heroTexts()); });
+		/* the whole ship list under the stage (the page's own fleet list, one button per ship), and a finger turns the model at once on a touch screen */
+		function find(id) { return fleet.filter(function (s) { return s.id === id; })[0]; }
+		function pick(id) {
+			var s = find(id); if (!s) return;
+			ship = s; want = id;
+			var note = $('.hero__slotnote'); if (note) note.hidden = id !== 'orion1';   /* the note under the stage names ORION-1: shown only while that ship is chosen */
+			$$('.hero__ship', strip).forEach(function (b) { var on = b.dataset.ship === id; b.setAttribute('aria-pressed', on ? 'true' : 'false'); b.tabIndex = on ? 0 : -1; });
+			hv.setTexts(heroTexts());
+		}
+		function choose(id) {
+			if (id === want) return; pick(id);
+			var role = ORION.i18n.d(String(ship.role || ''));
+			ORION.ui.announce(ORION.t('ships.selected', '{name}, {role}, {length} selected', { name: ship.name, role: ORION.i18n.lang === 'en' ? role.toLowerCase() : role, length: ORION.ui.fmt.len(ship.lengthM) }));
+			if (ctl) ctl.go(id);
+		}
+		var strip = el('div', { class: 'hero__ships pill-group', role: 'group', 'data-when': 'live', 'aria-label': ORION.t('ships.viewerGroup', 'Ship viewer') });
+		fleet.forEach(function (s) {
+			var b = el('button', { type: 'button', class: 'pill hero__ship', 'data-ship': s.id, 'aria-pressed': s.id === want ? 'true' : 'false', tabindex: s.id === want ? '0' : '-1', text: s.name });
+			b.addEventListener('click', function () { choose(s.id); });
+			strip.append(b);
+		});
+		strip.addEventListener('keydown', function (e) {
+			var b = e.target.closest && e.target.closest('.hero__ship'); if (!b) return;
+			var list = $$('.hero__ship', strip), i = list.indexOf(b), n = -1;
+			if (e.key === 'ArrowRight' || e.key === 'ArrowDown') n = (i + 1) % list.length; else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') n = (i - 1 + list.length) % list.length;
+			else if (e.key === 'Home') n = 0; else if (e.key === 'End') n = list.length - 1; else return;
+			e.preventDefault(); list.forEach(function (x) { x.tabIndex = -1; }); list[n].tabIndex = 0; list[n].focus();
+		});
+		var frame = host.closest('.hero__frame'); if (frame && fleet.length) frame.insertAdjacentElement('afterend', strip);
+		if (hv.tapEl) { hv.tapEl.remove(); hv.tapEl = null; } hv.coarse = false; host.classList.remove('viewer--coarse');
+		ORION.bus.on('lang', function () { hv.setTexts(heroTexts()); strip.setAttribute('aria-label', ORION.t('ships.viewerGroup', 'Ship viewer')); });
 	}
 
 	/* ---- mission: ledger collapse ---- */
