@@ -5,7 +5,7 @@ window.O81B = window.O81B || {};
 var NL = 4096, NS = 4096;
 var core, ch, sh, L, S, nl = 0, ns = 0, gl = [], so, N = 0, NB = 0, SC, SG, BC, step = 0, ready = 0;
 var WC = [], WB = [], WS = [], WE = [], ap = new Float32Array(6);
-var RM = [], tv = new Float32Array(3), tw = new Float32Array(3), t2 = new Float32Array(3), bv = new Float32Array(3);
+var rk = new Float32Array(12), RM = [], tv = new Float32Array(3), tw = new Float32Array(3), t2 = new Float32Array(3), bv = new Float32Array(3);
 var MP = 1.9, hc = new Float32Array(3), DX = new Float32Array([-1, 0, 0]), TC = null;
 var fx = { L: null, S: null, nl: 0, ns: 0, init: init, prep: prep, build: build };
 
@@ -210,7 +210,7 @@ function aim(si, s, o, j, n) {
 // laser bolts (kind 0) and cannon tracers (kind 3): bolt j leaves at j * gap and lands dur later
 function laser(F, si, s, a, o, cn) {
   var n = s.n || 1, d = s.dur > 0.05 ? s.dur : 0.05, gap = SG[si], j, ab, sx, sy, sz, ex, ey, ez, dx, dy, dz, D, sp, dt, hd, tl, ux, uy, uz, f;
-  var len = pm(cn ? 10 : 16), c = TC, i3 = F.tm[s.from] * 3, r, g, b;
+  var len, c = TC, i3 = F.tm[s.from] * 3, r, g, b;
   r = 0.5 + 0.5 * c[i3]; g = 0.5 + 0.5 * c[i3 + 1]; b = 0.5 + 0.5 * c[i3 + 2];
   for (j = 0; j < n; j++) {
     ab = a - j * gap;
@@ -220,6 +220,7 @@ function laser(F, si, s, a, o, cn) {
     sx = ap[0]; sy = ap[1]; sz = ap[2]; ex = ap[3]; ey = ap[4]; ez = ap[5];
     dx = ex - sx; dy = ey - sy; dz = ez - sz; D = Math.sqrt(dx * dx + dy * dy + dz * dz) || 1;
     sp = D / d; dt = s.hit ? D : D + sp * 0.4;
+    len = sp * 0.03; if (len < pm(6)) len = pm(6);
     hd = sp * ab; tl = hd - len;
     if (ab < 0.04) pS(sx, sy, sz, pm(3), 0.9, 0.95, 1, 0.8 * (1 - ab / 0.04), 3, 0.8, 0);
     if (s.hit && ab >= d && ab < d + 0.26) {
@@ -268,37 +269,47 @@ function bz(u, a, b, c, d, e, f, g, h, i) {
   var v = 1 - u, p = v * v, q = 2 * u * v, r = u * u;
   bv[0] = p * a + q * d + r * g; bv[1] = p * b + q * e + r * h; bv[2] = p * c + q * f + r * i;
 }
+function rpos(ab, d) {
+  var e = ab > d ? ab - d : 0;
+  if (ab < 0) ab = 0;
+  bz(ab > d ? 1 : ab / d, rk[0], rk[1], rk[2], rk[3], rk[4], rk[5], rk[6], rk[7], rk[8]);
+  bv[0] += rk[9] * e; bv[1] += rk[10] * e; bv[2] += rk[11] * e;
+}
+// rockets: a body with a plume, a trail that lingers 0.8 s, a narrow fan, a ring on a hit, a fade-out on a miss
 function rocket(si, s, a, o) {
-  var n = s.n || 1, d = s.dur > 0.05 ? s.dur : 0.05, j, ab, f, gx, gy, gz, tx, ty, tz, dx, dy, l2, sd, off, cx, cy, cz, u, x, y, z, ai, k;
+  var n = s.n || 1, d = s.dur > 0.05 ? s.dur : 0.05, j, ab, f, gx, gy, gz, tx, ty, tz, dx, dy, dz, l2, D, off, cx, cy, cz, e, fb, tf, x, y, z, ai, g;
   for (j = 0; j < n; j++) {
     ab = a - j * 0.09;
     if (ab < 0) break;
-    if (ab > d + 0.6) continue;
+    if (ab > d + 1.4) continue;
     f = n > 1 ? j / (n - 1) : 0;
     gx = lp(SC[o], SC[o + 3], f); gy = lp(SC[o + 1], SC[o + 4], f); gz = lp(SC[o + 2], SC[o + 5], f);
     tx = lp(SC[o + 6], SC[o + 9], f); ty = lp(SC[o + 7], SC[o + 10], f); tz = lp(SC[o + 8], SC[o + 11], f);
-    dx = tx - gx; dy = ty - gy;
-    l2 = Math.sqrt(dx * dx + dy * dy) || 1;
-    sd = core.rnd(si * 16 + j, 3) < 0.5 ? -1 : 1;
-    off = Math.sqrt(dx * dx + dy * dy + (tz - gz) * (tz - gz)) * (0.2 + 0.15 * core.rnd(si * 16 + j, 4)) * sd;
+    dx = tx - gx; dy = ty - gy; dz = tz - gz;
+    l2 = Math.sqrt(dx * dx + dy * dy) || 1; D = Math.sqrt(l2 * l2 + dz * dz) || 1;
+    off = D * (0.06 + 0.06 * core.rnd(si * 16 + j, 4)) * ((j & 1) ? 1 : -1);
     cx = (gx + tx) / 2 - dy / l2 * off; cy = (gy + ty) / 2 + dx / l2 * off; cz = (gz + tz) / 2;
-    u = ab / d;
-    if (u < 1) {
-      bz(u, gx, gy, gz, cx, cy, cz, tx, ty, tz);
-      x = bv[0]; y = bv[1]; z = bv[2];
-      k = pm(14) / (Math.sqrt(dx * dx + dy * dy + (tz - gz) * (tz - gz)) * 1.1 + 1);
-      bz(u > k ? u - k : 0, gx, gy, gz, cx, cy, cz, tx, ty, tz);
-      pL(x, y, z, bv[0], bv[1], bv[2], pm(1.6), 1, 1, 0.7, 0.35, 1, 0.4, 0.15, 0.5);
-      pS(x, y, z, pm(5), 1, 0.5, 0.2, 0.45, 0, 0.4, 0);
-      pS(x, y, z, pm(1.2), 1, 0.85, 0.6, 0.6, 2, 0, 0);
-    } else if (s.hit) {
-      ai = ab - d;
-      if (ai < 0.5) {
-        flash(tx, ty, tz, ai, 0.05, cap(6), 0.9);
-        k = 1 - ai / 0.5; x = 1 - k * k;
-        pS(tx, ty, tz, pm(4 + 10 * x), 1, 0.55, 0.25, 0.3 * k, 0, 0.5, 0);
-        pS(tx, ty, tz, pm(4 + 10 * x), 1, 0.6, 0.3, 0.25 * k, 1, 0.8, 0.3);
-      }
+    rk[0] = gx; rk[1] = gy; rk[2] = gz; rk[3] = cx; rk[4] = cy; rk[5] = cz; rk[6] = tx; rk[7] = ty; rk[8] = tz;
+    rk[9] = 2 * (tx - cx) / d; rk[10] = 2 * (ty - cy) / d; rk[11] = 2 * (tz - cz) / d;
+    e = s.hit ? d : d + 0.5;
+    if (ab < e) {
+      fb = ab > d ? 1 - (ab - d) / 0.5 : 1;
+      rpos(ab, d); x = bv[0]; y = bv[1]; z = bv[2];
+      rpos(ab - pm(10) * d / D, d);
+      pL(x, y, z, bv[0], bv[1], bv[2], pm(2.2), 1, 1, 0.85, 0.6, 1, 0.5, 0.2, 0.9 * fb);
+      pS(x, y, z, pm(3), 1, 0.9, 0.7, 0.9 * fb, 2, 0, 0);
+      pS(x, y, z, pm(8), 1, 0.55, 0.25, 0.5 * fb, 0, 0.4, 0);
+    }
+    if (ab < e + 0.8) {
+      tf = ab > d ? 1 - (ab - d) / (e - d + 0.8) : 1;
+      rpos(ab < e ? ab : e, d); x = bv[0]; y = bv[1]; z = bv[2];
+      rpos(ab - 0.8, d);
+      pL(x, y, z, bv[0], bv[1], bv[2], pm(1.6), 0.9, 0.8, 0.6, 0.45, 0.5, 0.35, 0.25, 0.4 * tf);
+    }
+    if (s.hit && ab >= d && ab < d + 0.4) {
+      ai = ab - d; g = ai / 0.4;
+      flash(tx, ty, tz, ai, 0.1, cap(10), 0.9);
+      pS(tx, ty, tz, pm(3 + 21 * (1 - (1 - g) * (1 - g))), 1, 0.6, 0.3, 0.6 * (1 - g), 1, 0.85, 0.08);
     }
   }
 }
