@@ -1,0 +1,108 @@
+/* (c) 2026 Andrius Bubliauskas. All rights reserved. */
+/* The background battle: canvas, readability covers, pause control. No box changes place. */
+:root {
+  --b-team-0: #f2b84b;
+  --b-team-1: #5aa2ff;
+}
+
+/* the canvas: fixed under the bar, behind all content; hidden unless the class shows it */
+#o81-battle {
+  position: fixed;
+  top: var(--bar-h);
+  left: 0;
+  width: 100%;
+  height: calc(100vh - var(--bar-h));
+  height: calc(100lvh - var(--bar-h));
+  z-index: -1;
+  pointer-events: none;
+  display: block;
+  visibility: hidden;
+  opacity: 0;
+}
+html[data-theme="light"] #o81-battle { visibility: hidden; opacity: 0; }
+
+/* the pause control: in the flow of the call-to-action row; its slot is reserved until the animation may run */
+.b-toggle {
+  flex: 0 0 auto;
+  width: var(--hit);
+  height: var(--hit);
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-pill);
+  background: var(--bg);
+  color: var(--text);
+  visibility: hidden;
+  transition: border-color var(--dur-fast) var(--ease);
+}
+.b-toggle:hover { border-color: var(--primary); }
+.b-toggle .i-play, .b-toggle[aria-pressed="true"] .i-pause { display: none; }
+.b-toggle[aria-pressed="true"] .i-play { display: block; }
+html:not(.js) .b-toggle, html[data-theme="light"] .b-toggle { display: none; }
+@media (prefers-reduced-motion: reduce) {
+  .b-toggle { display: none; }
+}
+
+/* everything that shows the battle needs colour mixing and masks; without them the canvas stays hidden and the page stays opaque */
+@supports (color: color-mix(in srgb, red 50%, transparent)) and (mask-composite: intersect) {
+  :root {
+    /* cover per box: bg, surface, raised; t = text, m = muted text, p = primary text */
+    --b-bt: color-mix(in srgb, var(--bg) 66%, transparent);
+    --b-bm: color-mix(in srgb, var(--bg) 84%, transparent);
+    --b-st: color-mix(in srgb, var(--surface) 66%, transparent);
+    --b-sp: color-mix(in srgb, var(--surface) 80%, transparent);
+    --b-sm: color-mix(in srgb, var(--surface) 87%, transparent);
+    --b-rm: color-mix(in srgb, var(--raised) 89%, transparent);
+    --b-tile: color-mix(in srgb, var(--surface) 57%, transparent);
+    --b-lg: color-mix(in srgb, var(--bg) 55%, transparent);
+  }
+  #o81-battle { transition: opacity 0.6s linear, visibility 0s linear 0.6s; }
+  html.o81-battle-on #o81-battle {
+    visibility: visible;
+    opacity: 1;
+    transition: opacity 0.6s linear;
+  }
+  html.o81-battle-run .b-toggle { visibility: visible; }
+  .b-toggle { background: var(--b-bt); box-shadow: 0 0 0 10px var(--b-bt); }
+
+  /* boxes that hold text, and boxes with a border */
+  html.o81-battle-on .fp-door { background-color: var(--b-bm); }
+  html.o81-battle-on :is(.dc-link, .fp-btn-secondary) { background-color: var(--b-bt); }
+  html.o81-battle-on .fp-door:hover { background-color: var(--b-sm); }
+  html.o81-battle-on :is(.dc-link, .fp-btn-secondary):hover { background-color: var(--b-rm); }
+  html.o81-battle-on .fp-stat { background-color: var(--b-tile); }
+  html.o81-battle-on .fp-feature { background-color: var(--b-sm); }
+  html.o81-battle-on .fp-feature:hover { background-color: var(--b-rm); }
+  html.o81-battle-on .fp-card:nth-child(1) { background-color: var(--b-st); }
+  html.o81-battle-on .fp-card:nth-child(2) { background-color: var(--b-sp); }
+  html.o81-battle-on .fp-card-wide { background-color: var(--b-rm); }
+
+  /* bare text: a cover fading over 12 px; short lines shrink to their text (nothing moves). The tiny "of" gets its own
+     background, so no cover reaches the digits beside it */
+  html.o81-battle-on .fp-of { background-color: var(--b-sm); border-radius: 4px; box-shadow: 0 0 2px 1px var(--b-sm); }
+  html.o81-battle-on :is(.fp-eyebrow, .fp-title, .fp-lead, .fp-summary, .pg-footer p, .fp-card:nth-child(3) .fp-card-h, .fp-card:nth-child(3) p, .fp-cap) {
+    position: relative;
+    z-index: 0;
+    --b-c: var(--b-bm);
+  }
+  html.o81-battle-on :is(.fp-eyebrow, .fp-title, .fp-lead, .pg-footer p, .fp-cap) { width: fit-content; }
+  html.o81-battle-on :is(.fp-lead, .fp-card:nth-child(3) .fp-card-h, .fp-card:nth-child(3) p) { --b-c: var(--b-bt); }
+  html.o81-battle-on .fp-title { --b-c: var(--b-lg); }
+  html.o81-battle-on .fp-cap { --b-c: var(--b-sm); }
+  html.o81-battle-on :is(.fp-eyebrow, .fp-title, .fp-lead, .fp-summary, .pg-footer p, .fp-card:nth-child(3) .fp-card-h, .fp-card:nth-child(3) p, .fp-cap)::before {
+    content: "";
+    position: absolute;
+    inset: -12px;
+    z-index: -1;
+    pointer-events: none;
+    background: var(--b-c);
+    mask-image: linear-gradient(to right, transparent, #000 12px, #000 calc(100% - 12px), transparent), linear-gradient(to bottom, transparent, #000 12px, #000 calc(100% - 12px), transparent);
+    mask-composite: intersect;
+  }
+}
+
+/* under reduced motion no fade is longer than 150 ms: the canvas and the covers simply appear */
+@media (prefers-reduced-motion: reduce) {
+  html #o81-battle, html.o81-battle-on #o81-battle { transition: none; }
+}
