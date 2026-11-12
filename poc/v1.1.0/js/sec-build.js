@@ -867,6 +867,8 @@
 				};
 			}
 		});
+		/* a finger turns the model at once on a touch screen: no cover button (the viewer never fills the frame's height, so the page still scrolls from outside it) */
+		if (sc.v.tapEl) { sc.v.tapEl.remove(); sc.v.tapEl = null; } sc.v.coarse = false; ui.host.classList.remove('viewer--coarse');
 		/* language switch (I18N.md 3.8): re-render every piece of text this section drew, keeping ship, tiers, colour, mounts, craft, tab and damage state */
 		ORION.bus.on('lang', function () {
 			ORION.ui.keepFocus(root, function () {

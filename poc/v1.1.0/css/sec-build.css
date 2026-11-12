@@ -18,6 +18,10 @@
 #build .build-viewer { aspect-ratio: 16 / 10; max-height: 70vh; }
 @media (max-width: 899.98px) { #build .build-viewer { aspect-ratio: 4 / 3; } }
 @media (max-width: 599.98px) { #build .build-viewer { aspect-ratio: 1 / 1; } }
+#build .build-stage .build-viewer { height: clamp(180px, min(62svh, (100vw - 2rem) * 1.33), 720px); max-height: none; min-height: 0; }
+#build .build-viewer .viewer__canvas { touch-action: none !important; } /* a finger on the model turns it at once; the viewer never fills the frame's height, so the page still scrolls from outside it */
+@media (min-width: 600px) and (max-width: 899.98px) and (min-height: 600px) { #build .build-stage .build-viewer { height: clamp(180px, 74svh, 720px); } }
+@media (min-width: 900px) { #build .build-stage .build-viewer { height: auto; max-height: 70vh; min-height: min(62svh, calc(100svh - 20rem), 720px); } } /* the split stays as it was; the viewer is never smaller than before and is taller where the whole sticky stage (viewer, caption, buttons, note) still fits in the frame's height */
 #build .build-actions { margin-top: var(--s-3); }
 #build .build-viewnote { margin-top: var(--s-3); max-width: none; }
 #build .build-side { min-width: 0; }
