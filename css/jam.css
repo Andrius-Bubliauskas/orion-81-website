@@ -1,0 +1,162 @@
+/* (c) 2026 Andrius Bubliauskas. All rights reserved.
+   Epic Jam 2026 page: the star chart (time runs down, lanes are columns from 820 px), the devlog text, the figure and the format table.
+   Built on tokens.css only. The un-animated state is the complete one; the reveal is the site's own .rv. */
+
+.jc-main > * { max-width: 100%; }
+.jc-head { display: grid; gap: var(--s3); padding-top: clamp(var(--s5), 5vw, var(--s7)); padding-bottom: var(--s6); }
+.jc-day { color: var(--muted); font: 500 var(--fs-eyebrow) / 1.4 var(--mono); letter-spacing: 0.12em; text-transform: uppercase; max-width: none; }
+
+/* ---- the star chart */
+.jc-sec { padding-bottom: var(--section-gap); }
+.jc-panel {
+  --jc-sky: var(--plate);
+  --jc-dot: color-mix(in srgb, var(--text) 45%, transparent);
+  --jc-lane: color-mix(in srgb, var(--text) 14%, transparent);
+  --jc-bar: color-mix(in srgb, var(--next) 75%, transparent);
+  position: relative;
+  padding: var(--s4) var(--s4) var(--s5);
+  background-color: var(--jc-sky);
+  background-image:
+    radial-gradient(circle at 22px 34px, var(--jc-dot) 0 1px, transparent 1.6px),
+    radial-gradient(circle at 131px 71px, var(--jc-dot) 0 0.8px, transparent 1.4px),
+    radial-gradient(circle at 247px 18px, var(--jc-dot) 0 1.2px, transparent 1.8px),
+    radial-gradient(circle at 318px 142px, var(--jc-dot) 0 0.8px, transparent 1.4px),
+    radial-gradient(circle at 74px 188px, var(--jc-dot) 0 1px, transparent 1.6px),
+    radial-gradient(circle at 196px 231px, var(--jc-dot) 0 1.2px, transparent 1.8px),
+    radial-gradient(circle at 289px 267px, var(--jc-dot) 0 0.8px, transparent 1.4px);
+  background-size: 360px 300px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+:root[data-theme="light"] .jc-panel {
+  --jc-sky: var(--raised);
+  --jc-dot: color-mix(in srgb, var(--muted) 40%, transparent);
+  --jc-lane: color-mix(in srgb, var(--text) 16%, transparent);
+}
+.jc-cols { display: none; }
+.jc-chart { position: relative; }
+
+.jc-item { position: relative; padding: var(--s3) 0 var(--s3) 40px; max-width: none; }
+.jc-item::before { content: ""; position: absolute; left: 10px; top: 0; bottom: 0; width: 1px; background: var(--jc-lane); }
+.jc-item:first-child::before { top: 22px; }
+.jc-item:last-child::before { bottom: auto; height: 22px; }
+.jc-body { min-width: 0; }
+.jc-seg { display: none; }
+
+/* lane numbers (one-based column) */
+.jc-item[data-lane="rules"], .jc-l-rules { --c: 1; }
+.jc-item[data-lane="theme"], .jc-l-theme { --c: 2; }
+.jc-item[data-lane="assets"], .jc-l-assets { --c: 3; }
+.jc-item[data-lane="team"], .jc-l-team { --c: 4; }
+.jc-item[data-lane="decisions"], .jc-l-decisions { --c: 5; }
+
+/* the three marks: Log a ring, Milestone a four-pointed star, Decision a planet (disc with a ring) */
+.jc-mark { position: absolute; left: 0; top: var(--s3); z-index: 1; width: 20px; height: 20px; display: block; }
+.jc-mark::before, .jc-mark::after { content: ""; position: absolute; display: block; }
+.jc-item[data-kind="log"] .jc-mark::before {
+  left: 4px; top: 4px; width: 12px; height: 12px; box-sizing: border-box;
+  border: 2px solid var(--primary); border-radius: 50%; background: var(--jc-sky);
+}
+.jc-item[data-kind="milestone"] .jc-mark::before {
+  inset: 0; background: var(--now);
+  clip-path: polygon(50% 0, 61% 39%, 100% 50%, 61% 61%, 50% 100%, 39% 61%, 0 50%, 39% 39%);
+}
+.jc-item[data-kind="decision"] .jc-mark::before {
+  inset: 0; box-sizing: border-box; border: 2px solid var(--done); border-radius: 50%; background: var(--jc-sky);
+}
+.jc-item[data-kind="decision"] .jc-mark::after { left: 6px; top: 6px; width: 8px; height: 8px; border-radius: 50%; background: var(--done); }
+
+.jc-meta { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s1) var(--s2); min-height: 20px; max-width: none; }
+.jc-kind { font: 500 var(--fs-eyebrow) / 1.4 var(--mono); letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+.jc-lane {
+  padding: 0 var(--s2); border: 1px solid var(--line); border-radius: var(--radius-pill);
+  font: 500 var(--fs-eyebrow) / 1.6 var(--mono); letter-spacing: 0.06em; color: var(--muted);
+}
+.jc-title { margin-top: var(--s1); color: var(--text); font-size: 1rem; font-weight: 500; line-height: 1.35; }
+.jc-line { margin-top: var(--s1); color: var(--muted); font-size: var(--fs-small); line-height: 1.5; }
+
+@media (min-width: 820px) {
+  .jc-panel { padding-top: 0; }
+  .jc-cols {
+    display: grid; grid-template-columns: repeat(5, minmax(0, 1fr));
+    position: sticky; top: var(--bar-h); z-index: 3;
+    padding: var(--s3) 0; background: var(--jc-sky); border-bottom: 1px solid var(--line);
+  }
+  .jc-cols span { padding-left: 24px; font: 500 var(--fs-eyebrow) / 1.4 var(--mono); letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+  .jc-chart {
+    padding-top: var(--s3);
+    background-image: linear-gradient(90deg, var(--jc-lane) 0 1px, transparent 1px);
+    background-size: 20% 100%;
+    background-repeat: repeat-x;
+  }
+  .jc-item { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); padding: var(--s3) 0; }
+  .jc-item::before { display: none; }
+  .jc-body { grid-column: var(--c); padding: 0 var(--s3) 0 24px; }
+  .jc-mark { left: calc((var(--c) - 1) * 20%); transform: translateX(-50%); }
+  .jc-lane { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; clip-path: inset(50%); white-space: nowrap; border: 0; }
+  .jc-seg { display: block; position: absolute; z-index: 0; left: calc((var(--c) - 1) * 20% - 1px); width: 3px; background: var(--jc-bar); }
+  .jc-seg-start { top: calc(var(--s3) + 10px); bottom: 0; border-radius: 2px 2px 0 0; }
+  .jc-seg-mid { top: 0; bottom: 0; }
+  .jc-seg-end { top: 0; height: calc(var(--s3) + 10px); border-radius: 0 0 2px 2px; }
+}
+
+/* ---- the devlog text and the figure */
+.jc-text { display: grid; gap: var(--s5); padding-bottom: var(--s6); }
+.jc-text p { max-width: var(--measure); }
+.jc-fig { margin-block: var(--s3); max-width: 100%; }
+.jc-fig img { display: block; width: 100%; max-width: 1600px; height: auto; border: 1px solid var(--line); border-radius: var(--radius); background: var(--plate); }
+.jc-fig figcaption { margin-top: var(--s2); color: var(--muted); font-size: var(--fs-small); line-height: 1.5; max-width: none; }
+
+/* ---- the format table */
+.jc-tablesec { padding-bottom: var(--section-gap); }
+.jc-tablewrap { border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
+.jc-table { width: 100%; border-collapse: collapse; font-size: var(--fs-small); line-height: 1.5; }
+.jc-table caption { padding: var(--s4) var(--s4) var(--s3); text-align: left; color: var(--text); font-size: var(--fs-h3); font-weight: 500; line-height: 1.3; caption-side: top; }
+.jc-table th, .jc-table td { padding: var(--s3) var(--s4); text-align: left; vertical-align: top; border-top: 1px solid var(--line); }
+.jc-table thead th { background: var(--raised); color: var(--text); font-weight: 500; }
+.jc-table tbody th { color: var(--text); font-weight: 500; width: 14rem; }
+.jc-table td { color: var(--muted); max-width: none; }
+.jc-table .jc-glb { background: color-mix(in srgb, var(--done) 8%, transparent); }
+.jc-pick {
+  display: inline-block; margin-left: var(--s2); padding: 0 var(--s2);
+  border: 1px solid var(--done); border-radius: var(--radius-pill);
+  font: 500 var(--fs-eyebrow) / 1.6 var(--mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--done);
+}
+.jc-note { margin-top: var(--s3); color: var(--muted); font-size: var(--fs-small); line-height: 1.5; max-width: var(--measure); }
+
+@media (max-width: 719px) {
+  .jc-tablewrap { border: 0; background: transparent; }
+  .jc-table, .jc-table tbody, .jc-table tr, .jc-table th, .jc-table td { display: block; width: auto; }
+  .jc-table caption { display: block; padding: 0 0 var(--s3); }
+  .jc-table thead .jc-pick { display: none; }
+  .jc-table thead { position: absolute; width: 1px; height: 1px; margin: -1px; clip-path: inset(50%); }
+  .jc-table tbody tr { margin-bottom: var(--s3); padding: var(--s4); background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); }
+  .jc-table th, .jc-table td { padding: 0; border: 0; }
+  .jc-table tbody th { width: auto; margin-bottom: var(--s2); font-size: 1rem; }
+  .jc-table td { margin-top: var(--s2); padding-left: var(--s3); border-left: 2px solid var(--line); }
+  .jc-table td[data-label]::before { content: attr(data-label); display: block; font: 500 var(--fs-eyebrow) / 1.4 var(--mono); letter-spacing: 0.12em; text-transform: uppercase; color: var(--text); }
+  .jc-table .jc-glb { background: transparent; border-left-color: var(--done); }
+}
+
+/* ---- the sub-tab row (one entry, Devlog), in the same look as the Orchestration row */
+.site-bar .o81-subtabs {
+  display: flex; flex-wrap: nowrap; align-items: stretch;
+  width: var(--content); min-height: calc(var(--hit) + 1px); margin-inline: auto; padding: 0; gap: 0;
+  border-top: 1px solid var(--line); font: 400 0.875rem / 1.2 var(--sans);
+}
+.site-bar .o81-subtab {
+  position: relative; display: inline-flex; align-items: center; flex: 0 1 auto;
+  min-width: var(--hit); min-height: var(--hit); padding: 0 var(--s3);
+  color: var(--muted); text-decoration: none; transition: color var(--dur-fast) var(--ease);
+}
+.site-bar .o81-subtab:hover { color: var(--text); }
+.site-bar .o81-subtab[aria-current="page"] { color: var(--primary); }
+.site-bar .o81-subtab[aria-current="page"]::after { content: ""; position: absolute; left: var(--s3); right: var(--s3); bottom: 0; height: 2px; background: var(--primary); border-radius: 2px; }
+.site-bar .o81-subtab:focus-visible { outline: 2px solid var(--primary); outline-offset: -4px; border-radius: 4px; }
+@media (min-width: 700px) {
+  .site-bar .o81-subtab { padding: 0 var(--s4); }
+  .site-bar .o81-subtab[aria-current="page"]::after { left: var(--s4); right: var(--s4); }
+}
+.jc-nb { white-space: nowrap; }
+.jc-day .stars { margin-left: var(--s1); }
+@media (max-width: 400px) { .jc-day { letter-spacing: 0.04em; } }

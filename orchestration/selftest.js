@@ -49,15 +49,15 @@
     var order = Array.prototype.map.call(links, function (a) { return a.getAttribute('data-tab') + '=' + a.textContent.trim(); });
     var cur = Array.prototype.filter.call(links, function (a) { return a.getAttribute('aria-current') === 'page'; })
       .map(function (a) { return a.getAttribute('data-tab'); });
-    check('tab bar: five links, Home, Orion-81 devlog, Progress, Orchestration, Orion POC',
+    check('tab bar: six links, Home, Orion-81 devlog, Progress, Orchestration, Epic Jam 2026, Orion POC',
       nav && nav.getAttribute('aria-label') === 'Site' &&
-      order.join('|') === 'home=Home|devlog=Orion-81 devlog|progress=Progress|orchestration=Orchestration|poc=Orion POC', order);
+      order.join('|') === 'home=Home|devlog=Orion-81 devlog|progress=Progress|orchestration=Orchestration|jam=Epic Jam 2026|poc=Orion POC', order);
     var hrefs = Array.prototype.map.call(links, function (a) { return a.getAttribute('href'); });
     check('tab bar: every link ends in .html (or is a clean address over http)',
-      hrefs.length === 5 && hrefs.every(function (h) { return /\.html$/.test(h) || /\/$/.test(h); }), hrefs);
+      hrefs.length === 6 && hrefs.every(function (h) { return /\.html$/.test(h) || /\/$/.test(h); }), hrefs);
     check('tab bar: current tab is ' + current, cur.length === 1 && cur[0] === current, cur);
     var bar = nav ? nav.getBoundingClientRect() : null;
-    /* 3.0.0 (fix round): on a narrow screen the five tabs wrap onto a second row of 44 px, none cut off and none scrolled away */
+    /* 3.0.0 (fix round): on a narrow screen the six tabs wrap onto a second row of 44 px, none cut off and none scrolled away */
     var wrapped = !!(bar && nav && nav.querySelector('a') && Math.abs(bar.height - 88) < 1 && nav.scrollWidth <= nav.clientWidth + 1 && getComputedStyle(nav).overflowX === 'visible');
     check('tab bar: 44 px high, or two rows of 44 px', bar && (Math.abs(bar.height - 44) < 1 || wrapped), bar ? bar.height : null);
     return nav;
