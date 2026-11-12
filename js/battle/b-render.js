@@ -2,30 +2,43 @@
 (function () {
 'use strict';
 var O81B = window.O81B = window.O81B || {};
-var gl, ctx, F, core, s, TN, NP, TOT, wd, bt, pr, un, hv, pv, hb, sk, sp, ev, tx, fb, fw, fh, nIn, wk;
+var gl, ctx, F, core, s, TN, NP, TOT, wd, bt, pr, un, hv, pv, hb, sk, sp, ev, tx, fb, fw, fh, nIn, wk, wv;
 var sv, sf, pe, ph, lk, waits;
 var tl = new Float32Array(6), cnt, off, cur, pnt, qa = new Float32Array(4), qb = new Float32Array(4), zv = [0, 0, 0, 0, 0];
-var SN = 1.2, SW = 3.5, GC = .55, GK = 9, GA = .85, HS = 17, NPR = 7, PI2 = 6.2831853, PP = [0.416, 0.4, 0.376], pc;
+var SN = 1.2, SW = 3.5, GC = .55, GK = 9, GA = .85, HS = 17, NPR = 8, PI2 = 6.2831853, PP = [0.416, 0.4, 0.376], pc;
 var V3 = '#version 300 es\n', PR = 'precision highp float;\n';
 var ROT = 'vec3 rot(vec4 q,vec3 v){return v+2.*cross(q.xyz,cross(q.xyz,v)+q.w*v);}\n';
 
 var VBD = V3 + 'void main(){vec2 p=vec2(float((gl_VertexID<<1)&2),float(gl_VertexID&2));gl_Position=vec4(p*2.-1.,0.,1.);}';
 
+var OUT = 'out vec3 vN;out vec3 vW;out vec3 vL;out vec3 vLn;out float vTn;out float vGl;out float vBd;out float vHt;' +
+'flat out float vTe;flat out float vA;flat out float vI;flat out float vDk;';
 var VHL = V3 + ROT + 'layout(location=0) in vec3 aP;layout(location=1) in vec3 aN;layout(location=2) in float aTn;' +
 'layout(location=3) in float aGl;layout(location=4) in float aBd;layout(location=5) in vec3 aIP;layout(location=6) in float aIS;' +
 'layout(location=7) in vec4 aIQ;layout(location=8) in float aIT;layout(location=9) in float aIA;layout(location=10) in float aII;' +
-'uniform mat4 uVP;out vec3 vN;out vec3 vW;out float vTn;out float vGl;out float vBd;flat out float vTe;flat out float vA;flat out float vI;' +
-'void main(){vec3 w=aIP+rot(aIQ,aP*aIS);vN=rot(aIQ,aN);vW=w;vTn=aTn*255./128.;vGl=aGl;vBd=aBd;vTe=aIT;vA=aIA;vI=aII;gl_Position=uVP*vec4(w,1.);}';
+'uniform mat4 uVP;uniform float uDk;' + OUT +
+'void main(){vec3 w=aIP+rot(aIQ,aP*aIS);vN=rot(aIQ,aN);vW=w;vL=aP*aIS;vLn=aN;vHt=0.;vDk=aIP.z<-250.?uDk:0.;vTn=aTn*255./128.;vGl=aGl;vBd=aBd;vTe=aIT;vA=aIA;vI=aII;gl_Position=uVP*vec4(w,1.);}';
 
-var FHL = V3 + PR + 'uniform vec3 uEye,uLD,uLC,uLA,uPaint,uGP;uniform vec3 uTm[2];uniform float uMode;' +
-'in vec3 vN;in vec3 vW;in float vTn;in float vGl;in float vBd;flat in float vTe;flat in float vA;flat in float vI;out vec4 o;' +
+var VWR = V3 + ROT + 'layout(location=0) in vec3 aP;layout(location=1) in vec3 aN;layout(location=2) in float aTn;' +
+'layout(location=3) in float aGl;layout(location=4) in float aBd;layout(location=5) in float aPt;' +
+'uniform mat4 uVP;uniform vec4 uA[14];uniform vec4 uWr,uWs;uniform float uC[6];' + OUT +
+'void main(){int k=int(aPt+.5);vec4 T=uA[2*k],q=uA[2*k+1];vec3 p=aP*uWr.x;vec3 w=T.xyz+rot(q,p);vN=rot(q,aN);vW=w;vL=p;vLn=aN;' +
+'vTn=aTn*255./128.;vGl=aGl;vBd=aBd;vTe=uWr.y;vA=uWr.z;vI=0.;vDk=uWs.x;vHt=uWr.w*min(1.,(1.-uWr.w)*24.);gl_Position=uVP*vec4(w,1.);}';
+
+var FHL = V3 + PR + 'uniform vec4 uWr,uWs;uniform float uC[6];uniform vec3 uEye,uLD,uLC,uLA,uPaint,uGP;uniform vec3 uTm[2];uniform float uMode,uPl,uPm;' +
+'in vec3 vN;in vec3 vW;in vec3 vL;in vec3 vLn;in float vTn;in float vGl;in float vBd;in float vHt;flat in float vTe;flat in float vA;flat in float vI;flat in float vDk;out vec4 o;' +
 'const float BY[16]=float[16](0.,8.,2.,10.,12.,4.,14.,6.,3.,11.,1.,9.,15.,7.,13.,5.);' +
 'void main(){if(uMode>1.5){float n=vI+1.;o=vec4(n/255.,1.,mod(n*n*37.+n*73.+41.,256.)/255.,1.);return;}' +
 'if(vA<1.){ivec2 c=ivec2(gl_FragCoord.xy)&3;if(vA<=(BY[c.y*4+c.x]+.5)/16.)discard;}' +
 'vec3 n=normalize(vN);vec3 v=normalize(uEye-vW);vec3 tm=uTm[int(vTe+.5)];float b=step(.5,vBd);' +
-'vec3 d=min(vec3(1.),mix(uPaint,tm,b)*vTn);' +
+'vec3 d=min(vec3(1.),mix(uPaint,tm,b)*vTn);float fp=uPm*(uEye.z-vW.z)/uEye.z,fd=uPl*clamp((8./fp-3.)/3.,0.,1.);' +
+'if(fd>0.){vec3 an=abs(vLn);vec2 g=(an.y>=an.x&&an.y>=an.z?vL.xz:(an.x>=an.z?vL.zy:vL.xy))/8.;vec2 ce=floor(g),fr=fract(g);' +
+'float t=(fract(sin(dot(ce,vec2(11.7461,69.318)))*41719.2873)-.5)*.06;float sd=min(min(fr.x,1.-fr.x),min(fr.y,1.-fr.y))*8.;' +
+'t=mix(t,-.03,.8*(1.-smoothstep(0.,max(.3,fp),sd)));d*=1.+fd*t;}' +
 'vec3 c=pow(d,vec3(2.2))*(uLA+uLC*max(0.,dot(n,uLD)));' +
 'c+=vec3(pow(1.-abs(dot(n,v)),3.)*.05)+uGP*(vGl*.5)+pow(tm,vec3(2.2))*(.15*b);' +
+'c*=mix(vec3(1.),vec3(.8,.85,1.),vDk);if(vHt>0.){float dm=99.;for(int i=0;i<6;i++)if(float(i)<uWs.z)dm=min(dm,abs(vL.x-uC[i]*uWr.x));c+=vec3(1.,.3,.07)*(vHt*(1.-smoothstep(5.,15.,dm))*1.2);}' +
+'if(!gl_FrontFacing)c*=.4;' +
 'c=pow(max(c,0.),vec3(1./2.2));vec3 e=max(c-.45,0.);c=min(c,vec3(.45))+.13*(1.-exp(-e/.13));o=vec4(c,1.);}';
 
 var VMK = V3 + ROT + 'layout(location=0) in vec3 aP;layout(location=5) in vec3 aIP;layout(location=6) in float aIS;layout(location=7) in vec4 aIQ;' +
@@ -79,7 +92,7 @@ function sh(t, src) {
   return x;
 }
 function startAll() {
-  var d = [[VBD, ctx.scenery.backdrop.frag], [VHL, FHL], [VMK, FMK], [VST, FST], [VSP, FSP], [VBD, FBL], [VBD, FCP]], i, p;
+  var d = [[VBD, ctx.scenery.backdrop.frag], [VHL, FHL], [VMK, FMK], [VST, FST], [VSP, FSP], [VBD, FBL], [VBD, FCP], [VWR, FHL]], i, p;
   for (i = 0; i < NPR; i++) {
     sv[i] = sh(gl.VERTEX_SHADER, d[i][0]); sf[i] = sh(gl.FRAGMENT_SHADER, d[i][1]);
     p = gl.createProgram();
@@ -113,6 +126,7 @@ function ab(loc, data, size, type, norm) {
   var b = gl.createBuffer();
   gl.bindBuffer(gl.ARRAY_BUFFER, b); gl.bufferData(gl.ARRAY_BUFFER, data, gl.STATIC_DRAW);
   gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc, size, type, norm, 0, 0);
+  return b;
 }
 function ia(loc, size, stride, o) {
   gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc, size, gl.FLOAT, false, stride, o);
@@ -124,14 +138,32 @@ function ib(bytes) {
   return b;
 }
 function hullVAO(m, cap) {
-  var v = gl.createVertexArray(), b;
+  var v = gl.createVertexArray(), b, bf = [];
   gl.bindVertexArray(v);
-  ab(0, m.pos, 3, gl.FLOAT, false); ab(1, m.nrm, 3, gl.FLOAT, false);
-  ab(2, m.tone, 1, gl.UNSIGNED_BYTE, true); ab(3, m.glow, 1, gl.UNSIGNED_BYTE, true); ab(4, m.band, 1, gl.UNSIGNED_BYTE, true);
+  bf.push(ab(0, m.pos, 3, gl.FLOAT, false), ab(1, m.nrm, 3, gl.FLOAT, false),
+    ab(2, m.tone, 1, gl.UNSIGNED_BYTE, true), ab(3, m.glow, 1, gl.UNSIGNED_BYTE, true), ab(4, m.band, 1, gl.UNSIGNED_BYTE, true));
   b = ib(cap * HS * 4);
   ia(5, 3, 68, 0); ia(6, 1, 68, 12); ia(7, 4, 68, 16); ia(8, 1, 68, 32); ia(9, 1, 68, 36); ia(10, 1, 68, 40); ia(11, 4, 68, 44); ia(12, 1, 68, 60); ia(13, 1, 68, 64);
   gl.bindVertexArray(null);
-  return { v: v, b: b, n: m.n };
+  return { v: v, b: b, n: m.n, bf: bf };
+}
+function wreckVAO(h, ty, m) {
+  var v = gl.createVertexArray(), i, pt = new Uint8Array(m.n), k, cu = ty.cuts, a = new Float32Array(6), c;
+  for (i = 0; i < m.n; i += 3) {
+    k = Math.min(6, core.part(ty, m, i) | 0);
+    pt[i] = pt[i + 1] = pt[i + 2] = k;
+  }
+  gl.bindVertexArray(v);
+  for (i = 0; i < 5; i++) {
+    gl.bindBuffer(gl.ARRAY_BUFFER, h.bf[i]); gl.enableVertexAttribArray(i);
+    gl.vertexAttribPointer(i, i < 2 ? 3 : 1, i < 2 ? gl.FLOAT : gl.UNSIGNED_BYTE, i > 1, 0, 0);
+  }
+  ab(5, pt, 1, gl.UNSIGNED_BYTE, false);
+  gl.bindVertexArray(null);
+  if (!cu || !cu.length) cu = [-ty.len / 6, ty.len / 6];
+  c = Math.min(6, cu.length);
+  for (i = 0; i < c; i++) a[i] = cu[i];
+  return { v: v, n: m.n, c: a, nc: c, ew: ty.len * .04 };
 }
 function step() {
   var i, p, m, n, d;
@@ -140,7 +172,8 @@ function step() {
   i = s++;
   if (i < NPR) {
     d = i === 0 ? 'uRes uPx uMpp uCamY uT uTheme uQ' :
-      i === 1 ? 'uVP uEye uLD uLC uLA uPaint uGP uTm uMode' :
+      i === 1 ? 'uVP uEye uLD uLC uLA uPaint uGP uTm uMode uPl uPm uDk' :
+      i === 7 ? 'uVP uEye uLD uLC uLA uPaint uGP uTm uMode uPl uPm uA uWr uWs uC' :
       i === 2 ? 'uVP uWide' : i === 5 ? 'uT uDir uStep uWt' : i === 6 ? 'uM uG uRes uTd uCap uSub uCh' :
       i === 3 ? 'uVP uEye uMpp uD' : 'uVP uMpp uD';
     un[i] = locs(pr[i], d);
@@ -154,6 +187,7 @@ function step() {
     p = ctx.ships.types[i].paint;
     for (n = 0; n < 3; n++) bt[i * 3 + n] = p[n];
     wd[i] = ctx.ships.types[i].cls === 'S' ? 0 : 1;
+    wv[i] = wd[i] ? wreckVAO(hv[i], ctx.ships.types[i], m) : null;
     return 0;
   }
   i -= TN;
@@ -177,18 +211,19 @@ function step() {
   return 0;
 }
 
-function hullUni() {
-  var u = un[1], l = F.light;
-  gl.useProgram(pr[1]);
+function hullUni(i) {
+  var u = un[i], l = F.light;
+  gl.useProgram(pr[i]);
   gl.uniformMatrix4fv(u.uVP, false, F.vp); gl.uniform3fv(u.uEye, F.eye);
   gl.uniform3fv(u.uLD, l.dir); gl.uniform3fv(u.uLC, l.color); gl.uniform3fv(u.uLA, l.ambient);
   gl.uniform3fv(u.uTm, tl); gl.uniform1f(u.uMode, F.mode === 2 ? 2 : 0);
+  gl.uniform1f(u.uPm, F.mpp / F.px); gl.uniform1f(u.uPl, 0); gl.uniform1f(u.uDk, 0);
   return u;
 }
 function drawProps() {
-  var f = F, h = f.cssH * f.mpp / 2, y0 = f.bgY - h - 1200, y1 = f.bgY + h + 1200, k, j, i, n, zs = ctx.scenery.zones, it, o, a, q, u, cy, pp, l, w = pnt;
-  for (k = 0; k < 5; k++) { cy = -900 * k; zv[k] = cy >= y0 && cy <= y1; }
-  u = hullUni();
+  var f = F, h = f.cssH * f.mpp / 2, y0 = f.bgY - h - 1700, y1 = f.bgY + h + 1700, k, j, i, n, zs = ctx.scenery.zones, it, o, a, q, u, cy, pp, l, w = pnt;
+  for (k = 0; k < 5; k++) { cy = -2000 * k; zv[k] = cy >= y0 && cy <= y1; }
+  u = hullUni(1);
   for (i = 0; i < pv.length; i++) {
     if (!pv[i]) continue;
     n = 0;
@@ -202,7 +237,7 @@ function drawProps() {
         core.qaxis(a[0] / l, a[1] / l, a[2] / l, PI2 * o.turns * f.t / 60, qa, 0);
         core.qmul(qa, 0, o.q, 0, qb, 0);
         q = n * HS; pp = o.p;
-        w[q] = pp[0]; w[q + 1] = pp[1] - 900 * k; w[q + 2] = pp[2]; w[q + 3] = o.s;
+        w[q] = pp[0]; w[q + 1] = pp[1] - 2000 * k; w[q + 2] = pp[2]; w[q + 3] = o.s;
         w[q + 4] = qb[0]; w[q + 5] = qb[1]; w[q + 6] = qb[2]; w[q + 7] = qb[3];
         w[q + 8] = 0; w[q + 9] = 1; w[q + 10] = 0;
         n++;
@@ -235,14 +270,32 @@ function fillShips() {
   }
 }
 function drawShips(wide) {
-  var t, u = hullUni();
-  gl.uniform3f(u.uGP, 1, .75, .45);
+  var t, u = hullUni(1);
+  gl.uniform3f(u.uGP, 1, .75, .45); gl.uniform1f(u.uDk, 1);
   for (t = 0; t < TN; t++) {
     if (!cnt[t] || wd[t] !== wide) continue;
-    gl.uniform3f(u.uPaint, bt[t * 3], bt[t * 3 + 1], bt[t * 3 + 2]);
+    gl.uniform3f(u.uPaint, bt[t * 3], bt[t * 3 + 1], bt[t * 3 + 2]); gl.uniform1f(u.uPl, wd[t]);
     gl.bindVertexArray(hv[t].v); gl.drawArraysInstanced(gl.TRIANGLES, 0, hv[t].n, cnt[t]);
     R.draws++; R.tris += cnt[t] * hv[t].n / 3;
   }
+}
+function drawWrecks(fx) {
+  var n = Math.min(fx.nw | 0, 8), W = fx.W, k, b, t, u, c, q;
+  if (n < 1 || !W) return;
+  u = hullUni(7);
+  gl.uniform3f(u.uGP, 1, .75, .45); gl.uniform1f(u.uPl, 1); gl.disable(gl.CULL_FACE);
+  for (k = 0; k < n; k++) {
+    b = k * 64; t = W[b + 1] | 0;
+    if (!(W[b + 3] > 0) || !(t >= 0 && t < TN) || !wv[t]) continue;
+    c = wv[t]; q = ctx.ships.types[t];
+    gl.uniform3f(u.uPaint, bt[t * 3], bt[t * 3 + 1], bt[t * 3 + 2]);
+    gl.uniform4f(u.uWr, q.scale, W[b + 5], W[b + 3], W[b + 4]);
+    gl.uniform4f(u.uWs, W[b + 10] < -250 ? 1 : 0, c.ew, c.nc, 0);
+    gl.uniform1fv(u.uC, c.c); gl.uniform4fv(u.uA, W, b + 8, 56);
+    gl.bindVertexArray(c.v); gl.drawArrays(gl.TRIANGLES, 0, c.n);
+    R.draws++; R.tris += c.n / 3;
+  }
+  gl.enable(gl.CULL_FACE);
 }
 function mkTex(w, h) {
   var t = gl.createTexture();
@@ -333,7 +386,7 @@ var R = O81B.render = {
     var i, t;
     gl = g; ctx = c; F = c.F; core = O81B.core; s = 0;
     TN = c.ships.types.length; NP = c.scenery.props.length; TOT = NPR + TN + NP + 4;
-    pr = []; un = []; sv = []; sf = []; pe = null; ph = 0; lk = 0; waits = 0; hv = []; pv = []; sk = sp = ev = null; tx = []; fb = []; fw = fh = nIn = 0;
+    pr = []; un = []; sv = []; sf = []; pe = null; ph = 0; lk = 0; waits = 0; hv = []; pv = []; wv = []; sk = sp = ev = null; tx = []; fb = []; fw = fh = nIn = 0;
     wk = new Float32Array(7); for (i = 0, t = 0; i < 7; i++) { wk[i] = Math.exp(-i * i / 9.68); t += i ? 2 * wk[i] : wk[0]; }
     for (i = 0; i < 7; i++) wk[i] /= t;
     bt = new Float32Array(TN * 3); wd = new Float32Array(TN);
@@ -375,8 +428,8 @@ var R = O81B.render = {
       else if (nIn) {
         drawMask();
         if (m === 1) compose(1, 1, 1, 1);
-        else { compose(0, 0, 1, 1); drawShips(1); compose(1, 1, 0, 0); drawShips(0); }
-      } else if (m === 0) { drawShips(1); drawShips(0); }
+        else { compose(0, 0, 1, 1); drawShips(1); if (fx) drawWrecks(fx); compose(1, 1, 0, 0); drawShips(0); }
+      } else if (m === 0) { drawShips(1); if (fx) drawWrecks(fx); drawShips(0); }
     }
     if (m === 0 && fx) drawFx(fx);
     gl.bindVertexArray(null);

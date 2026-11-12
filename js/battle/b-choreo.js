@@ -18,27 +18,27 @@ function rd(n, sc, off) {
   return a;
 }
 function byT(a, b) { return a.t - b.t; }
-function str(v, m) { return typeof v === 'string' && v.length > 0 && v.length % m === 0; }
+function str(v, m, z) { return typeof v === 'string' && (z || v.length > 0) && v.length % m === 0; }
 function decode() {
   var i, j, r, z, cl, s, t, e, c, b, o, g0, g1, g2;
   D = window.O81B.choreoData; p = 0;
   if (!D || !Array.isArray(D.T) || !D.T.length || !D.C || !Array.isArray(D.D) || D.D.length < 4 || !(D.Y > 0)) throw 0;
-  if (!str(D.R, 2) || !str(D.P, 2) || !str(D.E, 5) || !str(D.S, 9)) throw 0;
+  if (!str(D.R, 2) || !str(D.P, 2) || !str(D.E, 5, 1) || !str(D.S, 9, 1)) throw 0;
   for (i = 0; i < 64; i++) LK[AL.charCodeAt(i)] = i;
   T = D.T; C = D.C; N = D.R.length / 2;
   for (i = 0; i < T.length; i++) {
     r = T[i];
-    if (!Array.isArray(r) || r.length < 6 || !(r[2] > 0) || !(r[3] > 0) || !(r[4] > 0) || !Array.isArray(cl = C[r[1]]) || cl.length < 5 || !(cl[1] >= 0) || !(cl[4] > 0)) throw 0;
+    if (!Array.isArray(r) || r.length < 8 || !(r[2] > 0) || !(r[3] > 0) || !(r[4] > 0) || !(r[6] > 0) || !(r[7] > 0) || !Array.isArray(cl = C[r[1]]) || cl.length < 5 || !(cl[1] >= 0) || !(cl[4] > 0)) throw 0;
   }
   roster = []; ac = []; c9 = []; cx = []; cy = []; cz = []; cw = []; lim = []; bst = []; sd_ = []; sr_ = []; bg = [];
   et = []; ee = []; ec = []; eb = []; hA = []; hM = []; hR = []; booms = []; launches = []; docks = []; arrivals = []; shots = [];
-  // Per-ship tables. T row: id, class, boost, Kxy, Kz, Kyaw. C[class]: tilt deg, bank g, shield delay, recharge, thrust accel.
+  // Per-ship tables. T row: id, class, boost, Kxy, Kz, Kyaw, x step, y step. C[class]: tilt deg, bank g, shield delay, recharge, thrust accel.
   for (i = 0; i < N; i++) {
     j = num(D.R, 2 * i, 2);
     r = T[j >> 3]; z = j & 7; cl = C[r[1]];
     roster.push({ team: i < N / 2 ? 0 : 1, type: r[0], cls: r[1], zone: z });
-    cx[i] = rd(r[3], 1, 0);
-    cy[i] = rd(r[3], 0.5, -z * D.Y);
+    cx[i] = rd(r[3], r[6], 0);
+    cy[i] = rd(r[3], r[7], -z * D.Y);
     cz[i] = rd(r[4], 0.25, 0);
     cw[i] = r[5] ? rd(r[5], TWO / 1024, 0) : null;
     lim[i] = cl[0] * Math.PI / 180; c9[i] = Math.cos(0.9 * lim[i]); bg[i] = cl[1]; sd_[i] = cl[2]; sr_[i] = cl[3]; bst[i] = r[2]; ac[i] = cl[4];
@@ -51,7 +51,7 @@ function decode() {
     et[s].push(t); ee[s].push(e); ec[s].push(c); eb[s].push(b);
     if (e === 0) launches.push({ t: t, carrier: c, bay: b, ship: s });
     else if (e === 1) docks.push({ t: t, carrier: c, bay: b, ship: s });
-    else if (e === 2) booms.push({ t: t, ship: s, size: 'SML'.indexOf(roster[s].cls) });
+    else if (e === 2) booms.push({ t: t, ship: s, size: 'SML'.indexOf(roster[s].cls), br: b });
     else arrivals.push({ t: t, ship: s });
   }
   launches.sort(byT); docks.sort(byT); booms.sort(byT); arrivals.sort(byT);

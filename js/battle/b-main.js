@@ -5,7 +5,7 @@
  var O = window.O81B, C, W = window, D = document, H = D.documentElement, M = Math,
  cv, gl, F, tgl, A, sc, rd, cl, buf, bufN = 0, raf = 0, prepped = 0, starting = 0, dead = 0, lost = 0, hid = 0,
  light = 0, reduced = 0, mq, paused = 0, mv = 0, ph = 0, tier = 1, auto = 1, res = 1, rate = 60,
- mode = 0, camY = -1800, camSet = null, tcur = 0, base = 0, t0 = 0, lc = 0, due = 0,
+ mode = 0, camY = -4000, camSet = null, tcur = 0, base = 0, t0 = 0, lc = 0, due = 0,
  wS = 0, wN = 0, fps = 0, jn = 0, rt = 0, pw = 0, pi = 0, docH = -1, sOk = 0, S = [0, 0, 0, 0, 0],
  ids = 'top stats chart cards doors'.split(' '), cS = 0, cN = 0, cL = 0, cM = 1e9,
  hl = 0, js = new Float64Array(120), jt = new Float64Array(120), hs = new Float64Array(120), rc = new Float64Array(120),
@@ -43,10 +43,10 @@
  }
  function tgt(y) {
  var i;
- if (!sOk) return -1800;
+ if (!sOk) return -4000;
  y = C.clamp(y, S[0], S[4]);
  for (i = 1; i < 4 && y > S[i]; i++);
- return -900 * (i - 1) - 900 * (y - S[i - 1]) / (S[i] - S[i - 1]);
+ return -2000 * (i - 1) - 2000 * (y - S[i - 1]) / (S[i] - S[i - 1]);
  }
  function size() {
  var r = cv.getBoundingClientRect(), w = r.width, h = r.height, d, cw, ch;
@@ -61,11 +61,11 @@
  function cam(dt) {
  var iw = W.innerWidth, ih = W.innerHeight, mp, dd, tg;
  if (H.scrollHeight !== docH || iw !== pw || ih !== pi) { secs(); pw = iw; pi = ih; }
- tg = sOk ? tgt(reduced ? 0 : (W.scrollY || 0)) : -1800;
+ tg = sOk ? tgt(reduced ? 0 : (W.scrollY || 0)) : -4000;
  if (camSet !== null) camY = camSet;
  else camY += (tg - camY) * (1 - M.exp(-(reduced ? 1e3 : dt) / 0.15));
  mv = camSet === null && !reduced && M.abs(tg - camY) > 0.3;
- mp = M.min(1.9, 3600 / iw);
+ mp = iw < 900 ? M.min(3.3, 1.9 * M.pow(900 / iw, 0.6)) : iw <= 2736 ? 1.9 : 5200 / iw;
  dd = F.cssH * mp / (2 * M.tan(M.PI / 12));
  F.yc = ih / 2 - rt;
  C.proj(F.vp, F.cssW * mp, F.cssH * mp, dd, F.yc, F.cssH, camY);
@@ -75,16 +75,14 @@
  C.lblend(F.light, F.zw, O.scenery.zones);
  }
  function ships(t) {
- var ch = O.choreo, i, v, p, s, c, R, y1 = camY + F.yc * F.mpp, y0 = camY - (F.cssH - F.yc) * F.mpp,
+ var ch = O.choreo, i, v, p, s, R, y1 = camY + F.yc * F.mpp, y0 = camY - (F.cssH - F.yc) * F.mpp,
  hw = F.cssW * F.mpp * 0.575, pad = (y1 - y0) * 0.075, x, y;
  for (i = 0; i < F.n; i++) {
  ch.state(i, t, ou);
  p = ou.p; v = ou.vis; x = p[0]; y = p[1];
  F.P.set(p, 3 * i); F.HD.set(ou.hd, 3 * i); F.Q.set(ou.q, 4 * i);
  F.V[i] = v; F.SH[i] = ou.sh; F.HT[i] = ou.hit; F.TH[i] = ou.thr;
- s = sc[i]; c = F.cs[i];
- if (c > 0) { if (v < 1) s = C.mix(c, s, v); F.AL[i] = v > 0 ? 1 : v; } else F.AL[i] = v;
- F.DS[i] = s; R = rd[i] * s;
+ s = sc[i]; F.AL[i] = v; F.DS[i] = s; R = rd[i] * s;
  F.on[i] = v > 0 && M.abs(x) < hw + R && y > y0 - pad - R && y < y1 + pad + R ? 1 : 0;
  }
  }
@@ -174,10 +172,10 @@
  if (!light) go();
  }
  function build() {
- var R = O.choreo.roster, T = O.ships.types, n = R.length, L = O.choreo.launches, i, g;
+ var R = O.choreo.roster, T = O.ships.types, n = R.length, i, g;
  F = {
  vp: z(16), eye: z(3), light: { dir: z(3), color: z(3), ambient: z(3) }, zw: z(5), team: z(6), n: n,
- ty: new Int16Array(n), tm: new Uint8Array(n), cs: z(n), P: z(3 * n), Q: z(4 * n), V: z(n), SH: z(n),
+ ty: new Int16Array(n), tm: new Uint8Array(n), P: z(3 * n), Q: z(4 * n), V: z(n), SH: z(n),
  HT: z(n), HD: z(3 * n), TH: z(n), DS: z(n), AL: z(n), on: new Uint8Array(n)
  };
  sc = z(n); rd = z(n); cl = [];
@@ -185,7 +183,6 @@
  g = O.ships.index[R[i].type];
  F.ty[i] = g; F.tm[i] = R[i].team; sc[i] = T[g].scale; rd[i] = 0.6 * T[g].len; cl.push(R[i].cls);
  }
- for (i = 0; i < L.length; i++) F.cs[L[i].ship] = T[F.ty[L[i].carrier]].scale;
  g = getComputedStyle(H);
  for (i = 0; i < 6; i++) F.team[i] = (C.hex(g.getPropertyValue('--b-team-' + (i / 3 | 0))) || C.hex(i < 3 ? '#f2b84b' : '#5aa2ff'))[i % 3];
  }

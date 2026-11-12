@@ -62,10 +62,19 @@
   }
   // zone weights into w (five, two non-zero at most) for camera Y cy; returns the nearest zone
   function zw(w, cy) {
-    var u = clamp(-cy / 900, 0, 4), i = u | 0, fr = u - i;
+    var u = clamp(-cy / 2000, 0, 4), i = u | 0, fr = u - i;
     w.fill(0); w[i] = 1 - fr; if (fr > 0 && i < 4) w[i + 1] = fr;
     return M.round(u);
   }
+  // part number of vertex v (K41): by mesh.parts, else by local x against type.cuts (stand-in: thirds of the length)
+  function part(ty, me, v) {
+    var p = me.parts, k = 0, c, x;
+    if (p) { while (k + 1 < p.length && p[k + 1] <= v) k++; return M.min(k, 6); }
+    c = ty.cuts || [-ty.len / 6, ty.len / 6]; x = me.pos[3 * v];
+    while (k < c.length && x >= c[k]) k++;
+    return M.min(k, 6);
+  }
+  function nparts(ty, me) { return M.min(7, me.parts ? me.parts.length : (ty.cuts ? ty.cuts.length : 2) + 1); }
   // blend the zones' light by weights w into l3, direction normalised
   function lblend(l3, w, Z) {
     var c, a, i, m;
@@ -79,6 +88,6 @@
   window.O81B.core = {
     LOOP: 60, wrap: wrap, age: age, clamp: clamp, mix: mix, sstep: sstep, rnd: rnd,
     qrot: qrot, qmul: qmul, qaxis: qaxis, hex: hex, fnv: fnv, lin: lin, dsp: dsp,
-    proj: proj, zw: zw, lblend: lblend
+    proj: proj, zw: zw, part: part, nparts: nparts, lblend: lblend
   };
 })();
