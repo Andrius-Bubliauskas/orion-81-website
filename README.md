@@ -1,6 +1,6 @@
 # orion-81.io
 
-This folder is the whole orion-81.io website, version 3.4.1. A bar at the top of every page links its six parts.
+This folder is the whole orion-81.io website, version 3.5.0. A bar at the top of every page links its six parts.
 
 ## What it holds
 
@@ -17,8 +17,14 @@ This folder is the whole orion-81.io website, version 3.4.1. A bar at the top of
   for Andrius on 29 October 2026.
 * **Fable 5.2 conduct-of-work review** (`orchestration/fable-5-2-review/index.html`): the second view under the Orchestration tab, reached by a
   row of two sub-tabs. A 16-slide presentation of the conduct-of-work review made on 10 November 2026.
-* **Epic Jam 2026** (`epic-jam-2026/index.html`): the devlog of our entry to the Epic Jam 2026, with one sub-tab, Devlog: a star
-  chart of the day's logs, milestones and decisions, our notes, and a table comparing 3D file formats for Unreal Engine 5.
+* **Epic Jam 2026** (`epic-jam-2026/index.html`): the devlog of our entry to the Epic Jam 2026, the game Orion-81 Space Jam, with two
+  sub-tabs. **Devlog**: for each of the four jam days (12 to 15 November 2026) a star chart of the day's logs, milestones and decisions
+  and our notes, a table comparing 3D file formats for Unreal Engine 5 (Day 1), and links to the game's trailer and its ship gallery.
+  **Full devlog** (`epic-jam-2026/full-devlog/index.html`): every entry of the team's jam devlog (84 entries, 13 to 15 November), grouped
+  by day as folded cards, with search and a team filter (`js/jam-devlog.js`; without script the page is the full list). It is
+  generated, not hand-edited: `build_site_full_devlog.py` (kept beside the jam's devlog builders, in `D:\Games\2026 Epic Jam\devlog-page`)
+  turns the jam repo's `update-for-devlog.md` into this page. Version 3.5.0 (15 November 2026) added Days 2 to 4, the row of day links,
+  the trailer and gallery links, and the Full devlog sub-tab.
 * **Orion POC** (`poc/index.html`): the earlier proof-of-concept site, kept as it was published on 13 October 2026; three of its ship viewers and the note in its tab bar were changed in November 2026,
   and everything else is byte for byte as published. The page shows it in a frame under the tab bar and a subtab bar. Its statements are those of that date. The second
   subtab, **Gallery** (`poc/gallery/index.html`), holds the pictures and clips of that proof of concept.
@@ -36,6 +42,9 @@ to the Orion POC tab, and the old Gallery address (`gallery/index.html`) passes 
 The Orion POC tab loads three.js (MIT licence) and Google Fonts (SIL Open Font Licence) from public content delivery networks
 when it is viewed. The home page, the devlog and the Orchestration page load nothing from other sites. There are no trackers, no cookies and no forms.
 The home page links to one page on anthropic.com as further reading; the link loads nothing until it is followed.
+The Epic Jam 2026 page links to the game's trailer on YouTube and to its ship gallery on claude.ai; it embeds neither, and the links
+load nothing until they are followed. The Full devlog's entries link to the team's GitHub repository and other pages; those load nothing
+until followed either.
 
 ## Trademarks
 

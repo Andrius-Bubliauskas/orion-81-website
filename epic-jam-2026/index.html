@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Epic Jam 2026: Devlog</title>
-<meta name="description" content="Epic Jam 2026: the Orion-81 team's devlog for the jam, as a star chart of logs, milestones and decisions.">
+<meta name="description" content="Epic Jam 2026: the Orion-81 team's devlog for the jam and its game, Orion-81 Space Jam, as star charts of each day's logs, milestones and decisions.">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <link rel="icon" type="image/png" sizes="32x32" href="../assets/img/logo/favicon-32.png">
 <link rel="icon" type="image/png" sizes="180x180" href="../assets/img/logo/favicon-180.png">
@@ -32,20 +32,30 @@
 </div>
 <nav class="o81-subtabs" aria-label="Epic Jam 2026 views">
   <a class="o81-subtab" data-subtab="devlog" data-clean="./" href="index.html" aria-current="page">Devlog</a>
+  <a class="o81-subtab" data-subtab="full-devlog" data-clean="full-devlog/" href="full-devlog/index.html">Full devlog</a>
 </nav>
 </header>
 <main id="main" class="jc-main">
 
 <div class="jc-head">
   <h1>Epic Jam 2026</h1>
-  <p class="jc-day"><span class="stars" aria-hidden="true"><i></i><i></i><i></i></span>Devlog: Day 1, 12 November 2026</p>
+  <p class="jc-intro">Four days of making our entry, <span class="jc-nb">Orion-81 Space Jam</span>: a team space battle where you fly a fighter or a frigate and win by destroying the enemy's capital ships.</p>
+  <p class="jc-trailer"><a class="jc-watch" href="https://www.youtube.com/watch?v=u25fCTABK8w"><span class="jc-play" aria-hidden="true"></span>Watch the trailer</a> <span class="jc-where">Orion-81 Space Jam (Director's Cut), on YouTube</span></p>
+  <nav class="jc-days" aria-label="Jam days">
+    <a href="#day-1">Day 1</a><a href="#day-2">Day 2</a><a href="#day-3">Day 3</a><a href="#day-4">Day 4</a>
+  </nav>
+  <p class="jc-full">Every ship with its size, weapons, handling and health: <a href="https://claude.ai/artifact/8efPgeRQ78vj2TYoq13Boc?sk=X8ZxqeyH14AxwunbxsvB9w#specs">the ship gallery</a>.</p>
+  <p class="jc-full">Every entry in full, with who decided and which AI models did the work: <a href="full-devlog/index.html" data-clean="full-devlog/">the full devlog</a>.</p>
 </div>
 
-<section class="jc-sec" aria-label="Timeline of logs, milestones and decisions">
+<h2 class="jc-day" id="day-1"><span class="stars" aria-hidden="true"><i></i><i></i><i></i></span>Devlog: Day 1, 12 November 2026</h2>
+
+<section class="jc-sec" aria-label="Day 1: timeline of logs, milestones and decisions">
 <div class="jc-panel">
 <div class="jc-cols" aria-hidden="true"><span>Rules</span><span>Theme</span><span>Assets and map</span><span>Team and tools</span><span>Decisions</span></div>
 <!-- To add an entry: copy one li and put it at the end, in time order.
-     data-kind is log, milestone or decision. data-lane is rules, theme, assets, team or decisions (the visible lane name goes in .jc-lane).
+     data-kind is log, milestone or decision. data-lane is rules, theme, assets, team or decisions on Day 1, and game, art, builds, team or
+     decisions from Day 2 (the visible lane name goes in .jc-lane, and each chart's .jc-cols names its five columns).
      A bar joins two entries of one lane: put <span class="jc-seg jc-l-LANE jc-seg-start" aria-hidden="true"></span> in the first entry, a jc-seg-mid one
      in every entry between them (any lane), and a jc-seg-end one in the last. Keep the class rv on every li. -->
 <ol class="jc-chart">
@@ -139,7 +149,7 @@
 </div>
 </section>
 
-<section class="jc-text" aria-label="The devlog text">
+<section class="jc-text" aria-label="Day 1: the devlog text">
 <p>The first decisions come from today, made by Zilvinas and me. At the dawn of the jam day we had very little, little to nothing configured, and we had to familiarise ourselves with the rules. First we thought we couldn't create assets ourselves, as that's what was declared on <a href="https://itch.io/jam/2026-epic-ai-megajam">the jam's itch.io page</a>. Ideating about how a good space flight CTF should work, we quickly realised that the gameplay would be defined by 1) the theme and 2) the assets that are available from Fab. We came across <a href="https://epicgamejam.com/editions/2026/themes">epicgamejam.com's themes</a> and thought that the theme was the Andes, without realising that this 2026 Epic Jam was from July... We found <a href="https://www.youtube.com/watch?v=ETtXdZLY3fg">the perfect map</a> on Fab to use for it, but then - disaster! It's not compatible with the latest version of UE5 that we need to work with Claude Code... I thought maybe I could process some LiDAR data, recreate a part of Machu Picchu and the Andes in Blender and realise it in UE5 later - but that would strip us of our tokens...</p>
 
 <p>Took a break and ironed out the Claude Organisation particulars: 3x Pro seats. Andy called and mentioned he was going to bring over two gaming computers he'd built, so we could parallelise development when it came to it. Read the rule book properly. Realised that asset creation is actually OK and whatever is written on itch.io was a bit of an overstatement. Registered for the jam and got the real theme sent over - turns out it's DIRECTOR'S CUT... Checking your assumptions is important, don't forget &#x1F603;!</p>
@@ -198,12 +208,294 @@
 <p class="jc-note">Test mesh: 10,000 triangles, 5,191 vertices, with positions, normals and one UV set, and no textures. GLB and OBJ were written and measured by our own script. FBX is an estimate, reckoned from how the format stores the same arrays, plus a guessed fixed overhead; compressed arrays would give about 209 KB.</p>
 </section>
 
+<h2 class="jc-day" id="day-2"><span class="stars" aria-hidden="true"><i></i><i></i><i></i></span>Devlog: Day 2, 13 November 2026</h2>
+
+<section class="jc-sec" aria-label="Day 2: timeline of logs, milestones and decisions">
+<div class="jc-panel">
+<div class="jc-cols" aria-hidden="true"><span>Game</span><span>Art and sound</span><span>Builds and release</span><span>Team and tools</span><span>Decisions</span></div>
+<ol class="jc-chart">
+<li class="jc-item rv" data-lane="team" data-kind="log">
+  <span class="jc-seg jc-l-team jc-seg-start" aria-hidden="true"></span>
+  <span class="jc-mark" aria-hidden="true"></span>
+  <div class="jc-body"><p class="jc-meta"><span class="jc-kind">Log</span> <span class="jc-lane">Team and tools</span></p>
+  <p class="jc-title">An empty UE 5.8 project in Git</p>
+  <p class="jc-line">I merged the repo's first pull requests, the last one being the Unreal project itself.</p></div>
+</li>
+<li class="jc-item rv" data-lane="team" data-kind="log">
+  <span class="jc-seg jc-l-team jc-seg-mid" aria-hidden="true"></span>
+  <span class="jc-mark" aria-hidden="true"></span>
+  <div class="jc-body"><p class="jc-meta"><span class="jc-kind">Log</span> <span class="jc-lane">Team and tools</span></p>
+  <p class="jc-title">Andy clones the repo</p>
+  <p class="jc-line">Plain Git, with Git LFS already set up for Unreal's binary files.</p></div>
+</li>
+<li class="jc-item rv" data-lane="team" data-kind="milestone">
+  <span class="jc-seg jc-l-team jc-seg-end" aria-hidden="true"></span>
+  <span class="jc-mark" aria-hidden="true"></span>
+  <div class="jc-body"><p class="jc-meta"><span class="jc-kind">Milestone</span> <span class="jc-lane">Team and tools</span></p>
+  <p class="jc-title">Claude talks to GitHub</p>
+  <p class="jc-line">One shared MCP config for all three of us, with no secrets in it.</p></div>
+</li>
+<li class="jc-item rv" data-lane="decisions" data-kind="decision">
+  <span class="jc-mark" aria-hidden="true"></span>
+  <div class="jc-body"><p class="jc-meta"><span class="jc-kind">Decision</span> <span class="jc-lane">Decisions</span></p>
+  <p class="jc-title">A branch for game v0.0.0</p>
+  <p class="jc-line">feat/v0, cut from main, for all of us to branch from.</p></div>
+</li>
+<li class="jc-item rv" data-lane="game" data-kind="milestone">
+  <span class="jc-seg jc-l-game jc-seg-start" aria-hidden="true"></span>
+  <span class="jc-mark" aria-hidden="true"></span>
+  <div class="jc-body"><p class="jc-meta"><span class="jc-kind">Milestone</span> <span class="jc-lane">Game</span></p>
+  <p class="jc-title">The prototype comes over</p>
+  <p class="jc-line">A 6DOF fighter, three weapons, 12 v 12 against bots and a tactical map.</p></div>
+</li>
+<li class="jc-item rv" data-lane="decisions" data-kind="decision">
+  <span class="jc-seg jc-l-game jc-seg-mid" aria-hidden="true"></span>
+  <span class="jc-mark" aria-hidden="true"></span>
+  <div class="jc-body"><p class="jc-meta"><span class="jc-kind">Decision</span> <span class="jc-lane">Decisions</span></p>
+  <p class="jc-title">Capture the flag, dropped</p>
+  <p class="jc-line">You win by destroying the enemy capital ship. The repo keeps its ctf name.</p></div>
+</li>
+<li class="jc-item rv" data-lane="game" data-kind="log">
+  <span class="jc-seg jc-l-game jc-seg-end" aria-hidden="true"></span>
+  <span class="jc-mark" aria-hidden="true"></span>
+  <div class="jc-body"><p class="jc-meta"><span class="jc-kind">Log</span> <span class="jc-lane">Game</span></p>
+  <p class="jc-title">Capital ships take damage</p>
+  <p class="jc-line">20,000 HP and four glowing weak points that take three times the damage.</p></div>
+</li>
+<li class="jc-item rv" data-lane="art" data-kind="log">
+  <span class="jc-mark" aria-hidden="true"></span>
+  <div class="jc-body"><p class="jc-meta"><span class="jc-kind">Log</span> <span class="jc-lane">Art and sound</span></p>
+  <p class="jc-title">No more ball-shaped asteroids</p>
+  <p class="jc-line">Squashed, turned boxes stand in until real rocks arrive.</p></div>
+</li>
+</ol>
+</div>
+</section>
+
+<section class="jc-text" aria-label="Day 2: the devlog text">
+<p>Day 2 was Andy's evening. I merged the repo's first pull requests, ending with an empty Unreal Engine 5.8 project, and Andy took it from there. He cloned it, connected Claude to GitHub through GitHub's own MCP server (MCP is how Claude plugs into other tools), with one shared config and each person's token kept out of the repo, and cut a branch, feat/v0, for the first version of the game.</p>
+
+<p>Then the big one: our prototype's features were ported into the jam project, and capture the flag went out entirely. The brief's win is destroying the enemy capital ship, so a flag only got in the way. What came over: a fighter that flies in six degrees of freedom (6DOF), with flight assist and boost, kinetic and energy guns, homing missiles, 12 v 12 against bots and the M tactical map. What was added so the loop still closes: capital ships with 20,000 HP and four weak points, and a VICTORY or DEFEAT screen. The repo keeps its ctf name; the game doesn't.</p>
+</section>
+
+<h2 class="jc-day" id="day-3"><span class="stars" aria-hidden="true"><i></i><i></i><i></i></span>Devlog: Day 3, 14 November 2026</h2>
+
+<section class="jc-sec" aria-label="Day 3: timeline of logs, milestones and decisions">
+<div class="jc-panel">
+<div class="jc-cols" aria-hidden="true"><span>Game</span><span>Art and sound</span><span>Builds and release</span><span>Team and tools</span><span>Decisions</span></div>
+<ol class="jc-chart">
+<li class="jc-item rv" data-lane="game" data-kind="milestone">
+  <span class="jc-mark" aria-hidden="true"></span>
+  <div class="jc-body"><p class="jc-meta"><span class="jc-kind">Milestone</span> <span class="jc-lane">Game</span></p>
+  <p class="jc-title">The loop closes</p>
+  <p class="jc-line">Bombers and escorts break the dogfights, and a bots-only match ends in BLUE TEAM WINS.</p></div>
+</li>
+<li class="jc-item rv" data-lane="art" data-kind="log">
+  <span class="jc-mark" aria-hidden="true"></span>
+  <div class="jc-body"><p class="jc-meta"><span class="jc-kind">Log</span> <span class="jc-lane">Art and sound</span></p>
+  <p class="jc-title">A NASA sky with the Orion Nebula</p>
+  <p class="jc-line">Our own script lays two images of M42 over NASA's star map.</p></div>
+</li>
+<li class="jc-item rv" data-lane="builds" data-kind="milestone">
+  <span class="jc-seg jc-l-builds jc-seg-start" aria-hidden="true"></span>
+  <span class="jc-mark" aria-hidden="true"></span>
+  <div class="jc-body"><p class="jc-meta"><span class="jc-kind">Milestone</span> <span class="jc-lane">Builds and release</span></p>
+  <p class="jc-title">The first packaged build</p>
+  <p class="jc-line">2 min 20 s, 497 packages, 0 errors, 0 warnings.</p></div>
+</li>
+<li class="jc-item rv" data-lane="decisions" data-kind="decision">
+  <span class="jc-seg jc-l-builds jc-seg-mid" aria-hidden="true"></span>
+  <span class="jc-mark" aria-hidden="true"></span>
+  <div class="jc-body"><p class="jc-meta"><span class="jc-kind">Decision</span> <span class="jc-lane">Decisions</span></p>
+  <p class="jc-title">main frozen, develop added</p>
+  <p class="jc-line">Pull requests into main need my approval; Andy or Zilvinas approve into develop.</p></div>
+</li>
+<li class="jc-item rv" data-lane="game" data-kind="log">
+  <span class="jc-seg jc-l-builds jc-seg-mid" aria-hidden="true"></span>
+  <span class="jc-mark" aria-hidden="true"></span>
+  <div class="jc-body"><p class="jc-meta"><span class="jc-kind">Log</span> <span class="jc-lane">Game</span></p>
+  <p class="jc-title">A lead reticle for the guns</p>
+  <p class="jc-line">Andy's ring shows where to aim to hit a moving target.</p></div>
+</li>
+<li class="jc-item rv" data-lane="decisions" data-kind="decision">
+  <span class="jc-seg jc-l-builds jc-seg-mid" aria-hidden="true"></span>
+  <span class="jc-mark" aria-hidden="true"></span>
+  <div class="jc-body"><p class="jc-meta"><span class="jc-kind">Decision</span> <span class="jc-lane">Decisions</span></p>
+  <p class="jc-title">A derelict station, not an asteroid field</p>
+  <p class="jc-line">450 parts in six sizes between the fleets, made with Hyper3D Rodin.</p></div>
+</li>
+<li class="jc-item rv" data-lane="builds" data-kind="milestone">
+  <span class="jc-seg jc-l-builds jc-seg-mid" aria-hidden="true"></span>
+  <span class="jc-mark" aria-hidden="true"></span>
+  <div class="jc-body"><p class="jc-meta"><span class="jc-kind">Milestone</span> <span class="jc-lane">Builds and release</span></p>
+  <p class="jc-title">The smoke test passes</p>
+  <p class="jc-line">The game was fine: the 40 s exit was our own test harness.</p></div>
+</li>
+<li class="jc-item rv" data-lane="art" data-kind="log">
+  <span class="jc-seg jc-l-builds jc-seg-mid" aria-hidden="true"></span>
+  <span class="jc-mark" aria-hidden="true"></span>
+  <div class="jc-body"><p class="jc-meta"><span class="jc-kind">Log</span> <span class="jc-lane">Art and sound</span></p>
+  <p class="jc-title">Our own ships fly</p>
+  <p class="jc-line">Zilvinas's Meshy fighters, bombers and carriers replace the boxes.</p></div>
+</li>
+<li class="jc-item rv" data-lane="builds" data-kind="milestone">
+  <span class="jc-seg jc-l-builds jc-seg-end" aria-hidden="true"></span>
+  <span class="jc-mark" aria-hidden="true"></span>
+  <div class="jc-body"><p class="jc-meta"><span class="jc-kind">Milestone</span> <span class="jc-lane">Builds and release</span></p>
+  <p class="jc-title">Test flight: seven out of seven</p>
+  <p class="jc-line">I flew the 17:07 package by hand, and every check passed.</p></div>
+</li>
+<li class="jc-item rv" data-lane="game" data-kind="decision">
+  <span class="jc-mark" aria-hidden="true"></span>
+  <div class="jc-body"><p class="jc-meta"><span class="jc-kind">Decision</span> <span class="jc-lane">Game</span></p>
+  <p class="jc-title">Three capital ships a side</p>
+  <p class="jc-line">And 72 fighters per team. The carriers jump in as a streak and circle the station.</p></div>
+</li>
+<li class="jc-item rv" data-lane="art" data-kind="log">
+  <span class="jc-seg jc-l-art jc-seg-start" aria-hidden="true"></span>
+  <span class="jc-mark" aria-hidden="true"></span>
+  <div class="jc-body"><p class="jc-meta"><span class="jc-kind">Log</span> <span class="jc-lane">Art and sound</span></p>
+  <p class="jc-title">Zilvinas's carrier, assembled in Blender</p>
+  <p class="jc-line">Bay doors that open and turrets that turn.</p></div>
+</li>
+<li class="jc-item rv" data-lane="art" data-kind="decision">
+  <span class="jc-seg jc-l-art jc-seg-end" aria-hidden="true"></span>
+  <span class="jc-mark" aria-hidden="true"></span>
+  <div class="jc-body"><p class="jc-meta"><span class="jc-kind">Decision</span> <span class="jc-lane">Art and sound</span></p>
+  <p class="jc-title">The carrier grows to 1 km</p>
+  <p class="jc-line">3.6 times longer: built, packaged and smoke-tested the same night.</p></div>
+</li>
+<li class="jc-item rv" data-lane="team" data-kind="log">
+  <span class="jc-mark" aria-hidden="true"></span>
+  <div class="jc-body"><p class="jc-meta"><span class="jc-kind">Log</span> <span class="jc-lane">Team and tools</span></p>
+  <p class="jc-title">Sound, found by five agents</p>
+  <p class="jc-line">Andy had five Claude agents hunt licence-free recordings for every sound.</p></div>
+</li>
+</ol>
+</div>
+</section>
+
+<section class="jc-text" aria-label="Day 3: the devlog text">
+<p>Saturday was the long one. First, the loop. In a bots-only test, with the red capital ship cheated down to 10%, no shot ever hit it: the attackers kept getting pulled into dogfights. Bombers and escorts fixed that, and the test ended in BLUE TEAM WINS. I built a sky from NASA images, with the Orion Nebula drawn far larger than it looks from Earth, and packaged the game for the first time. We froze main and added develop, so nothing reaches main without my approval.</p>
+
+<p>Hyper3D Rodin, bought to make the sky, turned out to make only 3D models, so it made a derelict space station instead, and the station replaced the asteroid field. Andy got the packaged smoke test passing: the 40 s exit was our own test harness, not the game. Then our own ships went in: Zilvinas's Meshy fighters, bombers and carriers, three carriers and 72 fighters a side, jumping in as a streak. I flew the 17:07 package, and all seven checks passed. By the end of the night Zilvinas's carrier, with bay doors and turning turrets, was 1 km long and waiting in a pull request.</p>
+</section>
+
+<h2 class="jc-day" id="day-4"><span class="stars" aria-hidden="true"><i></i><i></i><i></i></span>Devlog: Day 4, 15 November 2026</h2>
+
+<section class="jc-sec" aria-label="Day 4: timeline of logs, milestones and decisions">
+<div class="jc-panel">
+<div class="jc-cols" aria-hidden="true"><span>Game</span><span>Art and sound</span><span>Builds and release</span><span>Team and tools</span><span>Decisions</span></div>
+<ol class="jc-chart">
+<li class="jc-item rv" data-lane="art" data-kind="milestone">
+  <span class="jc-mark" aria-hidden="true"></span>
+  <div class="jc-body"><p class="jc-meta"><span class="jc-kind">Milestone</span> <span class="jc-lane">Art and sound</span></p>
+  <p class="jc-title">Andy's sounds are in</p>
+  <p class="jc-line">Guns, engines and explosions, built from licence-free recordings.</p></div>
+</li>
+<li class="jc-item rv" data-lane="builds" data-kind="milestone">
+  <span class="jc-seg jc-l-builds jc-seg-start" aria-hidden="true"></span>
+  <span class="jc-mark" aria-hidden="true"></span>
+  <div class="jc-body"><p class="jc-meta"><span class="jc-kind">Milestone</span> <span class="jc-lane">Builds and release</span></p>
+  <p class="jc-title">The first Shipping build</p>
+  <p class="jc-line">02:07 UTC: the build players get, with no console and no cheats.</p></div>
+</li>
+<li class="jc-item rv" data-lane="game" data-kind="log">
+  <span class="jc-seg jc-l-builds jc-seg-mid" aria-hidden="true"></span>
+  <span class="jc-mark" aria-hidden="true"></span>
+  <div class="jc-body"><p class="jc-meta"><span class="jc-kind">Log</span> <span class="jc-lane">Game</span></p>
+  <p class="jc-title">Frigates, four a side</p>
+  <p class="jc-line">They roam the battle and fire from every hard point.</p></div>
+</li>
+<li class="jc-item rv" data-lane="art" data-kind="log">
+  <span class="jc-seg jc-l-builds jc-seg-mid" aria-hidden="true"></span>
+  <span class="jc-mark" aria-hidden="true"></span>
+  <div class="jc-body"><p class="jc-meta"><span class="jc-kind">Log</span> <span class="jc-lane">Art and sound</span></p>
+  <p class="jc-title">Frigate MK2</p>
+  <p class="jc-line">Zilvinas reworked the frigate in Blender, with turrets that turn.</p></div>
+</li>
+<li class="jc-item rv" data-lane="builds" data-kind="milestone">
+  <span class="jc-seg jc-l-builds jc-seg-end" aria-hidden="true"></span>
+  <span class="jc-mark" aria-hidden="true"></span>
+  <div class="jc-body"><p class="jc-meta"><span class="jc-kind">Milestone</span> <span class="jc-lane">Builds and release</span></p>
+  <p class="jc-title">The second release to main</p>
+  <p class="jc-line">Seven pull requests and 75 files in one go.</p></div>
+</li>
+<li class="jc-item rv" data-lane="decisions" data-kind="decision">
+  <span class="jc-mark" aria-hidden="true"></span>
+  <div class="jc-body"><p class="jc-meta"><span class="jc-kind">Decision</span> <span class="jc-lane">Decisions</span></p>
+  <p class="jc-title">Choose your ship</p>
+  <p class="jc-line">At the start of a match: fly a fighter, or a frigate.</p></div>
+</li>
+<li class="jc-item rv" data-lane="game" data-kind="log">
+  <span class="jc-mark" aria-hidden="true"></span>
+  <div class="jc-body"><p class="jc-meta"><span class="jc-kind">Log</span> <span class="jc-lane">Game</span></p>
+  <p class="jc-title">My play notes</p>
+  <p class="jc-line">An ESC menu with settings, HUD bars, shields and a slower launch through opening doors.</p></div>
+</li>
+<li class="jc-item rv" data-lane="decisions" data-kind="decision">
+  <span class="jc-mark" aria-hidden="true"></span>
+  <div class="jc-body"><p class="jc-meta"><span class="jc-kind">Decision</span> <span class="jc-lane">Decisions</span></p>
+  <p class="jc-title">Every build gets a version</p>
+  <p class="jc-line">v0.0.1 to v0.14.0, tagged by semantic versioning, and the game shows its own.</p></div>
+</li>
+<li class="jc-item rv" data-lane="art" data-kind="log">
+  <span class="jc-mark" aria-hidden="true"></span>
+  <div class="jc-body"><p class="jc-meta"><span class="jc-kind">Log</span> <span class="jc-lane">Art and sound</span></p>
+  <p class="jc-title">Explosions that boil</p>
+  <p class="jc-line">Andy's lumpy fireballs that cool, with embers and 3D shockwaves.</p></div>
+</li>
+<li class="jc-item rv" data-lane="game" data-kind="log">
+  <span class="jc-mark" aria-hidden="true"></span>
+  <div class="jc-body"><p class="jc-meta"><span class="jc-kind">Log</span> <span class="jc-lane">Game</span></p>
+  <p class="jc-title">Cinematic Mode</p>
+  <p class="jc-line">A ghost camera from the ESC menu that flies through anything.</p></div>
+</li>
+<li class="jc-item rv" data-lane="team" data-kind="milestone">
+  <span class="jc-mark" aria-hidden="true"></span>
+  <div class="jc-body"><p class="jc-meta"><span class="jc-kind">Milestone</span> <span class="jc-lane">Team and tools</span></p>
+  <p class="jc-title">One play test, three orchestrators</p>
+  <p class="jc-line">Its notes split three ways: v0.16.0 for me, v0.17.0 for Andy, v0.18.0 for Zilvinas.</p></div>
+</li>
+<li class="jc-item rv" data-lane="game" data-kind="log">
+  <span class="jc-mark" aria-hidden="true"></span>
+  <div class="jc-body"><p class="jc-meta"><span class="jc-kind">Log</span> <span class="jc-lane">Game</span></p>
+  <p class="jc-title">An objectives list</p>
+  <p class="jc-line">Zilvinas's list on the right: destroy all enemy carriers.</p></div>
+</li>
+<li class="jc-item rv" data-lane="decisions" data-kind="decision">
+  <span class="jc-mark" aria-hidden="true"></span>
+  <div class="jc-body"><p class="jc-meta"><span class="jc-kind">Decision</span> <span class="jc-lane">Decisions</span></p>
+  <p class="jc-title"><span class="jc-nb">Orion-81 Space Jam</span></p>
+  <p class="jc-line">The game's official name. <span class="jc-nb">Orion-81</span> is the studio.</p></div>
+</li>
+<li class="jc-item rv" data-lane="builds" data-kind="log">
+  <span class="jc-mark" aria-hidden="true"></span>
+  <div class="jc-body"><p class="jc-meta"><span class="jc-kind">Log</span> <span class="jc-lane">Builds and release</span></p>
+  <p class="jc-title">A 60-second trailer</p>
+  <p class="jc-line">Our own footage, cut on the beat of a CC0 funk track. Now on YouTube.</p></div>
+</li>
+</ol>
+</div>
+</section>
+
+<section class="jc-text" aria-label="Day 4: the devlog text">
+<p>At 01:21 UTC on Sunday Andy's sounds were merged, and at 02:07 UTC we had the first Shipping build, the kind players get: no console and no cheats. Packaging was going by Sunday morning, as we had planned. Frigates came in, four a side and firing from every hard point, then Zilvinas's Frigate MK2 with turrets that turn, and a choice at the start: fly a fighter or a frigate. Main got its second release.</p>
+
+<p>Late in the morning I played the Shipping build and sent my notes: an ESC menu with settings, HUD bars, shields and a slower launch through opening bay doors. We tagged every build so far, v0.0.1 to v0.14.0, and Andy made the explosions boil. Then the notes from the v0.15.0 play test were split three ways, one set each, and each of us directed our own Claude sessions: v0.16.0, v0.17.0 and v0.18.0. The game got its official name, <span class="jc-nb">Orion-81 Space Jam</span>, and a 60-second trailer cut to a CC0 funk track: <a href="https://www.youtube.com/watch?v=u25fCTABK8w">watch it on YouTube</a>. Left for tonight: the hand-in build and the submission, due at 01:59 UTC on 16 November.</p>
+</section>
+
+<div class="jc-more">
+<p class="jc-full">Every ship with its size, weapons, handling and health: <a href="https://claude.ai/artifact/8efPgeRQ78vj2TYoq13Boc?sk=X8ZxqeyH14AxwunbxsvB9w#specs">the ship gallery</a>.</p>
+<p class="jc-full">Every entry in full, with who decided and which AI models did the work: <a href="full-devlog/index.html" data-clean="full-devlog/">the full devlog</a>.</p>
+</div>
+
 </main>
 <footer class="pg-footer">
   <p>&copy; 2026 Zilvinas Kozemekinas, Andrew Beacom, Andrius Bubliauskas. All rights reserved.</p>
   <p>Anthropic, Claude and Claude Code are trademarks of Anthropic, PBC. Orion-81 is not affiliated with, sponsored or endorsed by Anthropic.</p>
   <p>No trackers, no cookies, nothing loaded from other sites.</p>
-  <p>Site version 3.4.1, updated 12 November 2026.</p>
+  <p>Site version 3.5.0, updated 15 November 2026.</p>
 </footer>
 <script src="../js/tabbar.js"></script>
 </body>

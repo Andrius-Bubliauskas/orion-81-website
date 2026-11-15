@@ -160,3 +160,39 @@
 .jc-nb { white-space: nowrap; }
 .jc-day .stars { margin-left: var(--s1); }
 @media (max-width: 400px) { .jc-day { letter-spacing: 0.04em; } }
+
+/* ---- 3.5.0: Days 2 to 4. Their lanes are Game, Art and sound, Builds and release (columns 1 to 3); Team and tools and Decisions keep 4 and 5. */
+.jc-item[data-lane="game"], .jc-l-game { --c: 1; }
+.jc-item[data-lane="art"], .jc-l-art { --c: 2; }
+.jc-item[data-lane="builds"], .jc-l-builds { --c: 3; }
+
+/* the intro, the row of day links and the link to the full devlog */
+.jc-intro { color: var(--muted); }
+.jc-days { display: flex; flex-wrap: wrap; gap: var(--s2); margin-top: var(--s2); }
+.jc-days a {
+  display: inline-flex; align-items: center; min-height: var(--hit); padding: 0 var(--s4);
+  border: 1px solid var(--line); border-radius: var(--radius-pill);
+  font: 500 var(--fs-eyebrow) / 1.4 var(--mono); letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--text); text-decoration: none; transition: color var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease);
+}
+.jc-days a:hover { color: var(--primary); border-color: var(--primary); }
+.jc-days a:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+.jc-full { color: var(--muted); }
+
+/* the trailer: a link out to YouTube (the page's policy loads nothing from other sites, so no embed); the play mark is drawn in CSS */
+.jc-trailer { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s2) var(--s3); max-width: none; margin-top: var(--s2); }
+.jc-watch {
+  display: inline-flex; align-items: center; gap: var(--s2); min-height: var(--hit); padding: 0 var(--s4);
+  border: 1px solid var(--primary); border-radius: var(--radius-pill);
+  font: 500 var(--fs-eyebrow) / 1.4 var(--mono); letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--primary); text-decoration: none; transition: background-color var(--dur-fast) var(--ease);
+}
+.jc-watch:hover { background-color: color-mix(in srgb, var(--primary) 12%, transparent); }
+.jc-watch:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+.jc-play { width: 0; height: 0; border-left: 9px solid currentColor; border-top: 6px solid transparent; border-bottom: 6px solid transparent; }
+.jc-where { color: var(--muted); font-size: var(--fs-small); }
+.jc-more { display: grid; gap: var(--s3); padding-bottom: var(--section-gap); }
+
+/* each day's heading: a rule above it from Day 2 on (the site's scroll padding already clears the bar and sub-tab row) */
+h2.jc-day { padding-top: var(--s6); border-top: 1px solid var(--line); }
+.jc-head + h2.jc-day { padding-top: 0; border-top: 0; }

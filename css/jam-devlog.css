@@ -1,0 +1,97 @@
+/* (c) 2026 Andrius Bubliauskas. All rights reserved.
+   Epic Jam 2026, the Full devlog page (website 3.5.0): the tools row, the day sections and the entry cards.
+   Built on tokens.css only, so both themes work. Without script the page is the complete list of folded entries. */
+
+.fd-stats { color: var(--muted); font: 500 var(--fs-eyebrow) / 1.6 var(--mono); letter-spacing: 0.06em; max-width: none; }
+.fd-note { color: var(--muted); font-size: var(--fs-small); }
+.fd-sr { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
+
+/* ---- tools: search, team filter, open and close all (shown by js/jam-devlog.js) */
+.fd-tools {
+  display: grid; gap: var(--s3); margin-bottom: var(--s6); padding: var(--s4);
+  background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+}
+.fd-tools[hidden], .fd-entry[hidden], .fd-day[hidden] { display: none; }
+.fd-search input {
+  display: block; width: 100%; min-height: var(--hit); padding: 0 var(--s4);
+  font: 400 1rem / 1.4 var(--sans); color: var(--text); background: var(--bg);
+  border: 1px solid var(--control-line); border-radius: var(--radius-s);
+}
+.fd-search input::placeholder { color: var(--muted); opacity: 1; }
+.fd-search input:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+.fd-chips, .fd-acts { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s2); }
+.fd-chips-l { margin-right: var(--s1); font: 500 var(--fs-eyebrow) / 1.4 var(--mono); letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+.fd-chip, .fd-btn {
+  min-height: var(--hit); padding: 0 var(--s4); cursor: pointer;
+  font: 500 var(--fs-small) / 1 var(--sans); color: var(--muted); background: transparent;
+  border: 1px solid var(--line); border-radius: var(--radius-pill);
+  transition: color var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease), background-color var(--dur-fast) var(--ease);
+}
+.fd-chip:hover, .fd-btn:hover { color: var(--text); border-color: var(--control-line); }
+.fd-chip[aria-pressed="true"] { color: var(--done); border-color: var(--done); background-color: color-mix(in srgb, var(--done) 12%, transparent); }
+.fd-chip:focus-visible, .fd-btn:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+.fd-count { margin-left: auto; color: var(--muted); font: 500 var(--fs-eyebrow) / 1.4 var(--mono); letter-spacing: 0.06em; }
+
+/* ---- day sections */
+.fd-main > .fd-day { padding-bottom: var(--s6); }
+.fd-day h2.jc-day { flex-wrap: wrap; gap: var(--s1) 0; }
+.fd-n { margin-left: auto; padding-left: var(--s3); letter-spacing: 0.06em; }
+.fd-list { display: grid; gap: var(--s3); }
+
+/* ---- an entry: a folded card; the summary is its date, topic, title, people and models */
+.fd-entry {
+  min-width: 0; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-s);
+  transition: border-color var(--dur-fast) var(--ease);
+}
+.fd-entry[open] { border-color: color-mix(in srgb, var(--primary) 55%, var(--line)); }
+.fd-entry:target { border-color: var(--primary); box-shadow: var(--glow); }
+.fd-entry > summary {
+  position: relative; display: grid; gap: var(--s2); padding: var(--s4) calc(var(--s4) + 24px) var(--s4) var(--s4);
+  list-style: none; cursor: pointer; border-radius: var(--radius-s);
+}
+.fd-entry > summary::-webkit-details-marker { display: none; }
+.fd-entry > summary::after {
+  content: ""; position: absolute; right: var(--s4); top: calc(var(--s4) + 4px); width: 8px; height: 8px;
+  border-right: 1.5px solid var(--muted); border-bottom: 1.5px solid var(--muted);
+  transform: rotate(45deg); transition: transform var(--dur) var(--ease);
+}
+.fd-entry[open] > summary::after { transform: translateY(5px) rotate(-135deg); }
+.fd-entry > summary:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+.fd-row1 { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s2); font: 500 var(--fs-eyebrow) / 1.4 var(--mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+.fd-topic { padding: 1px var(--s2); border-radius: var(--radius-pill); color: var(--primary); background: color-mix(in srgb, var(--primary) 12%, transparent); }
+.fd-title { color: var(--text); font-size: 1.0625rem; font-weight: 500; line-height: 1.35; transition: color var(--dur-fast) var(--ease); }
+.fd-entry > summary:hover .fd-title { color: var(--primary); }
+.fd-row2 { display: flex; flex-wrap: wrap; gap: var(--s1) var(--s2); }
+.fd-who { padding: 0 var(--s2); border-radius: var(--radius-pill); font-size: var(--fs-eyebrow); line-height: 1.8; color: var(--done); background: color-mix(in srgb, var(--done) 12%, transparent); }
+.fd-model { padding: 0 var(--s2); border: 1px solid var(--line); border-radius: var(--radius-pill); font: 500 var(--fs-eyebrow) / 1.7 var(--mono); color: var(--muted); }
+.fd-title code, .fd-md code { padding: 1px 5px; border-radius: 4px; background: var(--raised); color: var(--text); font: 0.875em / 1.4 var(--mono); }
+
+/* ---- an entry's text */
+.fd-md { min-width: 0; padding: var(--s1) var(--s4) var(--s5); border-top: 1px solid var(--line); font-size: 0.9375rem; line-height: 1.6; overflow-wrap: anywhere; }
+.fd-md > * { max-width: var(--measure); }
+.fd-md > * + * { margin-top: var(--s3); }
+.fd-md .fd-label { margin-top: var(--s5); font: 500 var(--fs-eyebrow) / 1.4 var(--mono); letter-spacing: 0.12em; text-transform: uppercase; color: var(--now); }
+.fd-md .fd-label:first-child { margin-top: var(--s4); }
+.fd-md .fd-label + * { margin-top: var(--s2); }
+.fd-md ul, .fd-md ol { padding-left: 1.25rem; }
+.fd-md ul { list-style: disc; }
+.fd-md ol { list-style: decimal; }
+.fd-md li { max-width: none; }
+.fd-md li + li, .fd-md li > ul, .fd-md li > ol { margin-top: var(--s1); }
+.fd-md li::marker { color: var(--muted); }
+.fd-md strong { font-weight: 600; }
+.fd-md del { color: var(--muted); }
+.fd-md a { color: var(--primary); }
+.fd-md > .fd-tbl { max-width: 100%; overflow-x: auto; border: 1px solid var(--line); border-radius: var(--radius-s); }
+.fd-tbl table { width: 100%; border-collapse: collapse; font-size: var(--fs-small); line-height: 1.5; overflow-wrap: normal; }
+.fd-tbl th, .fd-tbl td { min-width: 7rem; padding: var(--s2) var(--s3); text-align: left; vertical-align: top; border-top: 1px solid var(--line); }
+.fd-tbl thead th { border-top: 0; background: var(--raised); color: var(--text); font-weight: 500; }
+.fd-tbl td { color: var(--muted); }
+.fd-tbl td + td, .fd-tbl th + th { border-left: 1px solid var(--line); }
+
+@media (max-width: 559px) {
+  .fd-tools { padding: var(--s3); }
+  .fd-count { margin-left: 0; flex-basis: 100%; }
+  .fd-md { padding-inline: var(--s3); }
+  .fd-entry > summary { padding-left: var(--s3); }
+}
