@@ -1,6 +1,6 @@
 # orion-81.io
 
-This folder is the whole orion-81.io website, version 3.5.0. A bar at the top of every page links its six parts.
+This folder is the whole orion-81.io website, version 3.6.0. A bar at the top of every page links its seven parts.
 
 ## What it holds
 
@@ -25,6 +25,9 @@ This folder is the whole orion-81.io website, version 3.5.0. A bar at the top of
   generated, not hand-edited: `build_site_full_devlog.py` (kept beside the jam's devlog builders, in `D:\Games\2026 Epic Jam\devlog-page`)
   turns the jam repo's `update-for-devlog.md` into this page. Version 3.5.0 (15 November 2026) added Days 2 to 4, the row of day links,
   the trailer and gallery links, and the Full devlog sub-tab.
+* **Careers** (`careers/index.html`): six internship adverts (3D Asset Artist, Level Designer, Backend Engineer, Webmaster, PR Manager and Full-Stack
+  Developer, each an intern role at Orion-81), with a row of links to them and an "Apply by e-mail" button on each. The button is a plain `mailto:` link to
+  careers@orion-81.io with the role as the subject; the site sends and stores nothing. Version 3.6.0 (18 November 2026) added the tab and the page (`css/careers.css`).
 * **Orion POC** (`poc/index.html`): the earlier proof-of-concept site, kept as it was published on 13 October 2026; three of its ship viewers and the note in its tab bar were changed in November 2026,
   and everything else is byte for byte as published. The page shows it in a frame under the tab bar and a subtab bar. Its statements are those of that date. The second
   subtab, **Gallery** (`poc/gallery/index.html`), holds the pictures and clips of that proof of concept.
@@ -43,7 +46,7 @@ The Orion POC tab loads three.js (MIT licence) and Google Fonts (SIL Open Font L
 when it is viewed. The home page, the devlog and the Orchestration page load nothing from other sites. There are no trackers, no cookies and no forms.
 The home page links to one page on anthropic.com as further reading; the link loads nothing until it is followed.
 The Epic Jam 2026 page links to the game's trailer on YouTube and to its ship gallery on claude.ai; it embeds neither, and the links
-load nothing until they are followed. The Full devlog's entries link to the team's GitHub repository and other pages; those load nothing
+load nothing until they are followed. The Careers page loads nothing from other sites and has no form; its buttons open the visitor's own mail application. The Full devlog's entries link to the team's GitHub repository and other pages; those load nothing
 until followed either.
 
 ## Trademarks

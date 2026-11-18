@@ -1,0 +1,53 @@
+/* (c) 2026 Andrius Bubliauskas. All rights reserved.
+   Careers page: the head, the row of role links and the six advert cards. Built on tokens.css only; nothing is animated, so the un-animated state is the complete one. */
+
+.cr-main > * { max-width: 100%; }
+.cr-head { display: grid; gap: var(--s3); padding-top: clamp(var(--s5), 5vw, var(--s7)); padding-bottom: var(--s6); }
+.cr-sub { color: var(--primary); font: 500 var(--fs-eyebrow) / 1.4 var(--mono); letter-spacing: 0.12em; text-transform: uppercase; max-width: none; }
+.cr-intro { color: var(--muted); }
+
+/* the row of role links */
+.cr-roles ul { display: flex; flex-wrap: wrap; gap: var(--s2); list-style: none; max-width: none; margin-top: var(--s2); }
+.cr-roles li { max-width: none; }
+.cr-roles a {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--hit);
+  padding: var(--s2) var(--s4);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-pill);
+  background: var(--surface);
+  color: var(--text);
+  font-size: 0.9375rem;
+  line-height: 1.25;
+  text-decoration: none;
+}
+.cr-roles a:hover { border-color: var(--primary); background: var(--raised); }
+
+/* the adverts */
+.cr-list { display: grid; gap: var(--s5); padding-bottom: var(--s7); }
+.cr-card {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: var(--s5) var(--s4);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+.cr-card h2 { font-size: var(--fs-h3); font-weight: 500; line-height: 1.25; overflow-wrap: anywhere; }
+.cr-kind { margin-top: var(--s1); color: var(--primary); font: 500 var(--fs-eyebrow) / 1.4 var(--mono); letter-spacing: 0.12em; text-transform: uppercase; }
+.cr-card h3 { margin-top: var(--s5); color: var(--muted); font: 500 var(--fs-eyebrow) / 1.4 var(--mono); letter-spacing: 0.12em; text-transform: uppercase; }
+.cr-card h3 + p, .cr-card h3 + ul { margin-top: var(--s2); }
+.cr-card ul { display: grid; gap: var(--s2); padding-left: 1.2em; list-style: disc; }
+.cr-card li::marker { color: var(--primary); }
+.cr-act { margin-top: auto; padding-top: var(--s5); }
+.cr-apply-btn { max-width: 100%; }
+.cr-close { padding-bottom: var(--section-gap); font-size: 1.125rem; }
+
+@media (min-width: 560px) {
+  .cr-card { padding: var(--s6) var(--s5); }
+}
+@media (min-width: 980px) {
+  .cr-list { grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: stretch; }
+}

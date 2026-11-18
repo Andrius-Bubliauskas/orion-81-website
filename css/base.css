@@ -11,6 +11,10 @@ html {
 @media (max-width: 559px) {
   html { --bar-h: 89px; }
 }
+/* seven tabs: up to 434 px the strip needs a third row (3 x 44 px and the border; measured: 133 px at 434 px, 89 px at 435 px), so the page's top allowance follows it (3.6.0) */
+@media (max-width: 434px) {
+  html { --bar-h: 133px; }
+}
 @media (min-width: 900px) {
   html.has-toc { --toc-h: 45px; }
 }
@@ -131,7 +135,7 @@ main > section:first-child { padding-top: clamp(var(--s5), 5vw, var(--s8)); }
 }
 .o81-tab:focus-visible { outline-offset: -4px; }
 /* narrow screens: the tabs flow in rows (never a sideways scroll). The first row leaves room for the theme button at the top right; the second row
-   uses the whole width, so all five tabs fit in two rows at 320 px. */
+   uses the whole width, so the seven tabs fit in two rows from 435 px and take a third row below that (3.6.0). */
 @media (max-width: 559px) {
   .bar-in { display: block; position: relative; }
   .o81-tabs { display: block; font-size: 0; line-height: 0; }
