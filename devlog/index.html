@@ -52,7 +52,7 @@
   <p class="pg-summary-page">The page opens with the project at a glance and then the devlog, newest first. After it come what the game will be, the milestone road, the road ahead and the AI effort to get there, what exists today, how it is made, every test and the earlier proof of concept.</p>
   <p class="pg-lead">Orion-81 is a space combat game with six degrees of freedom: you move and turn freely along every axis. You pilot a single heavy ship and point its nose with the mouse. The pace is unhurried, yet the controls answer at once: every input takes effect from the next 8 millisecond step, and a big ship simply takes longer to come round.</p>
   <p>It has a purpose beyond play. Its revenue is meant to help support software engineers and graphic designers whose work has been affected by artificial intelligence.</p>
-  <p class="pg-status-line"><strong>In development.</strong> Built so far: the rules core (M2), the demo's rules (M2.1), ships as machines (M2.2, done on 26 October 2026), the engine-neutral first-flight layer (M3a, done on 28 October 2026), game modes, balance and sub-system combat (M2.3, done on 31 October 2026) and air, orbit and descent (M2.4, done on 1 November 2026). The game engine is Unreal Engine 5.8.4, chosen on 7 November 2026, and engine work starts once it is installed. By 10 November, M4a, the engine-neutral half of M4, was built on its own branch, ahead of its merge into the main line.</p>
+  <p class="pg-status-line"><strong>In development.</strong> As of 19 November 2026, 02:30 UTC, built so far: the rules core (M2), the demo's rules (M2.1), ships as machines (M2.2, done on 26 October 2026), the engine-neutral first-flight layer (M3a, done on 28 October 2026), game modes, balance and sub-system combat (M2.3, done on 31 October 2026) and air, orbit and descent (M2.4, done on 1 November 2026). By 10 November, M4a, the engine-neutral half of M4, was built on its own branch. On 18 November 2026 a first build of the asteroid-field demo that a person can start and play was made, drawn by a small Windows program written for the project. The game engine is Unreal Engine 5.8.4, chosen on 7 November 2026; work in it began on 18 November, and on 19 November a first build of the demo drawn by the engine was packaged. Both builds are internal.</p>
 </section>
 
 <section id="glance" aria-labelledby="glance-h">
@@ -87,6 +87,14 @@
   </div>
   <ol class="pg-log" id="o81-log">
     <li class="pg-entry rv">
+      <span class="pg-date">18 to 19 November</span>
+      <h3 class="pg-entry-h">A first build to play, then a first build drawn by the engine</h3>
+      <p>On 18 November a first build of Orion-81 that a person can start and play was made, numbered 0.3.1. It is the asteroid-field demo: waves 1 to 5, then endless waves, flown with mouse and keyboard in six degrees of freedom, with weapons, targets that break apart and the heads-up display. It has a menu with settings, and sound made in code. On its start screen the player chooses the scene, the ship class and the seed. It is drawn by a small Windows program written for the project.</p>
+      <p>It was made in one night: a plan and fixed interfaces first, then five AI coding agents working side by side, each on files of its own, four independent reviews, and checks by scripted flights and by pictures. When it was finished, early on 18 November, it had been flown only in scripted flights.</p>
+      <p>That evening Andrius gave the word for work in the game engine, and it began at once. The tested rules were joined to Unreal Engine 5.8.4 through one narrow interface, with command-line builds and scripts, and the game's models were made by scripts in Blender from the written specs. By 23:15 UTC a scripted test flight had run inside the engine with exactly the same result as outside it.</p>
+      <p>At 02:20 UTC on 19 November a first build drawn by the engine was packaged, numbered 0.4.0: the same demo, start screen, heads-up display and sound, with asteroids, pickups, rockets and ship hulls made by scripts in Blender. The packaged build flew the same scripted flight with the same result. Both builds are internal, and neither is offered for download. When this entry was written, at 02:30 UTC on 19 November, no person had flown the engine build with a real keyboard and mouse or listened to its sound. M3b, a ship flown in the engine, has been under way since 18 November. A milestone closes only when Andrius has flown it himself and accepted it, so seven of the 19 milestones were done at that time.</p>
+    </li>
+    <li class="pg-entry rv">
       <span class="pg-date">11 November</span>
       <h3 class="pg-entry-h">Three of the proof of concept's ship viewers, patched</h3>
       <p>The archived proof of concept was patched at Andrius's request: three of its 3D ship viewers now offer every ship of the page, they are bigger, and on a phone a finger turns the model at once, with no button to press first. Two went live on 11 November and the third, the Build chapter's, on 12 November. Its other viewers, and everything else in it, are kept as they were published on 13 October 2026.</p>
@@ -96,7 +104,7 @@
       <h3 class="pg-entry-h">M4a built: the demo plays without a display</h3>
       <p>All of M4a's code is built: the engine-neutral half of M4, the clean v0 demo. It holds the model of the heads-up display, the hulls' data, the seeded rock field, and the world that runs the waves, with rocks, a target panel and the demo itself. The parts were joined on M4a's own branch and built four ways from clean: two compilers, each in a debug and a release build.</p>
       <p>The demo plays from start to end without a display: five waves and then two endless ones, on one world, with the same result in all four builds. Both test programs stayed within the test-time limits Andrius set.</p>
-      <p>M4a is not yet in the main line, so seven of the 19 milestones are still done. Its close comes first: its last checks, then the merge. There is still nothing to play. That needs M3b, the first flight in Unreal Engine 5.8.4, once the engine is installed, and then M4b, the engine half of M4, which makes the demo a packaged build.</p>
+      <p>On 10 November M4a was on its own branch, outside the main line, so seven of the 19 milestones were done. Its close was to come first: its last checks, then the merge. At that date there was nothing to play, and the plan was that the first build to play would come with M3b, the first flight in Unreal Engine 5.8.4, once the engine was installed, and with M4b, the engine half of M4, which makes the demo a packaged build.</p>
       <p>How the work was organised on 10 November is set out in the Fable 5.2 conduct-of-work review, under the Orchestration tab.</p>
     </li>
     <li class="pg-entry rv">
@@ -104,15 +112,15 @@
       <h3 class="pg-entry-h">The engine question settled: Unreal Engine 5.8.4</h3>
       <p>The engine question is closed. Epic Games updated the licence of Unreal Engine on 30 October 2026, and on 7 November Andrius decided that work in Unreal Engine 5 can go ahead.</p>
       <p>He chose Unreal Engine 5.8.4 the same day, with one planned move to Unreal Engine 5.9 later, between milestones. The first versions aim at the highest quality possible; the plan is to lower the minimum PC the game needs later, as the project gains traction.</p>
-      <p>The road to the first playable version is set. M3b, the first flight in the engine, gives the first build that can be flown. M4, the clean v0 demo, is the first playable version: a packaged build in Unreal Engine 5, done when its checks pass and Andrius has played it and accepted it. M4a, the engine-neutral half of M4, runs beside M3b. Engine work starts once the engine is installed; until then, work goes on in the parts that need no engine.</p>
-      <p>Nothing has been merged into the main line since 1 November, so seven of the 19 milestones are still done. For M4a, the HUD model and view are accepted on one branch and a seeded rock field on another, and two other parts are still to come.</p>
+      <p>The road to the first playable version was then set. M3b, the first flight in the engine, was to give the first build in the engine that can be flown. M4, the clean v0 demo, was set as the first playable version: a packaged build in Unreal Engine 5, done when its checks pass and Andrius has played it and accepted it. M4a, the engine-neutral half of M4, was to run beside M3b. Engine work was to start once the engine was installed, and until then work went on in the parts that need no engine.</p>
+      <p>On 7 November nothing had been merged into the main line since 1 November, so seven of the 19 milestones were done. For M4a, the HUD model and view had been accepted on one branch and a seeded rock field on another, and two other parts were to follow.</p>
     </li>
     <li class="pg-entry rv">
       <span class="pg-date">31 October to 2 November</span>
       <h3 class="pg-entry-h">M2.3 and M2.4 done; M4a started</h3>
       <p>M2.3, modes, balance and sub-system combat, was merged into the main line on 31 October, within the test-time limit of 70 ms that Andrius set. M2.4, air, orbit and descent, followed on 1 November as version 0.3.0-m3a+m2.3+m2.4, taking 33.6 ms of test time against his limit of 40 ms. Seven of the 19 milestones are now done: M0, M2, M2.1, M2.2, M3a, M2.3 and M2.4 (the road counts M3a and M3b as two).</p>
       <p>The main line now holds 2,005 passing automated tests of the rules, with 201 more skipped, and 239 of the presentation layer. Both test programs still give identical results from two different compilers, and each runs in under one second.</p>
-      <p>M4 is now split in two, as Andrius agreed: M4a, its engine-neutral half, and M4b, the rest. For M4a, the HUD model and view are built, reviewed and accepted on their own branches, a seeded rock field is built on its own branch, and two other parts have not started. None of it is in the main line, and there is still nothing to play. M4 itself still needs the engine question settled and M3b. Game work was paused at the time.</p>
+      <p>M4 was then split in two, as Andrius agreed: M4a, its engine-neutral half, and M4b, the rest. For M4a, the HUD model and view had been built, reviewed and accepted on their own branches, a seeded rock field had been built on its own branch, and two other parts had not started. None of it was in the main line, and at that date there was nothing to play. M4 itself needed the engine question settled and M3b. Game work was paused at the time.</p>
     </li>
     <li class="pg-entry rv">
       <span class="pg-date">27 to 29 October</span>
@@ -192,18 +200,18 @@
     <li class="pg-step is-done"><div class="pg-node"><span class="pg-status">Done, 28 October 2026, in the main line</span><h3 class="pg-step-h">M3a: first flight, the part that needs no engine</h3><p id="o81-road-4">Cameras, controls kept as data, pause, menus and settings, and a tool that plays back a recorded match.</p></div></li>
     <li class="pg-step is-done"><div class="pg-node"><span class="pg-status">Done, 31 October 2026, in the main line</span><h3 class="pg-step-h">M2.3: modes, balance and sub-system combat</h3><p id="o81-road-5">Play styles and rules for each class of ship in each mode, team objectives, capture the flag rules, how an assigned ship is drawn, shield bubbles, swarm tactics and a tool that plays many matches to check the balance.</p></div></li>
     <li class="pg-step is-done"><div class="pg-node"><span class="pg-status">Done, 1 November 2026, in the main line</span><h3 class="pg-step-h">M2.4: air, orbit and descent</h3><p id="o81-road-6">Flight in an atmosphere, linked zones with a flown descent and re-entry heating.</p></div></li>
-    <li class="pg-step is-later"><div class="pg-node"><span class="pg-status">Next: once Unreal Engine 5.8.4 is installed</span><h3 class="pg-step-h">M3b: first flight in a game engine</h3><p id="o81-road-7">The rules core joined to a game engine through a thin layer, so a ship can be flown on screen for the first time.</p></div></li>
-    <li class="pg-step is-now"><div class="pg-node"><span class="pg-status">Under way: M4a, built by 10 November</span><h3 class="pg-step-h">M4 to M11</h3><p id="o81-road-8">M4 the clean v0 demo, the first playable build; M5 multiplayer on a local network; M6 the look, and M6.1 capture the flag on a city slice; M7 the full fleet; M8 loadout and hangar, and M8.1 assigned-ship co-op with a pilot record; M9 team battle; M10 more worlds, and M10.1 invasion and defence, with the orbital station; M11 economy and unlocks.</p></div></li>
+    <li class="pg-step is-now"><div class="pg-node"><span class="pg-status">Under way since 18 November 2026</span><h3 class="pg-step-h">M3b: first flight in a game engine</h3><p id="o81-road-7">A ship flown in the game engine, Unreal Engine 5.8.4, with the tested rules joined to it through one narrow interface. A scripted flight first ran inside the engine on 18 November. The milestone closes when Andrius has flown it himself and accepted it.</p></div></li>
+    <li class="pg-step is-later"><div class="pg-node"><span class="pg-status">Parts begun: M4a, built by 10 November; parts of M5, M8 and M9, from 19 November</span><h3 class="pg-step-h">M4 to M11</h3><p id="o81-road-8">M4 the clean v0 demo, the first playable build that Andrius accepts as the packaged engine build; M5 multiplayer on a local network; M6 the look, and M6.1 capture the flag on a city slice; M7 the full fleet; M8 loadout and hangar, and M8.1 assigned-ship co-op with a pilot record; M9 team battle; M10 more worlds, and M10.1 invasion and defence, with the orbital station; M11 economy and unlocks.</p></div></li>
   </ol>
   <p class="pg-quiet">There is no M1.</p>
 </section>
 
 <section id="ahead" aria-labelledby="ahead-h">
   <h2 id="ahead-h"><span class="stars" aria-hidden="true"><i></i><i></i><i></i></span>Road ahead and the AI effort to get there</h2>
-  <p>The rest of the road, in order. The game engine is Unreal Engine 5.8.4, and engine work starts once it is installed. M4a, the engine-neutral half of M4, needs no game engine and runs beside M3b.</p>
+  <p>The rest of the road, in order. The game engine is Unreal Engine 5.8.4; work in it began on 18 November 2026. M4a, the engine-neutral half of M4, needs no game engine and was built by 10 November. On 19 November work began on parts of later milestones: the plan and the base of multiplayer on a local network (M5), ship tiers and a local profile store (M8), and a scoreboard and kill feed (M9). As of 19 November 2026, 02:30 UTC, none of these milestones is done.</p>
   <ol class="pg-list pg-ahead">
     <li><strong>M4a.</strong> The engine-neutral half of M4. Built by 10 November on its own branch, ahead of its close and its merge into the main line. No engine needed.</li>
-    <li><strong>M3b.</strong> First flight in the game engine, Unreal Engine 5.8.4: the first build that can be flown. Needs the engine.</li>
+    <li><strong>M3b.</strong> First flight in the game engine, Unreal Engine 5.8.4: a ship flown in the engine. Under way since 18 November 2026; it closes when Andrius has flown it himself and accepted it.</li>
     <li><strong>M4 to M11.</strong> The clean v0 demo (M4); multiplayer on a local network (M5); the look (M6) and capture the flag (M6.1); the full fleet (M7); loadout and hangar (M8) and assigned-ship co-op (M8.1); team battle (M9); more worlds (M10) and invasion and defence, with the orbital station (M10.1); economy and unlocks (M11). All need the engine, apart from M4a.</li>
   </ol>
 
@@ -216,7 +224,7 @@
   <div class="pg-cards">
     <div class="pg-card rv"><p>The rules core, written in C++. It covers flight; the five weapon families (lasers, rotary cannons, rockets, railguns and point defence); turrets and automatic mounts; damage that travels through each ship's graph of modules; and the world step, which can record a replay and take a fingerprint of the game state, so the same inputs always give the same result. On top of it sit the demo's rules: the sides, respawns, pickups and score, single-player waves, drones and computer pilots, and four difficulty levels. Ships are machines now: damage spreads from part to part, damage control can stop it, a pilot can aim at a ship's subsystems, wrecks break into tumbling debris that can be salvaged, and engines, shields and weapon mounts are power modules. Without any game engine, the presentation layer (M3a) adds cameras, the lens, input, the session, the host and a replay tool. Since 31 October the main line also holds M2.3: game modes, balance and sub-system combat. Since 1 November it also holds M2.4: flight in an atmosphere, linked zones with a flown descent and re-entry heating.</p></div>
     <div class="pg-card rv"><p>The rules give identical results when built with two different compilers. On the main line, 2,005 automated tests of the rules pass and 201 more are skipped, and a further 239 test the presentation layer. Each of the two test programs runs in under one second. The table under "Every test" is a snapshot of 29 October 2026 and lists the <span data-o81-bind="count">1396</span> rules tests of that date.</p></div>
-    <div class="pg-card pg-card-quote rv"><p>There is nothing to play or watch yet. The first playable build is M4.</p></div>
+    <div class="pg-card pg-card-quote rv"><p>As of 19 November 2026, 02:30 UTC: two internal builds of the asteroid-field demo, neither offered for download. The first, made on 18 November, is drawn by a small Windows program written for the project; the second, packaged on 19 November, is drawn by Unreal Engine 5.8.4. M4 is the milestone at which Andrius plays the packaged engine build and accepts it.</p></div>
   </div>
 </section>
 
@@ -250,7 +258,7 @@
   <p>&copy; 2026 Andrius Bubliauskas. All rights reserved.</p>
   <p>Anthropic, Claude and Claude Code are trademarks of Anthropic, PBC. Orion-81 is not affiliated with, sponsored or endorsed by Anthropic.</p>
   <p>No trackers, no cookies, nothing loaded from other sites.</p>
-  <p>Site version 3.6.0, updated 18 November 2026.</p>
+  <p>Site version 3.7.0, updated 19 November 2026.</p>
 </footer>
 <script src="../assets/data/test-index.js"></script>
 <script src="../assets/data/progress-stats.js"></script>
