@@ -88,6 +88,13 @@
   <ol class="pg-log" id="o81-log">
     <li class="pg-entry rv">
       <span class="pg-date">20 November</span>
+      <h3 class="pg-entry-h">The Agent Provenance Graph is current again</h3>
+      <p>The Agent Provenance Graph on this site shows the game's commits with the AI sessions, agents and workflows that did the work behind them. Its data had last been generated on 7 November 2026. The work of the thirteen days after that was missing from it, while other pages of the site were updated in that time: the builds of the asteroid-field demo, the work in the game engine, and the sessions and workflows that did it.</p>
+      <p>On 20 November 2026 the graph was generated again from the project's commits, its tracker and its session records. From this update on it is generated again first in every update of the site, before any other page is changed. Andrius asked for this on 20 November, and it is now a written rule of the project.</p>
+    </li>
+
+    <li class="pg-entry rv">
+      <span class="pg-date">20 November</span>
       <h3 class="pg-entry-h">A sixth engine build, and what five picture checks found</h3>
       <p>By 12:33 UTC on 20 November a sixth build drawn by Unreal Engine 5.8.4 had been packaged and tagged, numbered 0.9.0. It draws the ships of the eight modelled classes from their cut parts, with turrets that turn towards their targets, and its start screen has the CONTROLS screen. Its packaged copy flew the scripted test flight with the same result as outside the engine, and the build passed all 33 of its tests inside the engine. The packaged game was also watched for 114 seconds while it ran: it opened no connection to another machine and listened on no network port.</p>
       <p>Before the tag, five questions about the build's picture were put to independent AI reviewers, two for each question, one of them told to look for faults, in three rounds with fixes between them. The last round found nothing broken. All five answers were no, each for a fault that the build's record names. A ship that breaks up is seen as five or more pieces with shapes of their own, drifting apart, but a torn tube shows an open end. A large ship seen close is whole and its turrets sit on the hull, but its class letters are too small to read, some hull surfaces show a speckle, and some collars between hull sections stand out of the hull. The turrets' aim is seen to turn, but in one frame a beam seems to start behind the turret, not at the barrel's end. A shot a kilometre away is seen as a streak and its hit as a star, but the star is one pixel under its smallest allowed size. The CONTROLS screen can be read at both sizes tried, but no picture of the way to it lay before the reviewers.</p>
@@ -312,7 +319,7 @@
   <p>&copy; 2026 Andrius Bubliauskas. All rights reserved.</p>
   <p>Anthropic, Claude and Claude Code are trademarks of Anthropic, PBC. Orion-81 is not affiliated with, sponsored or endorsed by Anthropic.</p>
   <p>No trackers, no cookies, nothing loaded from other sites.</p>
-  <p>Site version 3.7.6, updated 20 November 2026.</p>
+  <p>Site version 3.7.7, updated 20 November 2026.</p>
 </footer>
 <script src="../assets/data/test-index.js"></script>
 <script src="../assets/data/progress-stats.js"></script>
