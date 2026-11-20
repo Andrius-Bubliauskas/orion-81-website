@@ -52,7 +52,7 @@
   <p class="pg-summary-page">The page opens with the project at a glance and then the devlog, newest first. After it come what the game will be, the milestone road, the road ahead and the AI effort to get there, what exists today, how it is made, every test and the earlier proof of concept.</p>
   <p class="pg-lead">Orion-81 is a space combat game with six degrees of freedom: you move and turn freely along every axis. You pilot a single heavy ship and point its nose with the mouse. The pace is unhurried, yet the controls answer at once: every input takes effect from the next 8 millisecond step, and a big ship simply takes longer to come round.</p>
   <p>It has a purpose beyond play. Its revenue is meant to help support software engineers and graphic designers whose work has been affected by artificial intelligence.</p>
-  <p class="pg-status-line"><strong>In development.</strong> As of 20 November 2026, 02:45 UTC, built so far: the rules core (M2), the demo's rules (M2.1), ships as machines (M2.2, done on 26 October 2026), the engine-neutral first-flight layer (M3a, done on 28 October 2026), game modes, balance and sub-system combat (M2.3, done on 31 October 2026) and air, orbit and descent (M2.4, done on 1 November 2026). By 10 November, M4a, the engine-neutral half of M4, was built on its own branch. On 18 November 2026 the first builds of the asteroid-field demo that a person can start and play were made, drawn by a small Windows program written for the project. The game engine is Unreal Engine 5.8.4, chosen on 7 November 2026; work in it began on 18 November, four builds of the demo drawn by the engine were packaged on 19 November and a fifth on 20 November. All these builds are internal.</p>
+  <p class="pg-status-line"><strong>In development.</strong> As of 20 November 2026, 08:45 UTC, built so far: the rules core (M2), the demo's rules (M2.1), ships as machines (M2.2, done on 26 October 2026), the engine-neutral first-flight layer (M3a, done on 28 October 2026), game modes, balance and sub-system combat (M2.3, done on 31 October 2026) and air, orbit and descent (M2.4, done on 1 November 2026). By 10 November, M4a, the engine-neutral half of M4, was built on its own branch. On 18 November 2026 the first builds of the asteroid-field demo that a person can start and play were made, drawn by a small Windows program written for the project. The game engine is Unreal Engine 5.8.4, chosen on 7 November 2026; work in it began on 18 November, four builds of the demo drawn by the engine were packaged on 19 November and a fifth on 20 November. On 20 November ships drawn from their cut parts, with turrets that turn, were merged into the engine work and checked by machine. All these builds are internal.</p>
 </section>
 
 <section id="glance" aria-labelledby="glance-h">
@@ -86,6 +86,16 @@
     <button type="button" class="btn btn-quiet" id="o81-collapse-all" aria-controls="o81-log">Collapse all</button>
   </div>
   <ol class="pg-log" id="o81-log">
+    <li class="pg-entry rv">
+      <span class="pg-date">20 November</span>
+      <h3 class="pg-entry-h">Ships drawn from their parts, and measured frame times</h3>
+      <p>By 07:46 UTC on 20 November the next step of the engine work had been merged and checked by machine. Ships of the eight modelled classes are now drawn from their cut parts and no longer as one model each: 197 hull parts, with collars at the joints, caps on torn ends and turret models that turn with their aim. When a ship breaks up, each piece is drawn from the parts of the modules it carries. In the engine, 876 part models are imported and each is bound to its place by name. For this step the models were exported a third time with faults mended: 46 malformed end caps were rebuilt, and the heads of 14 turrets were reshaped so that they clear their bases when raised.</p>
+      <p>Frame times were measured again on 20 November between 08:06 and 08:40 UTC, on the project's computer with no other work of the project running: the asteroid-field scene, flown by a script for 17,999 frames and drawn off screen at 3840 x 2160, at the engine's quality level 3, with its upscaler's share set at 67 out of 100. Half the frames took 8.0 ms or less and 99 in 100 took 12.6 ms or less; the milestone's targets are 11.1 ms and 16.7 ms. A short break-up scene met the first target and missed the second, at 22.8 ms. These are early records, taken on a scene lighter than the battle scene that the milestone's targets name.</p>
+      <p>Sound was measured in the same hour over a five-minute scripted fight, on the mix the game makes and not on the sound device: the mix kept pace in each of its 18,000 steps, and its highest peak stayed 13.9 dB under full scale. One check missed: of 1,119 blast sounds that stood out of the mix, 19 started later than allowed, the worst after 55 ms against an allowance of 27.3 ms. In a test fight of 14,400 frames the engine had to leave out no effect in any frame, because effects are now thinned where they are made.</p>
+      <p>The start screen has a new CONTROLS screen: it lists 66 key bindings in seven groups and is made from the game's own key table. One independent review of this step found no blocking fault, two major faults and five minor ones. The five minor ones were fixed. One major fault was that the sound checks could pass without measuring the sound device: the checks now say that they measure the mix only.</p>
+      <p>As of 08:45 UTC on 20 November there were nine builds, all internal, and none is offered for download. Seven of the 19 milestones were done: a milestone closes only when Andrius has flown it himself and accepted it.</p>
+    </li>
+
     <li class="pg-entry rv">
       <span class="pg-date">20 November</span>
       <h3 class="pg-entry-h">A fifth engine build: a multiplayer lobby, and its picture judged</h3>
@@ -293,7 +303,7 @@
   <p>&copy; 2026 Andrius Bubliauskas. All rights reserved.</p>
   <p>Anthropic, Claude and Claude Code are trademarks of Anthropic, PBC. Orion-81 is not affiliated with, sponsored or endorsed by Anthropic.</p>
   <p>No trackers, no cookies, nothing loaded from other sites.</p>
-  <p>Site version 3.7.4, updated 20 November 2026.</p>
+  <p>Site version 3.7.5, updated 20 November 2026.</p>
 </footer>
 <script src="../assets/data/test-index.js"></script>
 <script src="../assets/data/progress-stats.js"></script>
