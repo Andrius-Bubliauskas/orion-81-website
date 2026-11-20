@@ -52,7 +52,7 @@
   <p class="pg-summary-page">The page opens with the project at a glance and then the devlog, newest first. After it come what the game will be, the milestone road, the road ahead and the AI effort to get there, what exists today, how it is made, every test and the earlier proof of concept.</p>
   <p class="pg-lead">Orion-81 is a space combat game with six degrees of freedom: you move and turn freely along every axis. You pilot a single heavy ship and point its nose with the mouse. The pace is unhurried, yet the controls answer at once: every input takes effect from the next 8 millisecond step, and a big ship simply takes longer to come round.</p>
   <p>It has a purpose beyond play. Its revenue is meant to help support software engineers and graphic designers whose work has been affected by artificial intelligence.</p>
-  <p class="pg-status-line"><strong>In development.</strong> As of 20 November 2026, 08:45 UTC, built so far: the rules core (M2), the demo's rules (M2.1), ships as machines (M2.2, done on 26 October 2026), the engine-neutral first-flight layer (M3a, done on 28 October 2026), game modes, balance and sub-system combat (M2.3, done on 31 October 2026) and air, orbit and descent (M2.4, done on 1 November 2026). By 10 November, M4a, the engine-neutral half of M4, was built on its own branch. On 18 November 2026 the first builds of the asteroid-field demo that a person can start and play were made, drawn by a small Windows program written for the project. The game engine is Unreal Engine 5.8.4, chosen on 7 November 2026; work in it began on 18 November, four builds of the demo drawn by the engine were packaged on 19 November and a fifth on 20 November. On 20 November ships drawn from their cut parts, with turrets that turn, were merged into the engine work and checked by machine. All these builds are internal.</p>
+  <p class="pg-status-line"><strong>In development.</strong> As of 20 November 2026, 12:45 UTC, built so far: the rules core (M2), the demo's rules (M2.1), ships as machines (M2.2, done on 26 October 2026), the engine-neutral first-flight layer (M3a, done on 28 October 2026), game modes, balance and sub-system combat (M2.3, done on 31 October 2026) and air, orbit and descent (M2.4, done on 1 November 2026). By 10 November, M4a, the engine-neutral half of M4, was built on its own branch. On 18 November 2026 the first builds of the asteroid-field demo that a person can start and play were made, drawn by a small Windows program written for the project. The game engine is Unreal Engine 5.8.4, chosen on 7 November 2026; work in it began on 18 November, four builds of the demo drawn by the engine were packaged on 19 November and two more on 20 November. The sixth draws ships from their cut parts, with turrets that turn. All these builds are internal.</p>
 </section>
 
 <section id="glance" aria-labelledby="glance-h">
@@ -86,6 +86,15 @@
     <button type="button" class="btn btn-quiet" id="o81-collapse-all" aria-controls="o81-log">Collapse all</button>
   </div>
   <ol class="pg-log" id="o81-log">
+    <li class="pg-entry rv">
+      <span class="pg-date">20 November</span>
+      <h3 class="pg-entry-h">A sixth engine build, and what five picture checks found</h3>
+      <p>By 12:33 UTC on 20 November a sixth build drawn by Unreal Engine 5.8.4 had been packaged and tagged, numbered 0.9.0. It draws the ships of the eight modelled classes from their cut parts, with turrets that turn towards their targets, and its start screen has the CONTROLS screen. Its packaged copy flew the scripted test flight with the same result as outside the engine, and the build passed all 33 of its tests inside the engine. The packaged game was also watched for 114 seconds while it ran: it opened no connection to another machine and listened on no network port.</p>
+      <p>Before the tag, five questions about the build's picture were put to independent AI reviewers, two for each question, one of them told to look for faults, in three rounds with fixes between them. The last round found nothing broken. All five answers were no, each for a fault that the build's record names. A ship that breaks up is seen as five or more pieces with shapes of their own, drifting apart, but a torn tube shows an open end. A large ship seen close is whole and its turrets sit on the hull, but its class letters are too small to read, some hull surfaces show a speckle, and some collars between hull sections stand out of the hull. The turrets' aim is seen to turn, but in one frame a beam seems to start behind the turret, not at the barrel's end. A shot a kilometre away is seen as a streak and its hit as a star, but the star is one pixel under its smallest allowed size. The CONTROLS screen can be read at both sizes tried, but no picture of the way to it lay before the reviewers.</p>
+      <p>Two things were mended between the rounds: the smallest size of a hit's flash was raised, and a new test checks that turret heads stay on their bases and that every shot leaves within five degrees of its barrel.</p>
+      <p>As of 12:45 UTC on 20 November there were ten builds, all internal, and none is offered for download. Seven of the 19 milestones were done: a milestone closes only when Andrius has flown it himself and accepted it.</p>
+    </li>
+
     <li class="pg-entry rv">
       <span class="pg-date">20 November</span>
       <h3 class="pg-entry-h">Ships drawn from their parts, and measured frame times</h3>
@@ -269,7 +278,7 @@
   <div class="pg-cards">
     <div class="pg-card rv"><p>The rules core, written in C++. It covers flight; the five weapon families (lasers, rotary cannons, rockets, railguns and point defence); turrets and automatic mounts; damage that travels through each ship's graph of modules; and the world step, which can record a replay and take a fingerprint of the game state, so the same inputs always give the same result. On top of it sit the demo's rules: the sides, respawns, pickups and score, single-player waves, drones and computer pilots, and four difficulty levels. Ships are machines now: damage spreads from part to part, damage control can stop it, a pilot can aim at a ship's subsystems, wrecks break into tumbling debris that can be salvaged, and engines, shields and weapon mounts are power modules. Without any game engine, the presentation layer (M3a) adds cameras, the lens, input, the session, the host and a replay tool. Since 31 October the main line also holds M2.3: game modes, balance and sub-system combat. Since 1 November it also holds M2.4: flight in an atmosphere, linked zones with a flown descent and re-entry heating.</p></div>
     <div class="pg-card rv"><p>The rules give identical results when built with two different compilers. On the main line, 2,005 automated tests of the rules pass and 201 more are skipped, and a further 239 test the presentation layer. Each of the two test programs runs in under one second. The table under "Every test" is a snapshot of 29 October 2026 and lists the <span data-o81-bind="count">1396</span> rules tests of that date.</p></div>
-    <div class="pg-card pg-card-quote rv"><p>As of 20 November 2026, 02:45 UTC: nine internal builds of the asteroid-field demo, none offered for download. Four, made on 18 November, are drawn by a small Windows program written for the project; five, packaged on 19 and 20 November, are drawn by Unreal Engine 5.8.4. M4 is the milestone at which Andrius plays the packaged engine build and accepts it.</p></div>
+    <div class="pg-card pg-card-quote rv"><p>As of 20 November 2026, 12:45 UTC: ten internal builds of the asteroid-field demo, none offered for download. Four, made on 18 November, are drawn by a small Windows program written for the project; six, packaged on 19 and 20 November, are drawn by Unreal Engine 5.8.4. M4 is the milestone at which Andrius plays the packaged engine build and accepts it.</p></div>
   </div>
 </section>
 
@@ -303,7 +312,7 @@
   <p>&copy; 2026 Andrius Bubliauskas. All rights reserved.</p>
   <p>Anthropic, Claude and Claude Code are trademarks of Anthropic, PBC. Orion-81 is not affiliated with, sponsored or endorsed by Anthropic.</p>
   <p>No trackers, no cookies, nothing loaded from other sites.</p>
-  <p>Site version 3.7.5, updated 20 November 2026.</p>
+  <p>Site version 3.7.6, updated 20 November 2026.</p>
 </footer>
 <script src="../assets/data/test-index.js"></script>
 <script src="../assets/data/progress-stats.js"></script>
